@@ -10,7 +10,7 @@ var usersRouter = require('./view/routes/users');
 var app = express();
 
 // view engine setup
-app.set('view', path.join(__dirname, 'view'));
+app.set('views', path.join(__dirname, 'view'));
 app.set('view engine', 'jade');
 
 app.use(logger('dev'));

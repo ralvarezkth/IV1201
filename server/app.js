@@ -1,3 +1,5 @@
+'use-strict';
+
 const createError = require('http-errors');
 const express = require('express');
 const path = require('path');
@@ -8,9 +10,7 @@ const indexRouter = require('./view/routes/index');
 const usersRouter = require('./view/routes/users');
 
 const UserController = require('./controller/UserController');
-const ApplicantDTO = require('./model/dto/ApplicantDTO');
-const PersonDTO = require('./model/dto/PersonDTO');
-
+const UserDTO = require('./model/dto/UserDTO');
 
 const app = express();
 
@@ -52,16 +52,16 @@ app.use(function(err, req, res, next) {
   res.json({ error: err});
 });
 
-// running some tests below
+/******************************
+* Temporary user creation test 
+*******************************/
 const userController = new UserController();
-userController.dbHandler.createTables();
-registerTestUser();
+const newUser = new UserDTO(null, 'richard6', 'fa', 'rich6', 'pass123', 'rich6@fake.email', '1234567896', '1612809774');
+registerTestUser(newUser);
 
-async function registerTestUser() {
-  const { person, applicant } = await userController.setUser('richard', 'fa', 'rich', 'pass123', 'rich@fake.email', '1234567890', '1612807274');
-  console.log(`registered person with name: ${person.first_name} ${person.last_name}, email: ${applicant.email}`);
+async function registerTestUser(user) {
+  const createdUser = await userController.setUser(user);
+  console.log(`registered new user with name: ${createdUser.firstName} ${createdUser.lastName}, email: ${createdUser.email}`);
 }
-
-
 
 module.exports = app;

@@ -40,7 +40,7 @@ class Person extends Model {
         }, {
             sequelize,
             modelName: 'Person',
-            paranoid: true
+            paranoid: false
         });
         return Person;
     }

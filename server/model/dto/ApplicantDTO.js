@@ -18,16 +18,16 @@ class ApplicantDTO {
      * @param {string} updatedAt 
      * @param {string} deletedAt 
      */
-    constructor(email, ssn, dob) {
+    constructor(id, email, ssn, dob, createdAt, updatedAt, deletedAt) {
         //TODO: validation
+        this.id = id;
         this.email = email;
         this.ssn = ssn;
         this.dob = dob;
-        /*
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
         this.deletedAt = deletedAt;
-        */
+        
     }
 
 }

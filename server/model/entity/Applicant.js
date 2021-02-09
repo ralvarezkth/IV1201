@@ -1,6 +1,7 @@
 'use strict';
 
 const { Sequelize, DataTypes, Model } = require('sequelize');
+const Person = require('./Person');
 
 /**
  * A type of user of the recruitment application 
@@ -19,10 +20,6 @@ class Applicant extends Model {
                 allowNull: false,
                 autoIncrement: true,
                 primaryKey: true,
-                references: {
-                    model: 'Person',
-                    key: 'id'
-                }
             },
             email: {
                 type: DataTypes.STRING, // TODO: what is a suitable datatype for this column?
@@ -39,8 +36,9 @@ class Applicant extends Model {
         }, {
             sequelize,
             modelName: 'Applicant',
-            paranoid: true
+            paranoid: false
         });
+        Applicant.belongsTo(Person);
         return Applicant;
     }
 }

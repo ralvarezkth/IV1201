@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
 
-export default function RegisterView(setUser, handleRegistrationSubmit) {
+const RegisterView = ({setUser, handleRegistrationSubmit}) => {
     const [firstName, setFirstName] = useState('')
     const [lastName, setLastName] = useState('')
     const [email, setEmail] = useState('')
@@ -8,17 +8,11 @@ export default function RegisterView(setUser, handleRegistrationSubmit) {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
 
-    /**
-     * handleSubmit handles the submission of the registration
-     * @param event is when user wants to submit their registration
-     * @returns {Promise<*>}
-     */
-
     return (
         <div className="App">
             <h1>Registration</h1>
             <form onSubmit={(e)=> {
-                setUser(email);
+                //setUser(email);
                 handleRegistrationSubmit(e)
             }} id="registration">
                 <div>
@@ -46,3 +40,4 @@ export default function RegisterView(setUser, handleRegistrationSubmit) {
         </div>
         );
 }
+export default RegisterView;

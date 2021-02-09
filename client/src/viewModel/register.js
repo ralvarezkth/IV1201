@@ -27,7 +27,7 @@ class Register extends Component {
         return(
             React.createElement(RegisterView,{
                 //!!!
-                setUser: (u) => this.setState({user: u}),
+                //setUser: (u) => this.setState({user: u}),
                 handleRegistrationSubmit: (e)=>this.handleRegistrationSubmit(e)
             })
         )

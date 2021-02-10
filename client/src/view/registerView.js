@@ -4,7 +4,8 @@ const RegisterView = ({setUser, handleRegistrationSubmit}) => {
     const [firstName, setFirstName] = useState('')
     const [lastName, setLastName] = useState('')
     const [email, setEmail] = useState('')
-    const [date, setDate] = useState('')
+    const [dob, setDob] = useState('')
+    //const [ssn, setSsn] = useState('')
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
 
@@ -12,8 +13,18 @@ const RegisterView = ({setUser, handleRegistrationSubmit}) => {
         <div className="App">
             <h1>Registration</h1>
             <form onSubmit={(e)=> {
-                //setUser(email);
-                handleRegistrationSubmit(e)
+                setUser({
+                    firstName: firstName,
+                    lastName: lastName,
+                    email: email,
+                    dob:dob,
+                    //ssn:ssn,
+                    username: username,
+                    password: password
+                }, () => {
+                        handleRegistrationSubmit(e)
+                });
+
             }} id="registration">
                 <div>
                     <input type="text" onChange={(event)=>setFirstName(event.target.value)} id="firstName" placeholder="First name" required/>
@@ -24,8 +35,9 @@ const RegisterView = ({setUser, handleRegistrationSubmit}) => {
                 <div>
                     <input type="email" onChange={(event)=>setEmail(event.target.value)} id="email" placeholder="Email address" required/>
                 </div>
+
                 <div>
-                    <input type="date" onChange={(event)=>setDate(event.target.value)} id="dateOfBirth" placeholder="Date of birth" required/>
+                    <input type="date" onChange={(event)=>setDob(event.target.value)} id="dateOfBirth" placeholder="Date of birth" required/>
                 </div>
                 <div>
                     <input type="text" onChange={(event)=>setUsername(event.target.value)} id="username" placeholder="Username" required/>

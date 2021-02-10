@@ -3,21 +3,21 @@ import React, { Component } from 'react';
 
 class Register extends Component {
     state = {
-        user: []
-        }
+        user: {}
+    }
 
     componentDidMount() {
 
     }
-    async handleRegistrationSubmit(event) {
+    handleRegistrationSubmit(event) {
         //prevent the default - preventing the form from refreshing
         event.preventDefault();
-        alert("!")
+        console.log(this.state.user);
 
         try {
             fetch('/register')
                 .then(res => res.json())
-                //.then(user => this.setState({user: user }));//!!!
+                //.then(data => );//!!!
 
         } catch {
             //setError('Failed to create account')
@@ -26,9 +26,8 @@ class Register extends Component {
     render() {
         return(
             React.createElement(RegisterView,{
-                //!!!
-                //setUser: (u) => this.setState({user: u}),
-                handleRegistrationSubmit: (e)=>this.handleRegistrationSubmit(e)
+                setUser: this.setState.bind(this),
+                handleRegistrationSubmit: this.handleRegistrationSubmit
             })
         )
     }

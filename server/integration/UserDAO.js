@@ -76,6 +76,7 @@ class UserDAO {
     }
 
     async setApplicant(applicant, options) {
+        console.log("apper", applicant, options)
         try { 
             return await Applicant.create(applicant, options);
         } catch (error) {
@@ -98,10 +99,10 @@ class UserDAO {
         try {
             // TODO: validation
             const { _id, firstName, lastName, username, password, email, ssn, dob } = user;
-            const createdPerson = await this.setPerson(new PersonDTO(null, firstName, lastName, username, password));            
+            const createdPerson = await this.setPerson(new PersonDTO(null, firstName, lastName, username, password));
             const createdApplicant = await this.setApplicant(
-                new ApplicantDTO(null, email, ssn, dob), 
-                { include: Person }
+                new ApplicantDTO(createdPerson.id, email, ssn, dob),
+                {include: Person}
             );
             return new UserDTO(
                 createdPerson.id, 

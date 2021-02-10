@@ -17,8 +17,6 @@ class Applicant extends Model {
         Applicant.init({
             person_id: {
                 type: DataTypes.INTEGER,
-                allowNull: false,
-                autoIncrement: true,
                 primaryKey: true,
             },
             email: {
@@ -38,7 +36,7 @@ class Applicant extends Model {
             modelName: 'Applicant',
             paranoid: false
         });
-        Applicant.belongsTo(Person);
+        Applicant.belongsTo(Person, {foreignKey: 'person_id'});
         return Applicant;
     }
 }

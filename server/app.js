@@ -57,7 +57,11 @@ app.use(function(err, req, res, next) {
 *******************************/
 const userController = new UserController();
 const newUser = new UserDTO(null, 'richard6', 'fa', 'rich6', 'pass123', 'rich6@fake.email', '1234567896', '1612809774');
-registerTestUser(newUser);
+
+setTimeout(() => {
+  registerTestUser(newUser);
+}, 3000);
+
 
 async function registerTestUser(user) {
   const createdUser = await userController.setUser(user);

@@ -1,7 +1,7 @@
 'use strict';
 
 const Sequelize = require('sequelize');
-const validator = require('validator');
+const Validator = require('validator');
 const Person = require('../model/entity/Person');
 const PersonDTO = require('../model/dto/PersonDTO');
 const Applicant = require('../model/entity/Applicant');
@@ -100,21 +100,71 @@ class UserDAO {
      * @throws Throws an exeption if unable to set the specified user.
      */
     async setUser(user) {
-        const { _id, firstName, lastName, username, password, email, dob } = user;
-        const createdPerson = await this.setPerson(new PersonDTO(null, firstName, lastName, username, password));
-        const createdApplicant = await this.setApplicant(
-            new ApplicantDTO(createdPerson.id, email, dob), 
-            {include: Person}
-        );
-        return new UserDTO(
-            createdPerson.id, 
-            createdPerson.firstName, 
-            createdPerson.lastName, 
-            createdPerson.username, 
-            createdPerson.password, 
-            createdApplicant.email, 
-            createdApplicant.dob
-        );
+        try {
+            let valid = true;
+            let keys = Object.keys(user);
+            keys.splice(keys.indexOf("id"), 1);
+
+            keys.forEach(key => {
+                if (Validator.isEmpty(user[key])) {
+                    valid = false;
+                }
+
+                user[key] = Validator.escape(user[key])
+                user[key] = Validator.ltrim(user[key])
+                user[key] = Validator.rtrim(user[key])
+                user[key] = Validator.stripLow(user[key])
+            });
+
+            if (!Validator.matches(user.firstName, /[a-zA-Z\\s\-]+/) || !Validator.matches(user.firstName, /[a-zA-Z\\s\-]+/)) {
+                valid = false;
+            }
+
+            if (!Validator.isEmail(user.email)) {
+                valid = false;
+            }
+            user.email = Validator.normalizeEmail(user.email,
+                {all_lowercase: true, gmail_remove_dots: true, gmail_remove_subaddress: true,
+                gmail_convert_googlemaildotcom: true, outlookdotcom_remove_subaddress: true,
+                yahoo_remove_subaddress: true, icloud_remove_subaddress: true});
+
+            if (!Validator.isStrongPassword(user.password, {minLength: 6, minNumbers: 1, minUppercase: 0, minSymbols: 0})) {
+                valid = false;
+            }
+
+            if (!Validator.matches(user.dob, /^[1-2][0-9]{5}$/)) {
+                valid = false;
+            }
+
+            if (!valid) {
+                throw new Error("Data validation failed.");
+            }
+            const { _id, firstName, lastName, username, password, email, dob } = user;
+            const createdPerson = await this.setPerson(new PersonDTO(null, firstName, lastName, username, password));
+            const createdApplicant = await this.setApplicant(
+                new ApplicantDTO(createdPerson.id, email, dob), 
+                {include: Person}
+            );
+            return new UserDTO(
+                createdPerson.id, 
+                createdPerson.firstName, 
+                createdPerson.lastName, 
+                createdPerson.username, 
+                createdPerson.password, 
+                createdApplicant.email, 
+                createdApplicant.dob
+            );
+        } catch (error) {
+            throw new WError(
+                {
+                    cause: error,
+                    info: {
+                        UserDAO: 'Data validation failed.'
+                    }
+                },
+                `Could not create user ${JSON.stringify(user)}.`
+            );
+        }
     }
 
 }

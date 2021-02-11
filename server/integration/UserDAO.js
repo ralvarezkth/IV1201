@@ -116,7 +116,7 @@ class UserDAO {
                 user[key] = Validator.stripLow(user[key])
             });
 
-            if (!Validator.matches(user.firstName, /[a-zA-Z\\s\-]+/) || !Validator.matches(user.firstName, /[a-zA-Z\\s\-]+/)) {
+            if (!Validator.matches(user.firstName, /[a-zA-Z\\s\-]+/) || !Validator.matches(user.lastName, /[a-zA-Z\\s\-]+/)) {
                 valid = false;
             }
 
@@ -132,7 +132,7 @@ class UserDAO {
                 valid = false;
             }
 
-            if (!Validator.matches(user.dob, /^[1-2][0-9]{5}$/)) {
+            if (!Validator.matches(user.dob, /^[0-9]{2}[0-1]((?<=0)[1-9]|(?<=1)[0-2])((?<!02)[0-3]|(?<=02)[0-2])((?<=[0-2])[0-9]|(?<=(013|033|053|073|083|103|123))[0-1]|(?<!(013|033|053|073|083|103|123))0)$/)) {
                 valid = false;
             }
 

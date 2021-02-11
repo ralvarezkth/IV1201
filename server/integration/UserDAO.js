@@ -47,7 +47,6 @@ class UserDAO {
             await this.database.authenticate();
             await this.database.sync();
         } catch (error) {
-            console.log(error);
             throw new WError(
                 {
                     cause: error,
@@ -64,7 +63,6 @@ class UserDAO {
         try {
             return await Person.create(person);
         } catch (error) {
-            console.log(error);
             throw new WError(
                 {
                     cause: error,
@@ -78,11 +76,9 @@ class UserDAO {
     }
 
     async setApplicant(applicant, options) {
-        console.log("apper", applicant, options)
         try { 
             return await Applicant.create(applicant, options);
         } catch (error) {
-            console.log(error);
             throw new WError(
                 {
                     cause: error,

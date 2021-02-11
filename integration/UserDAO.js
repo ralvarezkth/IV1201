@@ -107,6 +107,7 @@ class UserDAO {
 
             keys.forEach(key => {
                 if (Validator.isEmpty(user[key])) {
+                    console.log("empty")
                     valid = false;
                 }
 

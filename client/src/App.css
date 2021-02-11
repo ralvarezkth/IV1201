@@ -36,3 +36,17 @@
     transform: rotate(360deg);
   }
 }
+
+.bg-green {
+  margin: 5em;
+  padding: 2em;
+  border: 2px solid #47ABFF;
+  background-color: #A2EDC3;
+}
+
+.bg-red {
+  margin: 5em;
+  padding: 2em;
+  border: 2px solid #A73C0D;
+  background-color: #F59170;
+}

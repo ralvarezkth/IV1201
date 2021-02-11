@@ -5,6 +5,15 @@ import React, { Component } from 'react';
  * Component Register that takes care of the Registration site
  */
 class Register extends Component {
+
+    constructor(props) {
+        super(props);
+
+        this.setState({success: null, msg: ""});
+
+        this.handleRegistrationSubmit = this.handleRegistrationSubmit.bind(this);
+    }
+
     /**
      * Code to handle a registation request and sends
      * it through post request to server
@@ -17,6 +26,8 @@ class Register extends Component {
         //prevent the default - preventing the form from refreshing
         event.preventDefault();
 
+        let that = this;
+
         try {
             const reqOp ={
                 method: 'POST',
@@ -24,17 +35,25 @@ class Register extends Component {
                 headers: {'Content-Type': 'application/json'}
             }
             fetch('/register', reqOp )
-                .then(response => response.json()
-            );
+                .then(response => {
+                    let json = response.json();
+                    json.then(data => {
+                        this.setState({success: true, msg: "Hello " + data.firstName + "! Registration successful. Would you care for some pancakes? Richard's treat."});
+                    })
+                    
+
+                });
         } catch (error) {
             alert("Something went wrong! Couldn't create a new user")
+            this.setState({success: false, msg: "Registration failed. Please try again."});
         }
     }
 
     render() {
         return(
             React.createElement(RegisterView,{
-                handleRegistrationSubmit: this.handleRegistrationSubmit
+                handleRegistrationSubmit: this.handleRegistrationSubmit,
+                state: this.state
             })
         )
     }

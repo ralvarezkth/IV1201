@@ -1,25 +1,33 @@
 import React, { useRef, useState } from 'react';
 
-export default function RegisterView(setUser, handleRegistrationSubmit) {
+/**
+ * Handles the view, for the registration site
+ * @param handleRegistrationSubmit is a parent
+ * function for handling the submit event
+ * @returns the View for the registration site
+ */
+const RegisterView = ({handleRegistrationSubmit}) => {
     const [firstName, setFirstName] = useState('')
     const [lastName, setLastName] = useState('')
     const [email, setEmail] = useState('')
-    const [date, setDate] = useState('')
+    const [dob, setDob] = useState('') //Date of birth
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
-
-    /**
-     * handleSubmit handles the submission of the registration
-     * @param event is when user wants to submit their registration
-     * @returns {Promise<*>}
-     */
 
     return (
         <div className="App">
             <h1>Registration</h1>
             <form onSubmit={(e)=> {
-                setUser(email);
-                handleRegistrationSubmit(e)
+                let newUser = {
+                    firstName: firstName,
+                    lastName: lastName,
+                    email: email,
+                    dob:dob,
+                    username: username,
+                    password: password
+                };
+                handleRegistrationSubmit(e, newUser)
+
             }} id="registration">
                 <div>
                     <input type="text" onChange={(event)=>setFirstName(event.target.value)} id="firstName" placeholder="First name" required/>
@@ -30,8 +38,9 @@ export default function RegisterView(setUser, handleRegistrationSubmit) {
                 <div>
                     <input type="email" onChange={(event)=>setEmail(event.target.value)} id="email" placeholder="Email address" required/>
                 </div>
+
                 <div>
-                    <input type="date" onChange={(event)=>setDate(event.target.value)} id="dateOfBirth" placeholder="Date of birth" required/>
+                    <input type="date" onChange={(event)=>setDob(event.target.value)} id="dateOfBirth" placeholder="Date of birth" required/>
                 </div>
                 <div>
                     <input type="text" onChange={(event)=>setUsername(event.target.value)} id="username" placeholder="Username" required/>
@@ -46,3 +55,4 @@ export default function RegisterView(setUser, handleRegistrationSubmit) {
         </div>
         );
 }
+export default RegisterView;

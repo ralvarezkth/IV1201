@@ -8,7 +8,7 @@ router.post('/', function(req, res, next) {
     let data = req.body.newUser;
     let dob = data.dob.slice(2, 4) + data.dob.slice(5, 7) + data.dob.slice(8);
 
-    let userDTO = new UserDTO(null, data.firstName, data.lastName, data.username, data.password, data.email, dob, dob);
+    let userDTO = new UserDTO(null, data.firstName, data.lastName, data.username, data.password, data.email, dob);
     
     try {
         createUser(userDTO)

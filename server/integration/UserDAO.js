@@ -1,6 +1,7 @@
 'use strict';
 
 const Sequelize = require('sequelize');
+const validator = require('validator');
 const Person = require('../model/entity/Person');
 const PersonDTO = require('../model/dto/PersonDTO');
 const Applicant = require('../model/entity/Applicant');
@@ -76,7 +77,6 @@ class UserDAO {
     }
 
     async setApplicant(applicant, options) {
-        console.log("apper", applicant, options)
         try { 
             return await Applicant.create(applicant, options);
         } catch (error) {
@@ -98,6 +98,49 @@ class UserDAO {
     async setUser(user) {
         try {
             // TODO: validation
+            let valid = true;
+            let keys = Object.keys(user);
+            keys.splice(keys.indexOf("id"), 1);
+
+            keys.forEach(key => {
+                if (validator.isEmpty(user[key])) {
+                    valid = false;
+                }
+
+                user[key] = validator.escape(user[key])
+                user[key] = validator.ltrim(user[key])
+                user[key] = validator.rtrim(user[key])
+                user[key] = validator.stripLow(user[key])
+            });
+
+            if (!validator.matches(user.firstName, /[a-zA-Z\\s\-]+/) || !validator.matches(user.firstName, /[a-zA-Z\\s\-]+/)) {
+                valid = false;
+            }
+
+            if (!validator.isEmail(user.email)) {
+                valid = false;
+            }
+            user.email = validator.normalizeEmail(user.email,
+                {all_lowercase: true, gmail_remove_dots: true, gmail_remove_subaddress: true,
+                gmail_convert_googlemaildotcom: true, outlookdotcom_remove_subaddress: true,
+                yahoo_remove_subaddress: true, icloud_remove_subaddress: true});
+
+            if (!validator.isStrongPassword(user.password, {minLength: 6, minNumbers: 1, minUppercase: 0, minSymbols: 0})) {
+                valid = false;
+            }
+
+            if (!validator.matches(user.ssn, /^[1-2][0-9]{5}-[0-9]{4}$/)) {
+                valid = false;
+            }
+
+            if (!validator.matches(user.dob, /^[1-2][0-9]{5}$/) || !validator.matches(user.dob, user.ssn.slice(0, 6))) {
+                valid = false;
+            }
+
+            if (!valid) {
+                throw new Error("Data validation failed.");
+            }
+
             const { _id, firstName, lastName, username, password, email, ssn, dob } = user;
             const createdPerson = await this.setPerson(new PersonDTO(null, firstName, lastName, username, password));
             const createdApplicant = await this.setApplicant(

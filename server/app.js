@@ -56,11 +56,11 @@ app.use(function(err, req, res, next) {
 * Temporary user creation test 
 *******************************/
 const userController = new UserController();
-const newUser = new UserDTO(null, 'richard6', 'fa', 'rich6', 'pass123', 'rich6@fake.email', '1234567896', '1612809774');
+const newUser = new UserDTO(null, 'richard6', 'fa', 'rich6', 'pass123', 'rich6@fake.email', '123456-7896', '123456');
 
 setTimeout(() => {
   registerTestUser(newUser);
-}, 3000);
+}, 1000);
 
 
 async function registerTestUser(user) {

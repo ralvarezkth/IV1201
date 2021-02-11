@@ -78,6 +78,7 @@ class UserDAO {
     }
 
     async setApplicant(applicant, options) {
+        console.log("apper", applicant, options)
         try { 
             return await Applicant.create(applicant, options);
         } catch (error) {

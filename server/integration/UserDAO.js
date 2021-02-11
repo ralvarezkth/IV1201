@@ -1,6 +1,7 @@
 'use strict';
 
 const Sequelize = require('sequelize');
+const validator = require('validator');
 const Person = require('../model/entity/Person');
 const PersonDTO = require('../model/dto/PersonDTO');
 const Applicant = require('../model/entity/Applicant');

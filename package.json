@@ -17,6 +17,7 @@
     "pg-hstore": "^2.3.3",
     "sequelize": "^6.5.0",
     "sequelize-cli": "^6.2.0",
-    "verror": "^1.10.0"
+    "verror": "^1.10.0",
+    "validator": "^13.5.2"
   }
 }

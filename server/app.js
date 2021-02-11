@@ -9,9 +9,6 @@ const logger = require('morgan');
 const indexRouter = require('./view/routes/index');
 const usersRouter = require('./view/routes/users');
 
-const UserController = require('./controller/UserController');
-const UserDTO = require('./model/dto/UserDTO');
-
 const app = express();
 
 // view engine setup
@@ -30,11 +27,6 @@ app.use(express.static(path.join(__dirname, 'client/build')));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 
-// Catch all handler, redirects to index
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname + '/client/build/index.html'));
-});
-
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
@@ -51,17 +43,5 @@ app.use(function(err, req, res, next) {
   //res.render('error'); // throws error if a view engine is not used
   res.json({ error: err});
 });
-
-/******************************
-* Temporary user creation test 
-*******************************/
-const userController = new UserController();
-const newUser = new UserDTO(null, 'richard6', 'fa', 'rich6', 'pass123', 'rich6@fake.email', '1234567896', '1612809774');
-registerTestUser(newUser);
-
-async function registerTestUser(user) {
-  const createdUser = await userController.setUser(user);
-  console.log(`registered new user with name: ${createdUser.firstName} ${createdUser.lastName}, email: ${createdUser.email}`);
-}
 
 module.exports = app;

@@ -1,9 +1,10 @@
 'use strict';
 
 const { Sequelize, DataTypes, Model } = require('sequelize');
+//const Applicant = require('./Applicant');
 
 /**
- * A base user of the recruitment application 
+ * The base of a user of the recruitment application 
  */
 class Person extends Model {
 
@@ -21,11 +22,13 @@ class Person extends Model {
                 autoIncrement: true,
                 primaryKey: true
             },
-            first_name: {
+            firstName: {
+                field: 'first_name',
                 type: DataTypes.STRING,
                 allowNull: false
             },
-            last_name: {
+            lastName: {
+                field: 'last_name',
                 type: DataTypes.STRING,
                 allowNull: false
             },

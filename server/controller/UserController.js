@@ -1,9 +1,13 @@
+'use strict';
+
 const UserDAO = require('../integration/UserDAO');
 
 class UserController {
     
     /**
      * Creates a new instance of this class and attaches a new UserDAO instance.
+     * Upon creation the UserDAO instance will attempt to connect to the database.
+     * @throws Throws an exception if unable to connect to the database.
      */
     constructor() {
         this.userDAO = new UserDAO();
@@ -12,11 +16,11 @@ class UserController {
     /**
      * Creates a new user (applicant).
      * 
-     * @param {UserDTO} user The user to be created
-     * @returns {UserDTO} createdUser The created user
+     * @param {UserDTO} user The user to be created.
+     * @returns {UserDTO} createdUser The created user.
+     * @throws Throws an exception if unable to create the specified user.
      */
     async setUser(user) {
-        // TODO: validation
         return await this.userDAO.setUser(user);
     }
 

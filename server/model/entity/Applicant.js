@@ -10,27 +10,22 @@ class Applicant extends Model {
 
     /**
      * 
-     * @param {Sequelize} sequelize The sequelize connection instance object
+     * @param {Sequelize} sequelize The sequelize connection instance object.
      * @return {Applicant} A sequelize model describing the Applicant entity.
      */
     static createModel(sequelize) {
         Applicant.init({
-            person_id: {
+            personId: {
+                field: 'person_id',
                 type: DataTypes.INTEGER,
-                allowNull: false,
-                autoIncrement: true,
                 primaryKey: true,
             },
             email: {
-                type: DataTypes.STRING, // TODO: what is a suitable datatype for this column?
-                allowNull: false
-            },
-            ssn: {
-                type: DataTypes.STRING, // TODO: what is a suitable datatype for this column?
+                type: DataTypes.STRING, 
                 allowNull: false
             },
             dob: {
-                type: DataTypes.BIGINT, // TODO: what is a suitable datatype for this column?
+                type: DataTypes.STRING, 
                 allowNull: false
             }
         }, {
@@ -38,7 +33,7 @@ class Applicant extends Model {
             modelName: 'Applicant',
             paranoid: false
         });
-        Applicant.belongsTo(Person);
+        Applicant.belongsTo(Person, {foreignKey: 'person_id'});
         return Applicant;
     }
 }

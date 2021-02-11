@@ -5,29 +5,25 @@
  */
 class ApplicantDTO {
 
-    /** TODO:
+    /**
      * 
-     * @param {string} firstName 
-     * @param {string} lastName 
-     * @param {string} username 
-     * @param {string} password 
-     * @param {string} email 
-     * @param {string} ssn 
-     * @param {bigint} dob 
-     * @param {string} createdAt 
-     * @param {string} updatedAt 
-     * @param {string} deletedAt 
+     * @param {integer} id The id of the applicant. This field is auto-generated and need not be provided.
+     * @param {string} email The email address of the applicant.
+     * @param {string} dob The date of birth of the applicant.
+     * @param {string} createdAt The time when the applicant was created. 
+     *                           This field is auto-generated and need not be provided.
+     * @param {string} updatedAt The time when the applicant was last updated.
+     *                           This field is auto-generated and need not be provided.
+     * @param {string} deletedAt The time when the applicant was deleted.
+     *                           This field is auto-generated and need not be provided.
      */
-    constructor(id, email, ssn, dob, createdAt, updatedAt, deletedAt) {
-        //TODO: validation
-        this.id = id;
+    constructor(id, email, dob, createdAt, updatedAt, deletedAt) {
+        this.personId = id;
         this.email = email;
-        this.ssn = ssn;
         this.dob = dob;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
-        this.deletedAt = deletedAt;
-        
+        this.deletedAt = deletedAt;  
     }
 
 }

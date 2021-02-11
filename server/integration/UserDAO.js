@@ -129,11 +129,7 @@ class UserDAO {
                 valid = false;
             }
 
-            if (!validator.matches(user.ssn, /^[1-2][0-9]{5}-[0-9]{4}$/)) {
-                valid = false;
-            }
-
-            if (!validator.matches(user.dob, /^[1-2][0-9]{5}$/) || !validator.matches(user.dob, user.ssn.slice(0, 6))) {
+            if (!validator.matches(user.dob, /^[1-2][0-9]{5}$/)) {
                 valid = false;
             }
 

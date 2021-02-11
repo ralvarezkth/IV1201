@@ -1,11 +1,16 @@
 import React, { useRef, useState } from 'react';
 
-const RegisterView = ({setUser, handleRegistrationSubmit}) => {
+/**
+ * Handles the view, for the registration site
+ * @param handleRegistrationSubmit is a parent
+ * function for handling the submit event
+ * @returns the View for the registration site
+ */
+const RegisterView = ({handleRegistrationSubmit}) => {
     const [firstName, setFirstName] = useState('')
     const [lastName, setLastName] = useState('')
     const [email, setEmail] = useState('')
-    const [dob, setDob] = useState('')
-    //const [ssn, setSsn] = useState('')
+    const [dob, setDob] = useState('') //Date of birth
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
 
@@ -13,17 +18,15 @@ const RegisterView = ({setUser, handleRegistrationSubmit}) => {
         <div className="App">
             <h1>Registration</h1>
             <form onSubmit={(e)=> {
-                setUser({
+                let newUser = {
                     firstName: firstName,
                     lastName: lastName,
                     email: email,
                     dob:dob,
-                    //ssn:ssn,
                     username: username,
                     password: password
-                }, () => {
-                        handleRegistrationSubmit(e)
-                });
+                };
+                handleRegistrationSubmit(e, newUser)
 
             }} id="registration">
                 <div>

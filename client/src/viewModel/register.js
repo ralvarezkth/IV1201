@@ -26,7 +26,6 @@ class Register extends Component {
         //prevent the default - preventing the form from refreshing
         event.preventDefault();
 
-        try {
             const reqOp ={
                 method: 'POST',
                 body: JSON.stringify({newUser}),
@@ -43,13 +42,11 @@ class Register extends Component {
                             this.setState({success: false, msg: "Registration failed. " + data.error});
                         }  
                     }).catch(data => {
+                        // alert("Something went wrong! Couldn't create a new user")
                         this.setState({success: false, msg: "Registration failed. + data.error"});
                     });
                 });
-        } catch (error) {
-            alert("Something went wrong! Couldn't create a new user")
-            this.setState({success: false, msg: "Registration failed. Please try again."});
-        }
+            
     }
 
     render() {

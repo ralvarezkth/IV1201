@@ -50,9 +50,11 @@ class UserDAO {
         } catch (error) {
             throw new WError(
                 {
+                    name: 'DatabaseAuthSyncError',
                     cause: error,
                     info: {
-                        UserDAO: 'The call to authenticate and sync has failed.'
+                        UserDAO: 'The call to authenticate and sync has failed.',
+                        message: 'Technical issues, please try again later.'
                     }
                 },
                 'Could not connect to the database.'
@@ -66,9 +68,11 @@ class UserDAO {
         } catch (error) {
             throw new WError(
                 {
+                    name: 'CreatePersonFailedError',
                     cause: error,
                     info: {
-                        UserDAO: 'The call to create has failed.'
+                        UserDAO: 'The call to create has failed.',
+                        message: 'Technical issues, please try again later.'
                     }
                 },
                 `Could not create person ${JSON.stringify(person)}.`
@@ -82,9 +86,11 @@ class UserDAO {
         } catch (error) {
             throw new WError(
                 {
+                    name: 'CreateApplicantFailedError',
                     cause: error,
                     info: {
-                        UserDAO: 'The call to create has failed.'
+                        UserDAO: 'The call to create has failed.',
+                        message: 'Technical issues, please try again later.'
                     }
                 },
                 `Could not create applicant ${JSON.stringify(applicant)}.`
@@ -101,7 +107,7 @@ class UserDAO {
      */
     async setUser(user) {
         try {
-            let reason = "";
+            let reason = [];
             let keys = Object.keys(user);
             keys.splice(keys.indexOf("id"), 1);
 
@@ -117,11 +123,11 @@ class UserDAO {
             });
 
             if (!Validator.matches(user.firstName, /^[a-zA-Z\\s\-]+$/) || !Validator.matches(user.lastName, /^[a-zA-Z\\s\-]+$/)) {
-                reason = "Invalid name format; alphabetic characters as well as space and dash allowed.";
+                reason.push("Invalid name format; alphabetic characters as well as space and dash allowed.");
             }
 
             if (!Validator.isEmail(user.email)) {
-                reason = "Invalid email format; address@domain.com etc.";
+                reason.push("Invalid email format; address@domain.com etc.");
             }
             user.email = Validator.normalizeEmail(user.email,
                 {all_lowercase: true, gmail_remove_dots: true, gmail_remove_subaddress: true,
@@ -129,15 +135,22 @@ class UserDAO {
                 yahoo_remove_subaddress: true, icloud_remove_subaddress: true});
 
             if (!Validator.isStrongPassword(user.password, {minLength: 6, minNumbers: 1, minUppercase: 0, minSymbols: 0})) {
-                reason = "Invalid password; minimum length 6 characters with at least one numeric character.";
+                reason.push("Invalid password; minimum length 6 characters with at least one numeric character.");
             }
 
             if (!Validator.matches(user.dob, /^[0-9]{2}[0-1]((?<=0)[1-9]|(?<=1)[0-2])((?<!02)[0-3]|(?<=02)[0-2])((?<=[0-2])[0-9]|(?<=(013|033|053|073|083|103|123))[0-1]|(?<!(013|033|053|073|083|103|123))0)$/)) {
-                reason = "Invalid date.";
+                reason.push("Invalid date.");
             }
 
-            if (reason) {
-                throw new WError({name: "DataValidationError", info: {message: reason}});
+            if (reason.length) {
+                let fullReason = "";
+
+                reason.forEach(reas => {
+                    fullReason += reas + " ";
+                });
+                fullReason = fullReason.slice(0, fullReason.length - 1);
+
+                throw new WError({name: "DataValidationError", info: {message: fullReason}});
             }
             const { _id, firstName, lastName, username, password, email, dob } = user;
             const createdPerson = await this.setPerson(new PersonDTO(null, firstName, lastName, username, password));

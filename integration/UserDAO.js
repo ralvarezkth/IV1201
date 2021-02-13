@@ -101,13 +101,12 @@ class UserDAO {
      */
     async setUser(user) {
         try {
-            let valid = true;
+            let reason = "";
             let keys = Object.keys(user);
             keys.splice(keys.indexOf("id"), 1);
 
             keys.forEach(key => {
                 if (Validator.isEmpty(user[key])) {
-                    console.log("empty")
                     valid = false;
                 }
 
@@ -117,12 +116,12 @@ class UserDAO {
                 user[key] = Validator.stripLow(user[key])
             });
 
-            if (!Validator.matches(user.firstName, /[a-zA-Z\\s\-]+/) || !Validator.matches(user.lastName, /[a-zA-Z\\s\-]+/)) {
-                valid = false;
+            if (!Validator.matches(user.firstName, /^[a-zA-Z\\s\-]+$/) || !Validator.matches(user.lastName, /^[a-zA-Z\\s\-]+$/)) {
+                reason = "Invalid name format; alphabetic characters as well as space and dash allowed.";
             }
 
             if (!Validator.isEmail(user.email)) {
-                valid = false;
+                reason = "Invalid email format; address@domain.com etc.";
             }
             user.email = Validator.normalizeEmail(user.email,
                 {all_lowercase: true, gmail_remove_dots: true, gmail_remove_subaddress: true,
@@ -130,15 +129,15 @@ class UserDAO {
                 yahoo_remove_subaddress: true, icloud_remove_subaddress: true});
 
             if (!Validator.isStrongPassword(user.password, {minLength: 6, minNumbers: 1, minUppercase: 0, minSymbols: 0})) {
-                valid = false;
+                reason = "Invalid password; minimum length 6 characters with at least one numeric character.";
             }
 
             if (!Validator.matches(user.dob, /^[0-9]{2}[0-1]((?<=0)[1-9]|(?<=1)[0-2])((?<!02)[0-3]|(?<=02)[0-2])((?<=[0-2])[0-9]|(?<=(013|033|053|073|083|103|123))[0-1]|(?<!(013|033|053|073|083|103|123))0)$/)) {
-                valid = false;
+                reason = "Invalid date.";
             }
 
-            if (!valid) {
-                throw new Error("Data validation failed.");
+            if (reason) {
+                throw new WError({name: "DataValidationError", info: {message: reason}});
             }
             const { _id, firstName, lastName, username, password, email, dob } = user;
             const createdPerson = await this.setPerson(new PersonDTO(null, firstName, lastName, username, password));
@@ -160,11 +159,12 @@ class UserDAO {
                 {
                     cause: error,
                     info: {
-                        UserDAO: 'Data validation failed.'
+                        UserDAO: error.name
                     }
                 },
                 `Could not create user ${JSON.stringify(user)}.`
             );
+       //     throw error;
         }
     }
 

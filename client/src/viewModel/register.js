@@ -26,8 +26,6 @@ class Register extends Component {
         //prevent the default - preventing the form from refreshing
         event.preventDefault();
 
-        let that = this;
-
         try {
             const reqOp ={
                 method: 'POST',
@@ -37,11 +35,16 @@ class Register extends Component {
             fetch('/register', reqOp )
                 .then(response => {
                     let json = response.json();
-                    json.then(data => {
-                        this.setState({success: true, msg: "Hello " + data.firstName + "! Registration successful. Would you care for some pancakes? Richard's treat."});
-                    })
-                    
 
+                    json.then(data => {
+                        if (response.status === 200) {
+                            this.setState({success: true, msg: "Hello " + data.firstName + "! Registration successful. Would you care for some pancakes? Richard's treat."});
+                        } else {
+                            this.setState({success: false, msg: "Registration failed. " + data.error});
+                        }  
+                    }).catch(data => {
+                        this.setState({success: false, msg: "Registration failed. + data.error"});
+                    });
                 });
         } catch (error) {
             alert("Something went wrong! Couldn't create a new user")

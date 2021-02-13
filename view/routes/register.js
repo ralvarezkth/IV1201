@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+const {VError} = require('verror')
 const {UserCtrl} = require('../../controller');
 const UserDTO = require('../../model/dto/UserDTO');
 
@@ -12,9 +13,12 @@ router.post('/', function(req, res, next) {
     
     try {
         createUser(userDTO)
-            .then(dat => res.json(dat));
+            .then(dat => res.json(dat))
+            .catch(err => {
+                res.status(500).json({error: VError.info(err).message});
+            });
     } catch (err) {
-        res.status(500).json({error: "No can do."});
+        res.status(500).json({error: "Please try again later."});
     }
 });
 

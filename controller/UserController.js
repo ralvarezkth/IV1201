@@ -20,7 +20,7 @@ class UserController {
      * @returns {UserDTO} createdUser The created user.
      * @throws Throws an exception if unable to create the specified user.
      */
-    async setUser(user) {
+    async setUser(user) {   
         return await this.userDAO.setUser(user);
     }
 

@@ -68,7 +68,6 @@ class UserDAO {
                 return await Person.create(person, {transaction: t});
             });
         } catch (error) {
-            console.log(error);
             throw new WError(
                 {
                     name: 'CreatePersonFailedError',
@@ -89,7 +88,6 @@ class UserDAO {
                 return await Applicant.create(applicant, {include: Person, transaction: t});
             });
         } catch (error) {
-            console.log(error);
             throw new WError(
                 {
                     name: 'CreateApplicantFailedError',

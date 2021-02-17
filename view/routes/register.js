@@ -6,10 +6,9 @@ const UserDTO = require('../../model/dto/UserDTO');
 
 /* POST registration. */
 router.post('/', function(req, res, next) {
-    let data = req.body.newUser;
-    let dob = data.dob.slice(2, 4) + data.dob.slice(5, 7) + data.dob.slice(8);
+    let user = req.body.newUser;
 
-    let userDTO = new UserDTO(null, data.firstName, data.lastName, data.username, data.password, data.email, dob);
+    let userDTO = new UserDTO(null, user.firstName, user.lastName, user.username, user.password, user.email, user.ssn);
 
     createUser(userDTO)
         .then(dat => res.json(dat))

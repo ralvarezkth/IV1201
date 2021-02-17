@@ -24,7 +24,7 @@ class Applicant extends Model {
                 type: DataTypes.STRING, 
                 allowNull: false
             },
-            dob: {
+            ssn: {
                 type: DataTypes.STRING, 
                 allowNull: false
             }

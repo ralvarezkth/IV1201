@@ -113,7 +113,7 @@ class UserDAO {
 
             keys.forEach(key => {
                 if (Validator.isEmpty(user[key])) {
-                    valid = false;
+                    valid = false; // TODO: is this variable still used?
                 }
 
                 user[key] = Validator.escape(user[key])
@@ -138,8 +138,8 @@ class UserDAO {
                 reason.push("Invalid password; minimum length 6 characters with at least one numeric character.");
             }
 
-            if (!Validator.matches(user.dob, /^[0-9]{2}[0-1]((?<=0)[1-9]|(?<=1)[0-2])((?<!02)[0-3]|(?<=02)[0-2])((?<=[0-2])[0-9]|(?<=(013|033|053|073|083|103|123))[0-1]|(?<!(013|033|053|073|083|103|123))0)$/)) {
-                reason.push("Invalid date.");
+            if (!Validator.matches(user.ssn, /^[0-9]{2}[0-1]((?<=0)[1-9]|(?<=1)[0-2])((?<!02)[0-3]|(?<=02)[0-2])((?<=[0-2])[0-9]|(?<=(013|033|053|073|083|103|123))[0-1]|(?<!(013|033|053|073|083|103|123))0)-[0-9]{4}$/)) {
+                reason.push("Invalid social security number.");
             }
 
             if (reason.length) {
@@ -152,10 +152,10 @@ class UserDAO {
 
                 throw new WError({name: "DataValidationError", info: {message: fullReason}});
             }
-            const { _id, firstName, lastName, username, password, email, dob } = user;
+            const { _id, firstName, lastName, username, password, email, ssn } = user;
             const createdPerson = await this.setPerson(new PersonDTO(null, firstName, lastName, username, password));
             const createdApplicant = await this.setApplicant(
-                new ApplicantDTO(createdPerson.id, email, dob), 
+                new ApplicantDTO(createdPerson.id, email, ssn), 
                 {include: Person}
             );
             return new UserDTO(
@@ -165,7 +165,7 @@ class UserDAO {
                 createdPerson.username, 
                 createdPerson.password, 
                 createdApplicant.email, 
-                createdApplicant.dob
+                createdApplicant.ssn
             );
         } catch (error) {
             throw new WError(

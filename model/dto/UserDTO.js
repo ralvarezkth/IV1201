@@ -13,16 +13,16 @@ class UserDTO {
      * @param {string} username The username of the user.
      * @param {string} password The password of the user.
      * @param {string} email The email address of the user.
-     * @param {string} dob The date of birth of the user. 
+     * @param {string} ssn The social security number of the user. 
      */
-    constructor(id, firstName, lastName, username, password, email, dob) {
+    constructor(id, firstName, lastName, username, password, email, ssn) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.username = username;
         this.password = password;
         this.email = email;
-        this.dob = dob;
+        this.ssn = ssn;
     }
 }
 

@@ -45,7 +45,7 @@ const RegisterView = ({handleRegistrationSubmit, state}) => {
                 </div>
 
                 <div>
-                    <input type="numbers" onChange={(event)=>setSsn(event.target.value)} id="socialSecurityNumber" placeholder="Social security number YYMMDD-XXXX"
+                    <input type="numbers" onChange={(event)=>setSsn(event.target.value)} id="socialSecurityNumber" placeholder="YYMMDD-XXXX"
                            pattern="[0-9]{2}[0-1]((?<=0)[1-9]|(?<=1)[0-2])((?<!02)[0-3]|(?<=02)[0-2])((?<=[0-2])[0-9]|(?<=(013|033|053|073|083|103|123))[0-1]|(?<!(013|033|053|073|083|103|123))0)-[0-9]{4}"
                            title="Social security number" required/>
                 </div>

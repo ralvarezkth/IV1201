@@ -64,8 +64,11 @@ class UserDAO {
 
     async setPerson(person) {
         try {
-            return await Person.create(person);
+            return await this.database.transaction(async (t) => {
+                return await Person.create(person, {transaction: t});
+            });
         } catch (error) {
+            console.log(error);
             throw new WError(
                 {
                     name: 'CreatePersonFailedError',
@@ -80,10 +83,13 @@ class UserDAO {
         }
     }
 
-    async setApplicant(applicant, options) {
-        try { 
-            return await Applicant.create(applicant, options);
+    async setApplicant(applicant) {
+        try {
+            return await this.database.transaction(async (t) => {
+                return await Applicant.create(applicant, {include: Person, transaction: t});
+            });
         } catch (error) {
+            console.log(error);
             throw new WError(
                 {
                     name: 'CreateApplicantFailedError',
@@ -154,10 +160,7 @@ class UserDAO {
             }
             const { _id, firstName, lastName, username, password, email, ssn } = user;
             const createdPerson = await this.setPerson(new PersonDTO(null, firstName, lastName, username, password));
-            const createdApplicant = await this.setApplicant(
-                new ApplicantDTO(createdPerson.id, email, ssn), 
-                {include: Person}
-            );
+            const createdApplicant = await this.setApplicant(new ApplicantDTO(createdPerson.id, email, ssn));
             return new UserDTO(
                 createdPerson.id, 
                 createdPerson.firstName, 

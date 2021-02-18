@@ -25,7 +25,12 @@ class UserDAO {
     constructor() {
         process.env.DATABASE_URL ? 
         this.database = new Sequelize(process.env.DATABASE_URL, {
-            dialectOptions: { ssl: true }
+            dialectOptions: {
+                ssl: {
+                    require: true,
+                    rejectUnauthorized: false
+                }
+            }
         }) 
         :
         this.database = new Sequelize('dbtest', 'postgres', 'admin', {

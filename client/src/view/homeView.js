@@ -7,7 +7,7 @@ const HomeView = () => {
             <h1>Recruitment application</h1>
 
             <div>
-                <Link to="/login">Login with existing account</Link><br>
+                <Link to="/login">Login with existing account</Link><br/>
                 <Link to="/register">Create new account</Link>
             </div>
 

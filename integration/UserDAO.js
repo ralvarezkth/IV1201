@@ -124,7 +124,7 @@ class UserDAO {
 
             keys.forEach(key => {
                 if (Validator.isEmpty(user[key])) {
-                    valid = false; // TODO: is this variable still used?
+                    let valid = false; // TODO: is this variable still used?
                 }
 
                 user[key] = Validator.escape(user[key])

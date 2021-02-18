@@ -52,6 +52,7 @@ class UserDAO {
             await this.database.authenticate();
             await this.database.sync();
         } catch (error) {
+            console.log(error);
             throw new WError(
                 {
                     name: 'DatabaseAuthSyncError',
@@ -72,6 +73,7 @@ class UserDAO {
                 return await Person.create(person, {transaction: t});
             });
         } catch (error) {
+            console.log(error);
             throw new WError(
                 {
                     name: 'CreatePersonFailedError',
@@ -92,6 +94,7 @@ class UserDAO {
                 return await Applicant.create(applicant, {include: Person, transaction: t});
             });
         } catch (error) {
+            console.log(error);
             throw new WError(
                 {
                     name: 'CreateApplicantFailedError',
@@ -173,6 +176,7 @@ class UserDAO {
                 createdApplicant.ssn
             );
         } catch (error) {
+            console.log(error);
             throw new WError(
                 {
                     cause: error,

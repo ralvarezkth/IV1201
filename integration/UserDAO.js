@@ -30,12 +30,10 @@ class UserDAO {
                 freezeTableName: true
             },
             dialectOptions: {
-                
                 ssl: {
                     require: true,
                     rejectUnauthorized: false
                 }
-                
             }
         }) 
         :

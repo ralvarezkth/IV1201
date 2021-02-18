@@ -25,8 +25,12 @@ class UserDAO {
     constructor() {
         process.env.DATABASE_URL ? 
         this.database = new Sequelize(process.env.DATABASE_URL, {
+            dialect: 'postgres',
+            define: {
+                freezeTableName: true
+            },
             dialectOptions: {
-                define: { freezeTableName: true },
+                
                 ssl: {
                     require: true,
                     rejectUnauthorized: false

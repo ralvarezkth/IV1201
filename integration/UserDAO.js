@@ -15,12 +15,16 @@ const { WError } = require('verror');
 class UserDAO {
 
     /**
-     * Creates a new instance of this class and initializes the database connection.
+     * Creates a new instance of this class and initializes the database connection
+     * using the environment variable DATABASE_URL, or using the default credentials 
+     * for a local database.
      * Initialization creates the model entities and the required database tables 
      * if they are non-existent. 
      * @throws Throws an exception if unable to connect to the database.
      */
     constructor() {
+        process.env.DATABASE_URL ? 
+        this.database = new Sequelize(process.env.DATABASE_URL) :
         this.database = new Sequelize('dbtest', 'postgres', 'admin', {
             host: 'localhost',
             port: '5432',

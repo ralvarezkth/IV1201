@@ -29,7 +29,8 @@ class UserDAO {
                 ssl: {
                     require: true,
                     rejectUnauthorized: false
-                }
+                },
+                define: { freezeTableName: true }
             }
         }) 
         :

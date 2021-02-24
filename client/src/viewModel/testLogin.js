@@ -6,9 +6,15 @@ class TestLogin extends Component{
         super(props);
     }
     handleLogin(event, loginRequest){
+        //prevent the default - preventing the page from refreshing
         event.preventDefault();
-        console.log("username: " + loginRequest.username)
-        console.log("password: " + loginRequest.password)
+
+       const username= loginRequest.username;
+       const password = loginRequest.password;
+
+       fetch('/login')
+            .then(res => res.json())
+
     }
     render(){
         return(

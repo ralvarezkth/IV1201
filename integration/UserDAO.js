@@ -181,6 +181,24 @@ class UserDAO {
        //     throw error;
         }
     }
+    async getUser(username,password){
+        try{
+            return await this.database.transaction(async (t) => {
+                const user = await Person.findOne({ where: {username}})
+                console.log(user.password, password);
+                console.log(user.password == password);
+
+                //if(){
+                    //return user
+                //}else{throw new Error('invalid password');}
+
+                //return await Applicant.create(applicant, {include: Person, transaction: t});
+                //return await Person.create(person, {transaction: t});
+            });
+        }catch(error){
+
+        }
+    }
 
 }
 module.exports = UserDAO;

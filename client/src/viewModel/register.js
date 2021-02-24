@@ -5,7 +5,6 @@ import React, { Component } from 'react';
  * Component Register that takes care of the Registration site
  */
 class Register extends Component {
-
     constructor(props) {
         super(props);
 

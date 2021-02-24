@@ -1,9 +1,26 @@
-var express = require('express');
-var router = express.Router();
+function authUser(req, res, next){
+    if(req.user == null){
+        res.status(401)
+        return res.send("You need to sign in.")
+    }
+    next()
+}
 
-/*  */
-router.get('/', function(req, res, next) {
+function authRole(roleName){
+    const role = roleName.toLowerCase();
+    //TODO try get user by id in table for "role"
+    if(req.user == null){
+        res.status(403)
+        return res.send("You do not seem to have the ")
+    }
+    next()
+}
 
-});
+//to veryfy a token
+function verifyToken(req,res, next){
 
-module.exports = router;
+}
+
+module.exports = {
+    authUser, authRole
+};

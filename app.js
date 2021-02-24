@@ -10,7 +10,8 @@ const {authUser} = require('./view/routes/authentication')
 const indexRouter = require('./view/routes/index');
 const usersRouter = require('./view/routes/users');
 const registerRouter = require('./view/routes/register');
-const loginRouter = require('')
+const loginRouter = require('./view/routes/login');
+const UserController = require('./controller/UserController');
 
 const app = express();
 
@@ -30,7 +31,7 @@ app.use(express.static(path.join(__dirname, 'client/build')));
 app.use('/', authUser, indexRouter);
 app.use('/users', authUser, usersRouter);
 app.use('/register', registerRouter);
-app.use('/login', loginRouter)
+app.use('/login', authUser, loginRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -47,5 +48,11 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
+/*
+const userController = new UserController();
+const user = userController.getUser("rich", "pass12345");
+console.log("hämtad user: " + user.firstName);
+*/
 
 module.exports = app;

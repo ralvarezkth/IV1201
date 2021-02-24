@@ -11,9 +11,15 @@ class TestLogin extends Component{
 
        const username= loginRequest.username;
        const password = loginRequest.password;
+    
 
-       fetch('/login')
+       fetch(`/login?username=${username}&password=${password}`)
             .then(res => res.json())
+            .then((data) => {
+                return data;
+                // -> auth though athentication.js (?) ->
+
+            })
 
     }
     render(){

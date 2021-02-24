@@ -181,12 +181,42 @@ class UserDAO {
        //     throw error;
         }
     }
+
     async getUser(username,password){
+        
         try{
-            return await this.database.transaction(async (t) => {
-                const user = await Person.findOne({ where: {username}})
+            return await this.database(async (t) => {
+                console.log("khello would you zome vodka");
+                const user = await Person.findAll();
+                
                 console.log(user.password, password);
                 console.log(user.password == password);
+
+                return user;
+
+
+                //if(){
+                    //return user
+                //}else{throw new Error('invalid password');}
+
+                //return await Applicant.create(applicant, {include: Person, transaction: t});
+                //return await Person.create(person, {transaction: t});
+            });
+        }catch(error){
+
+        }
+    }
+
+    async getUser2(username,password){
+        
+        try{
+            return await this.database.transaction(async (t) => {
+                const user = await Person.findOne({ where: {id: "2", transaction: t}});
+                console.log(user.password, password);
+                console.log(user.password == password);
+
+                return user;
+
 
                 //if(){
                     //return user

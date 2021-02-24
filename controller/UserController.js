@@ -24,5 +24,9 @@ class UserController {
         return await this.userDAO.setUser(user);
     }
 
+    async getUser(username,password) {   
+        return await this.userDAO.getUser(username,password);
+    }
+
 }
 module.exports = UserController;

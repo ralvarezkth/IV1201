@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 const {VError} = require('verror')
 const {UserCtrl} = require('../../controller');
-const UserDTO = require('../../model/dto/UserDTO');
+const UserDTO = require('../../model/dto/userDTO');
 
 /* POST registration. */
 router.post('/', function(req, res, next) {

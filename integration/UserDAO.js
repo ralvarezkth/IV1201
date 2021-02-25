@@ -7,6 +7,7 @@ const PersonDTO = require('../model/dto/PersonDTO');
 const Applicant = require('../model/entity/Applicant');
 const ApplicantDTO = require('../model/dto/ApplicantDTO');
 const UserDTO = require('../model/dto/UserDTO');
+const Logger = require('../util/Logger');
 const { WError } = require('verror');
 
 /**
@@ -46,7 +47,7 @@ class UserDAO {
             }
         });
         this.initialize();
-        
+        this.logger = new Logger();
     }
 
     async initialize() {
@@ -82,7 +83,9 @@ class UserDAO {
     async setPerson(person) {
         try {
             return await this.database.transaction(async (t) => {
-                return await Person.create(person, {transaction: t});
+                const createdPerson = await Person.create(person, {transaction: t});
+                this.logger.log(`created Person: ${JSON.stringify(createdPerson)}`);
+                return createdPerson;
             });
         } catch (error) {
             console.log(error);
@@ -103,7 +106,9 @@ class UserDAO {
     async setApplicant(applicant) {
         try {
             return await this.database.transaction(async (t) => {
-                return await Applicant.create(applicant, {include: Person, transaction: t});
+                const createdApplicant = await Applicant.create(applicant, {include: Person, transaction: t});
+                this.logger.log(`created Applicant: ${JSON.stringify(createdApplicant)}`);
+                return createdApplicant;
             });
         } catch (error) {
             console.log(error);

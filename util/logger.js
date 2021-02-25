@@ -18,7 +18,7 @@ class Logger {
         this.logger = new Sequelize(process.env.HEROKU_POSTGRESQL_BRONZE_URL, {
             dialect: 'postgres',
             define: {
-                freezeTableName: table
+                freezeTableName: true
             },
             dialectOptions: {
                 ssl: {

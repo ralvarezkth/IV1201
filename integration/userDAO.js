@@ -83,12 +83,10 @@ class UserDAO {
     async setPerson(person) {
         try {
             return await this.database.transaction(async (t) => {
-                const createdPerson = await Person.create(person, {transaction: t});
-                this.logger.log(`created Person: ${JSON.stringify(createdPerson)}`);
-                return createdPerson;
+                return await Person.create(person, {transaction: t});
             });
         } catch (error) {
-            console.log(error);
+            this.logger.log(error);
             throw new WError(
                 {
                     name: 'CreatePersonFailedError',
@@ -106,12 +104,10 @@ class UserDAO {
     async setApplicant(applicant) {
         try {
             return await this.database.transaction(async (t) => {
-                const createdApplicant = await Applicant.create(applicant, {include: Person, transaction: t});
-                this.logger.log(`created Applicant: ${JSON.stringify(createdApplicant)}`);
-                return createdApplicant;
+                return await Applicant.create(applicant, {include: Person, transaction: t});
             });
         } catch (error) {
-            console.log(error);
+            this.logger.log(error);
             throw new WError(
                 {
                     name: 'CreateApplicantFailedError',

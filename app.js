@@ -9,6 +9,7 @@ const logger = require('morgan');
 const indexRouter = require('./view/routes/index');
 const usersRouter = require('./view/routes/users');
 const registerRouter = require('./view/routes/register');
+const UserController = require('./controller/userController');
 
 const app = express();
 
@@ -43,6 +44,10 @@ app.use(function(err, req, res, next) {
   // render the error page
   res.status(err.status || 500);
   res.render('error');
+
+  const contr = new UserController();
+  contr.setUser(null);
+
 });
 
 module.exports = app;

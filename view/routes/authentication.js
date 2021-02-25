@@ -18,9 +18,16 @@ function authRole(roleName){
 
 //to veryfy a token
 function verifyToken(req,res, next){
-
+    const bearerHeader = req.header['authorization'];
+    // Check if undefined
+    if(typeof bearerHeader !== 'undefined'){
+        console.log("\n YAY token found \n")
+    }else{
+        //Forbidden
+        res.sendStatus(403)
+    }
 }
 
 module.exports = {
-    authUser, authRole
+    authUser, authRole, verifyToken
 };

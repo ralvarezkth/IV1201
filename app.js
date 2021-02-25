@@ -5,7 +5,7 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
-const {authUser} = require('./view/routes/authentication')
+const {authUser, verifyToken} = require('./view/routes/authentication')
 
 const indexRouter = require('./view/routes/index');
 const usersRouter = require('./view/routes/users');
@@ -32,6 +32,7 @@ app.use(express.static(path.join(__dirname, 'client/build')));
 //app.use('/users', authUser, usersRouter);
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/users', verifyToken, usersRouter);
 app.use('/register', registerRouter);
 app.use('/login', loginRouter);
 

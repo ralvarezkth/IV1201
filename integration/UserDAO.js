@@ -183,50 +183,27 @@ class UserDAO {
     }
 
     async getUser(username,password){
-        
-        try{
-            return await this.database(async (t) => {
-                console.log("khello would you zome vodka");
-                const user = await Person.findAll();
-                
-                console.log(user.password, password);
-                console.log(user.password == password);
-
-                return user;
-
-
-                //if(){
-                    //return user
-                //}else{throw new Error('invalid password');}
-
-                //return await Applicant.create(applicant, {include: Person, transaction: t});
-                //return await Person.create(person, {transaction: t});
-            });
-        }catch(error){
-
-        }
-    }
-
-    async getUser2(username,password){
-        
         try{
             return await this.database.transaction(async (t) => {
-                const user = await Person.findOne({ where: {id: "2", transaction: t}});
-                console.log(user.password, password);
-                console.log(user.password == password);
-
-                return user;
-
-
-                //if(){
-                    //return user
-                //}else{throw new Error('invalid password');}
-
-                //return await Applicant.create(applicant, {include: Person, transaction: t});
-                //return await Person.create(person, {transaction: t});
+                const user = await Person.findOne({ where: {username}, transaction: t} );
+                
+                if(user.password === password) {
+                    return user;
+                }
+                throw new Error('Invalid password');
             });
         }catch(error){
-
+            throw new WError(
+                {
+                    name: 'GetPersonFailedError',
+                    cause: error,
+                    info: {
+                        UserDAO: 'Invalid password.',
+                        message: 'Provided username and password do not match.'
+                    }
+                },
+                `Could not get user with username: ${username}.`
+            );
         }
     }
 

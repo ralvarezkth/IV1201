@@ -28,10 +28,12 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Serve static files from the React app
 app.use(express.static(path.join(__dirname, 'client/build')));
 
-app.use('/', authUser, indexRouter);
-app.use('/users', authUser, usersRouter);
+//app.use('/', authUser, indexRouter);
+//app.use('/users', authUser, usersRouter);
+app.use('/', indexRouter);
+app.use('/users', usersRouter);
 app.use('/register', registerRouter);
-app.use('/login', authUser, loginRouter);
+app.use('/login', loginRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -51,8 +53,16 @@ app.use(function(err, req, res, next) {
 
 /*
 const userController = new UserController();
-const user = userController.getUser("rich", "pass12345");
-console.log("hämtad user: " + user.firstName);
+
+setTimeout(() => {
+  getUser();
+}, 3000);
+
+async function getUser() {
+  const user = await userController.getUser("richfa", "pass12345");
+  console.log(user.firstName);
+}
 */
+
 
 module.exports = app;

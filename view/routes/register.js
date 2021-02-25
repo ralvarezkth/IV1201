@@ -18,8 +18,7 @@ router.post('/', function(req, res, next) {
 });
 
 async function createUser(user) {
-    const createdUser = await UserCtrl.setUser(user);
-    return createdUser;
+    return await UserCtrl.setUser(user);
 }
 
 module.exports = router;

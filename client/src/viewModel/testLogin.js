@@ -16,8 +16,7 @@ class TestLogin extends Component{
        fetch(`/login?username=${username}&password=${password}`)
             .then(res => res.json())
             .then((data) => {
-                return data;
-                // -> auth though athentication.js (?) ->
+               console.log(data); // do something with the user (data)
 
             })
 

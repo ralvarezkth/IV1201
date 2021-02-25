@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 const VError = require("verror");
-const LogEntry = require("../model/entity/LogEntry");
-const LogEntryDTO = require("../model/dto/LogEntryDTO");
+const LogEntry = require("../model/entity/logEntry");
+const LogEntryDTO = require("../model/dto/logEntryDTO");
 
 class Logger {
 

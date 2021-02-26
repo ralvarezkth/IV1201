@@ -5,7 +5,6 @@
 -- Dumped from database version 13.1
 -- Dumped by pg_dump version 13.1
 \c recruit
-
 SET statement_timeout = 0;
 SET lock_timeout = 0;
 SET idle_in_transaction_session_timeout = 0;
@@ -28,7 +27,8 @@ SET default_table_access_method = heap;
 CREATE TABLE public.applicant (
     person_id integer NOT NULL,
     email text NOT NULL,
-    ssn text NOT NULL
+    ssn text NOT NULL,
+    dob text NOT NULL
 );
 
 
@@ -438,7 +438,7 @@ ALTER TABLE ONLY public.status ALTER COLUMN id SET DEFAULT nextval('public.statu
 -- Data for Name: applicant; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.applicant (person_id, email, ssn) FROM stdin;
+COPY public.applicant (person_id, email, ssn, dob) FROM stdin;
 \.
 
 

@@ -1,7 +1,7 @@
 import LoginView from '../view/loginView'
 import React, { Component } from 'react';
 
-class Login extends Component{
+class LoginVM extends Component{
     constructor(props) {
         super(props);
 
@@ -54,9 +54,10 @@ class Login extends Component{
     render(){
         return(
             React.createElement(LoginView, {
-                handleLogin: this.handleLogin
+                handleLogin: this.handleLogin,
+                state: this.state
             })
-        )
+        );
     }
 }
-export default Login;
+export default LoginVM;

@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 /**
  * Component Register that takes care of the Registration site
  */
-class Register extends Component {
+class RegisterVM extends Component {
     constructor(props) {
         super(props);
 
@@ -49,10 +49,10 @@ class Register extends Component {
 
     render() {
         return(
-            React.createElement(RegisterView,{
+            React.createElement(RegisterView, {
                 handleRegistrationSubmit: this.handleRegistrationSubmit,
                 state: this.state
             })
-        )
+        );
     }
-}export default Register;
+}export default RegisterVM;

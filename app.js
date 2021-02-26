@@ -11,7 +11,7 @@ const indexRouter = require('./view/routes/indexRouter');
 const applyRouter = require('./view/routes/applyRouter');
 const registerRouter = require('./view/routes/registerRouter');
 const loginRouter = require('./view/routes/loginRouter');
-const UserController = require('./controller/UserController');
+const UserController = require('./controller/userController');
 
 const app = express();
 

@@ -18,25 +18,25 @@ const LoginView = ({handleLogin, state}) => {
                     {state.msg}
                 </div>
             }
-            {state != null && state.success != true &&
-                <form onSubmit={(e)=> {
-                        let loginRequest = {
-                            username: username,
-                            password: password
-                        };
-                        handleLogin(e, loginRequest)
-                    }}>
-                    <div>
-                        <input type="text" onChange={(event)=>setUsername(event.target.value)} id="username" placeholder="Username" required/>
-                    </div>
-                    <div>
-                        <input type="password" onChange={(event)=>setPassword(event.target.value)}  id="password" placeholder="Password" required/>
-                    </div>
-                    <div>
-                        <button type="submit" id="send">Log in</button>
-                    </div>
-                </form>
-            }
+            
+            <form onSubmit={(e)=> {
+                    let loginRequest = {
+                        username: username,
+                        password: password
+                    };
+                    handleLogin(e, loginRequest)
+                }}>
+                <div>
+                    <input type="text" onChange={(event)=>setUsername(event.target.value)} id="username" placeholder="Username" required/>
+                </div>
+                <div>
+                    <input type="password" onChange={(event)=>setPassword(event.target.value)}  id="password" placeholder="Password" required/>
+                </div>
+                <div>
+                    <button type="submit" id="send">Log in</button>
+                </div>
+            </form>
+            
         </div>
     )
 }

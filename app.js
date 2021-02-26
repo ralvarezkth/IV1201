@@ -7,10 +7,10 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 //const {authUser, verifyToken} = require('./view/routes/authentication');
 
-const indexRouter = require('./view/routes/indexRouter');
-const applyRouter = require('./view/routes/applyRouter');
-const registerRouter = require('./view/routes/registerRouter');
-const loginRouter = require('./view/routes/loginRouter');
+const IndexRouter = require('./view/routes/indexRouter');
+const ApplyRouter = require('./view/routes/applyRouter');
+const RegisterRouter = require('./view/routes/registerRouter');
+const LoginRouter = require('./view/routes/loginRouter');
 const UserController = require('./controller/userController');
 
 const app = express();
@@ -28,10 +28,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Serve static files from the React app
 app.use(express.static(path.join(__dirname, 'client/build')));
 
-app.use('/', indexRouter);
-app.use('/register', registerRouter);
-app.use('/login', loginRouter);
-app.use('/apply', applyRouter);
+app.use('/', IndexRouter);
+app.use('/register', RegisterRouter);
+app.use('/login', LoginRouter);
+app.use('/apply', ApplyRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

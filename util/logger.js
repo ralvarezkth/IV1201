@@ -67,9 +67,8 @@ class Logger {
      * @returns {LogEntry} createdLogEntry The stored log entry.
      * @throws Throws an exception if unable to store the log entry
      */
-    async log(error) {
-        console.log(`LOGGING STACK: ${error.stack} AND MESSAGE: ${error.message}`);
-        /*
+    async log(event) {
+        
         try {
             return await this.logger.transaction(async (t) => {
                 return await LogEntry.create(new LogEntryDTO(null, event), {transaction: t});
@@ -87,7 +86,7 @@ class Logger {
                 },
                 `Could not create event: ${event}.`
             );
-        }*/
+        }
     }
 }
 module.exports = Logger;

@@ -15,7 +15,7 @@ function App() {
           <Route path="/" exact component={HomeVM} />
           <Route path="/register" exact component={RegisterVM} />
           <Route path="/login" component={LoginVM} />
-          <Route path="/apply" component={ApplyVM}/>
+          <Route path="/apply" component={ApplyVM} />
         </Switch>
     </Router>
   );

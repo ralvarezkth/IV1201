@@ -38,6 +38,7 @@ class RegisterVM extends Component {
                         if (res.status === 200) {
                             this.setState({success: true, msg: "Hello " + data.firstName + "! Registration successful. Would you care for some pancakes? Richard's treat."});
                         } else {
+                            console.log(data);
                             this.setState({success: false, msg: "Registration failed. " + data.error});
                         }  
                     }).catch(data => {

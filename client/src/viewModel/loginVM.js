@@ -24,17 +24,17 @@ class LoginVM extends Component{
 
        const username= loginRequest.username;
        const password = loginRequest.password;
-    
+
 
        fetch(`/login?username=${username}&password=${password}`)
             .then(res => {
                 let json = res.json();
-                
+
                 json.then((data) => {
                     if(res.status === 200) {
                         this.setState({
                             success: true, 
-                            msg: `Welcome back ${data.user.firstName}! Did you know that it's Fredrik's birthday today? Congratulations!!`
+                            msg: `Welcome back ${data.user.firstName}!`
                         });
                         sessionStorage.setItem("token", data.token);
                     } else {
@@ -50,6 +50,7 @@ class LoginVM extends Component{
                         });
                 });
             });
+
     }
     render(){
         return(
@@ -57,7 +58,7 @@ class LoginVM extends Component{
                 handleLogin: this.handleLogin,
                 state: this.state
             })
-        );
+        )
     }
 }
-export default LoginVM;
+export default LoginVM; 

@@ -4,13 +4,23 @@ import React, { useRef, useState } from 'react';
  * Handles the apply view
  * @returns the apply view.
  */
-const ApplyView = () => {
+const ApplyView = ({handleAccess, state}) => {
 
     return(
         <div className="App">
             <h1>Apply for a position</h1>
+
+            <form onSubmit={(e)=> { handleAccess(e)}}>
+                <button type="submit" id="send">Get application form</button>
+            </form>
             
-            <h3>Placeholder for the application form</h3>
+            {state != null && state.msg &&
+                <div className={state.success ? 'bg-green' : 'bg-red'}>
+                    {state.msg}
+                </div>
+            }
+
+
              
         </div>
     )

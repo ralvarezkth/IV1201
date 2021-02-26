@@ -86,7 +86,7 @@ class UserDAO {
                 return await Person.create(person, {transaction: t});
             });
         } catch (error) {
-            this.logger.log(error);
+            console.log(error);
             throw new WError(
                 {
                     name: 'CreatePersonFailedError',
@@ -107,7 +107,7 @@ class UserDAO {
                 return await Applicant.create(applicant, {include: Person, transaction: t});
             });
         } catch (error) {
-            this.logger.log(error);
+            console.log(error);
             throw new WError(
                 {
                     name: 'CreateApplicantFailedError',
@@ -137,7 +137,7 @@ class UserDAO {
 
             keys.forEach(key => {
                 if (Validator.isEmpty(user[key])) {
-                    let valid = false; // TODO: is this variable still used?
+                    let valid = false;
                 }
 
                 user[key] = Validator.escape(user[key])
@@ -189,7 +189,7 @@ class UserDAO {
                 createdApplicant.ssn
             );
         } catch (error) {
-            console.log(error);
+            this.logger.log(JSON.stringify(error));
             throw new WError(
                 {
                     cause: error,
@@ -199,10 +199,19 @@ class UserDAO {
                 },
                 `Could not create user ${JSON.stringify(user)}.`
             );
-       //     throw error;
         }
     }
 
+    /**
+     * Retrieves a user (Person) from the database by username and compares 
+     * its password with the provided password.
+     * 
+     * @param {string} username The username to find in the database. 
+     * @param {string} password The password to compare with
+     * @returns {Person} The found person.
+     * @throws an exeption if unable to retrieve Person or if the provided 
+     *         password is incorrect. 
+     */
     async getUser(username,password){
         try{
             return await this.database.transaction(async (t) => {

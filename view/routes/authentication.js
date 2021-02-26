@@ -1,3 +1,6 @@
+const { Unauthorized } = require('http-errors');
+const {VError} = require('verror');
+
 function authUser(req, res, next){
     if(req.user == null){
         res.status(401)
@@ -11,7 +14,7 @@ function authRole(roleName){
     //TODO try get user by id in table for "role"
     if(req.user == null){
         res.status(403)
-        return res.send("You do not seem to have the ")
+        return res.send("You do not seem to have the correct role");
     }
     next()
 }
@@ -25,7 +28,8 @@ function verifyToken(req, res, next) {
         req.token = bearerToken;
         next();
     } else {
-        res.status(401).json({error: VError.info(err).message});
+        //res.sendStatus(401);
+        res.status(401).json({error: "Unauthorized"});
     }
 }
 

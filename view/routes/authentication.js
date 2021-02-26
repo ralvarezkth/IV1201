@@ -28,7 +28,6 @@ function verifyToken(req, res, next) {
         req.token = bearerToken;
         next();
     } else {
-        //res.sendStatus(401);
         res.status(401).json({error: "Unauthorized"});
     }
 }

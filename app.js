@@ -5,13 +5,11 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
-//const {authUser, verifyToken} = require('./view/routes/authentication');
 
 const IndexRouter = require('./view/routes/indexRouter');
 const ApplyRouter = require('./view/routes/applyRouter');
 const RegisterRouter = require('./view/routes/registerRouter');
 const LoginRouter = require('./view/routes/loginRouter');
-const UserController = require('./controller/userController');
 
 const app = express();
 
@@ -47,9 +45,6 @@ app.use(function(err, req, res, next) {
   // render the error page
   res.status(err.status || 500);
   res.render('error');
-
-  const contr = new UserController();
-  contr.setUser(null);
 
 });
 

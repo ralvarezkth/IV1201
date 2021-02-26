@@ -74,7 +74,6 @@ class Logger {
                 return await LogEntry.create(new LogEntryDTO(null, event), {transaction: t});
             });
         } catch (error) {
-            console.log(error);
             throw new WError(
                 {
                     name: 'CreateLogFailedError',

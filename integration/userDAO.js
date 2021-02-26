@@ -223,6 +223,7 @@ class UserDAO {
                 throw new Error('Invalid password');
             });
         }catch(error){
+            this.logger.log(JSON.stringify(error));
             throw new WError(
                 {
                     name: 'GetPersonFailedError',

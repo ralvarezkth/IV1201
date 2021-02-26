@@ -2,11 +2,12 @@
 
 const Sequelize = require('sequelize');
 const Validator = require('validator');
-const Person = require('../model/entity/Person');
-const PersonDTO = require('../model/dto/PersonDTO');
-const Applicant = require('../model/entity/Applicant');
-const ApplicantDTO = require('../model/dto/ApplicantDTO');
-const UserDTO = require('../model/dto/UserDTO');
+const Person = require('../model/entity/person');
+const PersonDTO = require('../model/dto/personDTO');
+const Applicant = require('../model/entity/applicant');
+const ApplicantDTO = require('../model/dto/applicantDTO');
+const UserDTO = require('../model/dto/userDTO');
+const Logger = require('../util/logger');
 const { WError } = require('verror');
 
 /**
@@ -46,7 +47,7 @@ class UserDAO {
             }
         });
         this.initialize();
-        
+        this.logger = new Logger();
     }
 
     async initialize() {
@@ -85,7 +86,7 @@ class UserDAO {
                 return await Person.create(person, {transaction: t});
             });
         } catch (error) {
-            console.log(error);
+            this.logger.log(error);
             throw new WError(
                 {
                     name: 'CreatePersonFailedError',
@@ -106,7 +107,7 @@ class UserDAO {
                 return await Applicant.create(applicant, {include: Person, transaction: t});
             });
         } catch (error) {
-            console.log(error);
+            this.logger.log(error);
             throw new WError(
                 {
                     name: 'CreateApplicantFailedError',

@@ -1,6 +1,6 @@
 'use strict';
 
-const UserDAO = require('../integration/UserDAO');
+const UserDAO = require('../integration/userDAO');
 
 class UserController {
     

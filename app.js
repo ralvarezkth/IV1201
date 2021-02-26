@@ -5,12 +5,12 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
-const {authUser, verifyToken} = require('./view/routes/authentication')
+//const {authUser, verifyToken} = require('./view/routes/authentication');
 
-const indexRouter = require('./view/routes/index');
-const usersRouter = require('./view/routes/users');
-const registerRouter = require('./view/routes/register');
-const loginRouter = require('./view/routes/login');
+const indexRouter = require('./view/routes/indexRouter');
+const applyRouter = require('./view/routes/applyRouter');
+const registerRouter = require('./view/routes/registerRouter');
+const loginRouter = require('./view/routes/loginRouter');
 const UserController = require('./controller/UserController');
 
 const app = express();
@@ -28,13 +28,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Serve static files from the React app
 app.use(express.static(path.join(__dirname, 'client/build')));
 
-//app.use('/', authUser, indexRouter);
-//app.use('/users', authUser, usersRouter);
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
-app.use('/users', verifyToken, usersRouter);
 app.use('/register', registerRouter);
 app.use('/login', loginRouter);
+app.use('/apply', applyRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -51,19 +48,6 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
-
-/*
-const userController = new UserController();
-
-setTimeout(() => {
-  getUser();
-}, 3000);
-
-async function getUser() {
-  const user = await userController.getUser("richfa", "pass12345");
-  console.log(user.firstName);
-}
-*/
 
 
 module.exports = app;

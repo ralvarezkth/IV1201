@@ -9,13 +9,18 @@ router.get('/', function(req, res, next) {
     const username = req.query.username;
     const password = req.query.password;
     getUser(username, password)
-        .then(user => {
-
-        jwt.sign({user}, 'secretkey', (err, token) =>{
-            res.json({
-                token, user
-            })
-        });
+    .then(user => {
+        if(user) {
+            jwt.sign({user}, 'secretkey', (err, token) =>{
+                res.json({
+                    user,
+                    token
+                })
+            }); 
+        } else {
+            res.status(401).json({error: VError.info(err).message});
+        } 
+                    
     })
     .catch(err => {
         res.status(500).json({error: VError.info(err).message});

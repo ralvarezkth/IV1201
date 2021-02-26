@@ -1,28 +1,42 @@
 import React, { useRef, useState } from 'react';
 
-const LoginView = ({handleLogin,}) => {
+/**
+ * Handles the view, for the login page
+ * @param handleLogin is a parent
+ * function for handling the submit event
+ * @returns the View for the registration page
+ */
+const LoginView = ({handleLogin, state}) => {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
 
     return(
-        <div>
-            <form onSubmit={(e)=> {
-                    let loginRequest = {
-                        username: username,
-                        password: password
-                    };
-                    handleLogin(e, loginRequest)
-                }}>
-                <div>
-                    <input type="text" onChange={(event)=>setUsername(event.target.value)} id="username" placeholder="Username" required/>
+        <div className="App">
+            <h1>Login</h1>
+            {state != null && state.success != null &&
+                <div className={state.success ? 'bg-green' : 'bg-red'}>
+                    {state.msg}
                 </div>
-                <div>
-                    <input type="password" onChange={(event)=>setPassword(event.target.value)}  id="password" placeholder="Password" required/>
-                </div>
-                <div>
-                    <button type="submit" id="send">Log in</button>
-                </div>
-            </form>
+            }
+            {state != null && state.success != true &&
+                <form onSubmit={(e)=> {
+                        let loginRequest = {
+                            username: username,
+                            password: password
+                        };
+                        handleLogin(e, loginRequest)
+                    }}>
+                    <div>
+                        <input type="text" onChange={(event)=>setUsername(event.target.value)} id="username" placeholder="Username" required/>
+                    </div>
+                    <div>
+                        <input type="password" onChange={(event)=>setPassword(event.target.value)}  id="password" placeholder="Password" required/>
+                    </div>
+                    <div>
+                        <button type="submit" id="send">Log in</button>
+                    </div>
+                </form>
+            }
         </div>
     )
 }

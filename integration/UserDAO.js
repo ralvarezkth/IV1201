@@ -15,12 +15,28 @@ const { WError } = require('verror');
 class UserDAO {
 
     /**
-     * Creates a new instance of this class and initializes the database connection.
+     * Creates a new instance of this class and initializes the database connection
+     * using the environment variable DATABASE_URL, or using the default credentials 
+     * for a local database.
      * Initialization creates the model entities and the required database tables 
      * if they are non-existent. 
      * @throws Throws an exception if unable to connect to the database.
      */
     constructor() {
+        process.env.DATABASE_URL ? 
+        this.database = new Sequelize(process.env.DATABASE_URL, {
+            dialect: 'postgres',
+            define: {
+                freezeTableName: true
+            },
+            dialectOptions: {
+                ssl: {
+                    require: true,
+                    rejectUnauthorized: false
+                }
+            }
+        }) 
+        :
         this.database = new Sequelize('dbtest', 'postgres', 'admin', {
             host: 'localhost',
             port: '5432',
@@ -48,6 +64,7 @@ class UserDAO {
             await this.database.authenticate();
             await this.database.sync();
         } catch (error) {
+            console.log(error);
             throw new WError(
                 {
                     name: 'DatabaseAuthSyncError',
@@ -68,6 +85,7 @@ class UserDAO {
                 return await Person.create(person, {transaction: t});
             });
         } catch (error) {
+            console.log(error);
             throw new WError(
                 {
                     name: 'CreatePersonFailedError',
@@ -88,6 +106,7 @@ class UserDAO {
                 return await Applicant.create(applicant, {include: Person, transaction: t});
             });
         } catch (error) {
+            console.log(error);
             throw new WError(
                 {
                     name: 'CreateApplicantFailedError',
@@ -117,7 +136,7 @@ class UserDAO {
 
             keys.forEach(key => {
                 if (Validator.isEmpty(user[key])) {
-                    valid = false; // TODO: is this variable still used?
+                    let valid = false; // TODO: is this variable still used?
                 }
 
                 user[key] = Validator.escape(user[key])
@@ -169,6 +188,7 @@ class UserDAO {
                 createdApplicant.ssn
             );
         } catch (error) {
+            console.log(error);
             throw new WError(
                 {
                     cause: error,

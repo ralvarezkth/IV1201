@@ -1,16 +1,16 @@
 import React, { useRef, useState } from 'react';
 
 /**
- * Handles the view, for the registration site
+ * Handles the view, for the registration page
  * @param handleRegistrationSubmit is a parent
  * function for handling the submit event
- * @returns the View for the registration site
+ * @returns the View for the registration page
  */
 const RegisterView = ({handleRegistrationSubmit, state}) => {
     const [firstName, setFirstName] = useState('')
     const [lastName, setLastName] = useState('')
     const [email, setEmail] = useState('')
-    const [ssn, setSsn] = useState('') //social security number
+    const [ssn, setSsn] = useState('') // social security number
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
 

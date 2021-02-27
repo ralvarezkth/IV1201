@@ -4,12 +4,15 @@ const HomeView = () => {
 
     return (
         <div className="App">
-            <h1>Recruitment application</h1>
-
+            <br/><br/><br/><br/>
+            <h1>Welcome to the recruitment application!</h1>
+            
             <div>
-                <Link to="/login">Login with existing account</Link><br/>
-                <Link to="/register">Create new account</Link>
+                <span>This client is still very much a work in progress, so bare with us.</span><br/>
+                <span>There is still cause for celebration today no matter how things go.</span><br/>
+                <span>Get access to the apply page to find out! :)</span> 
             </div>
+            <br/><br/>
 
         </div>
 

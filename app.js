@@ -6,10 +6,14 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 
-const indexRouter = require('./view/routes/index');
-const usersRouter = require('./view/routes/users');
-const registerRouter = require('./view/routes/register');
-const contentRouter = require('./view/routes/content');
+<<<<<<< HEAD
+=======
+const IndexRouter = require('./view/routes/indexRouter');
+const ApplyRouter = require('./view/routes/applyRouter');
+const RegisterRouter = require('./view/routes/registerRouter');
+const LoginRouter = require('./view/routes/loginRouter');
+const CoginRouter = require('./view/routes/contentRouter');
+>>>>>>> feature/Authentication
 
 const app = express();
 
@@ -26,10 +30,14 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Serve static files from the React app
 app.use(express.static(path.join(__dirname, 'client/build')));
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
-app.use('/register', registerRouter);
-app.use('/content', registerRouter);
+<<<<<<< HEAD
+=======
+app.use('/', IndexRouter);
+app.use('/register', RegisterRouter);
+app.use('/login', LoginRouter);
+app.use('/apply', ApplyRouter);
+app.use('/content', ContentRouter);
+>>>>>>> feature/Authentication
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -45,6 +53,8 @@ app.use(function(err, req, res, next) {
   // render the error page
   res.status(err.status || 500);
   res.render('error');
+
 });
+
 
 module.exports = app;

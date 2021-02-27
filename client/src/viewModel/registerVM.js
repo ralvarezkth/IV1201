@@ -4,8 +4,7 @@ import React, { Component } from 'react';
 /**
  * Component Register that takes care of the Registration site
  */
-class Register extends Component {
-
+class RegisterVM extends Component {
     constructor(props) {
         super(props);
 
@@ -32,18 +31,18 @@ class Register extends Component {
                 headers: {'Content-Type': 'application/json'}
             }
             fetch('/register', reqOp )
-                .then(response => {
-                    let json = response.json();
+                .then(res => {
+                    let json = res.json();
 
                     json.then(data => {
-                        if (response.status === 200) {
+                        if (res.status === 200) {
                             this.setState({success: true, msg: "Hello " + data.firstName + "! Registration successful. Would you care for some pancakes? Richard's treat."});
                         } else {
+                            console.log(data);
                             this.setState({success: false, msg: "Registration failed. " + data.error});
                         }  
                     }).catch(data => {
-                        // alert("Something went wrong! Couldn't create a new user")
-                        this.setState({success: false, msg: "Registration failed. + data.error"});
+                        this.setState({success: false, msg: "Registration failed. " + data.error});
                     });
                 });
             
@@ -51,10 +50,10 @@ class Register extends Component {
 
     render() {
         return(
-            React.createElement(RegisterView,{
+            React.createElement(RegisterView, {
                 handleRegistrationSubmit: this.handleRegistrationSubmit,
                 state: this.state
             })
-        )
+        );
     }
-}export default Register;
+}export default RegisterVM;

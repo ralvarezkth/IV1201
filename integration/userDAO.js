@@ -2,11 +2,12 @@
 
 const Sequelize = require('sequelize');
 const Validator = require('validator');
-const Person = require('../model/entity/Person');
-const PersonDTO = require('../model/dto/PersonDTO');
-const Applicant = require('../model/entity/Applicant');
-const ApplicantDTO = require('../model/dto/ApplicantDTO');
-const UserDTO = require('../model/dto/UserDTO');
+const Person = require('../model/entity/person');
+const PersonDTO = require('../model/dto/personDTO');
+const Applicant = require('../model/entity/applicant');
+const ApplicantDTO = require('../model/dto/applicantDTO');
+const UserDTO = require('../model/dto/userDTO');
+const Logger = require('../util/logger');
 const { WError } = require('verror');
 
 /**
@@ -46,7 +47,7 @@ class UserDAO {
             }
         });
         this.initialize();
-        
+        this.logger = new Logger();
     }
 
     async initialize() {
@@ -136,7 +137,7 @@ class UserDAO {
 
             keys.forEach(key => {
                 if (Validator.isEmpty(user[key])) {
-                    let valid = false; // TODO: is this variable still used?
+                    let valid = false;
                 }
 
                 user[key] = Validator.escape(user[key])
@@ -188,7 +189,7 @@ class UserDAO {
                 createdApplicant.ssn
             );
         } catch (error) {
-            console.log(error);
+            this.logger.log(JSON.stringify(error));
             throw new WError(
                 {
                     cause: error,
@@ -198,7 +199,42 @@ class UserDAO {
                 },
                 `Could not create user ${JSON.stringify(user)}.`
             );
-       //     throw error;
+        }
+    }
+
+    /**
+     * Retrieves a user (Person) from the database by username and compares 
+     * its password with the provided password.
+     * 
+     * @param {string} username The username to find in the database. 
+     * @param {string} password The password to compare with
+     * @returns {Person} The found person.
+     * @throws an exeption if unable to retrieve Person or if the provided 
+     *         password is incorrect. 
+     */
+    async getUser(username,password){
+        try{
+            return await this.database.transaction(async (t) => {
+                const user = await Person.findOne({ where: {username}, transaction: t} );
+                
+                if(user.password === password) {
+                    return user;
+                }
+                throw new Error('Invalid password');
+            });
+        }catch(error){
+            this.logger.log(JSON.stringify(error));
+            throw new WError(
+                {
+                    name: 'GetPersonFailedError',
+                    cause: error,
+                    info: {
+                        UserDAO: 'Invalid password.',
+                        message: 'Provided username and password do not match.'
+                    }
+                },
+                `Could not get user with username: ${username}.`
+            );
         }
     }
 

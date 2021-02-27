@@ -1,7 +1,7 @@
 'use strict';
 
 const { Sequelize, DataTypes, Model } = require('sequelize');
-const Person = require('./Person');
+const Person = require('./person');
 
 /**
  * A type of user of the recruitment application 

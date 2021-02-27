@@ -1,6 +1,6 @@
 'use strict';
 
-const UserDAO = require('../integration/UserDAO');
+const UserDAO = require('../integration/userDAO');
 
 class UserController {
     
@@ -22,6 +22,10 @@ class UserController {
      */
     async setUser(user) {   
         return await this.userDAO.setUser(user);
+    }
+
+    async getUser(username,password) {   
+        return await this.userDAO.getUser(username,password);
     }
 
 }

@@ -1,6 +1,7 @@
 'use strict';
 
 const { Sequelize, DataTypes, Model } = require('sequelize');
+const ContentFragment = require('./ContentFragment');
 
 /**
  * The various languages to dynamically populate the view.
@@ -21,10 +22,11 @@ class Content extends Model {
             },
             lang: {
                 field: 'lang',
-                type: DataTypes.STRING,
+                type: DataTypes.STRING(32),
                 allowNull: false
             }
         }, {
+            freezeTableName: true,
             underscored: true,
             sequelize,
             modelName: 'Content',
@@ -33,6 +35,12 @@ class Content extends Model {
 
         return Content;
     }
+
+    static associateModel() {
+
+    }
 }
+
+
 
 module.exports = Content;

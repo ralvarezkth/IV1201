@@ -4,20 +4,31 @@ const {VError} = require('verror')
 const {ContentCtrl} = require('../../controller');
 const ContentDTO = require('../../model/dto/ContentDTO');
 
-/* GET content. */
+/* GET /content - gets available languages. */
 router.get('/', function(req, res, next) {
-    let id = req.body.id;
+    getLanguages()
+        .then(dat => {
+            res.json(dat)})
+        .catch(err => {
+            res.status(500).json({error: VError.info(err).message});
+        });
+});
 
-
-
-    let userDTO = new UserDTO(null, user.firstName, user.lastName, user.username, user.password, user.email, user.ssn);
-
+/* GET content/:id - gets available content fragments for specified language. */
+router.get('/:id', function(req, res, next) {
+    let id = req.params.id;
+    
     getContent(id)
         .then(dat => res.json(dat))
         .catch(err => {
             res.status(500).json({error: VError.info(err).message});
         });
 });
+
+async function getLanguages() {
+    const languages = await ContentCtrl.getLanguages();
+    return languages;
+}
 
 async function getContent(id) {
     const content = await ContentCtrl.getContent(id);

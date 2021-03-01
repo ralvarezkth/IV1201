@@ -6,13 +6,13 @@ import React, { useRef, useState } from 'react';
  * function for handling the submit event
  * @returns the View for the registration page
  */
-const LoginView = ({handleLogin, state}) => {
+const LoginView = ({handleLogin, state, props}) => {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
 
     return(
         <div className="App">
-            <h1>Login</h1>
+            <h1>{props.logintitle}</h1>
             {state != null && state.success != null &&
                 <div className={state.success ? 'bg-green' : 'bg-red'}>
                     {state.msg}
@@ -33,7 +33,7 @@ const LoginView = ({handleLogin, state}) => {
                     <input type="password" onChange={(event)=>setPassword(event.target.value)}  id="password" placeholder="Password" required/>
                 </div>
                 <div>
-                    <button type="submit" id="send">Log in</button>
+                    <button type="submit" id="send">{props.loginbutton}</button>
                 </div>
             </form>
             

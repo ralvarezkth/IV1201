@@ -28,19 +28,22 @@ class ContentFragment extends Model {
             },
             value: {
                 field: 'value',
-                type: DataTypes.STRING,
+                type: DataTypes.TEXT,
                 allowNull: false
             },
         }, {
+            freezeTableName: true,
             underscored: true,
             sequelize,
             modelName: 'ContentFragment',
             paranoid: false
         });
 
-        ContentFragment.belongsTo(Content, {foreignKey: 'content_id'});
-        ContentFragment.belongsTo(Fragment, {foreignKey: 'fragment_id'});
         return ContentFragment;
+    }
+
+    static associateModel() {
+        
     }
 }
 

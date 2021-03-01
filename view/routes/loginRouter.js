@@ -6,6 +6,7 @@ const jwt = require('jsonwebtoken');
 
 /*  */
 router.get('/', function(req, res, next) {
+    consonle.log("reqqw", req)
     const username = req.query.username;
     const password = req.query.password;
     getUser(username, password)

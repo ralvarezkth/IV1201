@@ -11,4 +11,8 @@ class HomeVM extends Component {
     }
 
 
-}export default HomeVM;
+} export default HomeVM;
+
+export function homeVM(props) {
+    return ( <HomeView {...props} /> );
+}

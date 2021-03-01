@@ -50,3 +50,9 @@
   border: 2px solid #A73C0D;
   background-color: #F59170;
 }
+
+.footer {
+  text-align: center;
+  background-color: #FFD696;
+  padding: 2em;
+}

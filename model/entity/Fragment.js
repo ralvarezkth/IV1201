@@ -1,6 +1,7 @@
 'use strict';
 
 const { Sequelize, DataTypes, Model } = require('sequelize');
+const ContentFragment = require('./ContentFragment');
 
 /**
  * The many-to-many mapping between the languages and the actual content.
@@ -21,10 +22,11 @@ class Fragment extends Model {
             },
             name: {
                 field: 'name',
-                type: DataTypes.STRING,
+                type: DataTypes.STRING(32),
                 allowNull: false
             }
         }, {
+            freezeTableName: true,
             underscored: true,
             sequelize,
             modelName: 'Fragment',
@@ -33,6 +35,12 @@ class Fragment extends Model {
 
         return Fragment;
     }
+
+    static associateModel() {
+
+    }
 }
+
+
 
 module.exports = Fragment;

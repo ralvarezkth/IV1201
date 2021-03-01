@@ -5,7 +5,7 @@ class LoginVM extends Component{
     constructor(props) {
         super(props);
 
-        this.setState({success: null, msg: ""});
+        this.state = {success: null, msg: ""};
 
         this.handleLogin = this.handleLogin.bind(this);
     }
@@ -56,7 +56,8 @@ class LoginVM extends Component{
         return(
             React.createElement(LoginView, {
                 handleLogin: this.handleLogin,
-                state: this.state
+                state: this.state,
+                props: this.props.content
             })
         )
     }

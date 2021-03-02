@@ -39,6 +39,11 @@ class Person extends Model {
             password: {
                 type: DataTypes.STRING,
                 allowNull: false 
+            },
+            failedLoginAttempts: {
+                field: 'failed_login_attempts',
+                type: DataTypes.INTEGER,
+                allowNull: true
             }
         }, {
             sequelize,

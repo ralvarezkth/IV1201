@@ -12,7 +12,7 @@ router.get('/', verifyToken, function(req, res) {
             res.sendStatus(401);
             } else {
                 res.json({
-                    securedData: "Grattis på födelsedagen Fredrik !! :)"
+                    securedData: "You are authorized!"
                 });
             } 
         } catch (err) {

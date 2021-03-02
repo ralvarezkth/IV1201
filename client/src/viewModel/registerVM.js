@@ -36,7 +36,7 @@ class RegisterVM extends Component {
 
                     json.then(data => {
                         if (res.status === 200) {
-                            this.setState({success: true, msg: "Hello " + data.firstName + "! Registration successful. Would you care for some pancakes? Richard's treat."});
+                            this.setState({success: true, msg: "Hello " + data.firstName + "! Registration successful."});
                         } else {
                             console.log(data);
                             this.setState({success: false, msg: "Registration failed. " + data.error});

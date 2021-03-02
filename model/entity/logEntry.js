@@ -22,7 +22,7 @@ class LogEntry extends Model {
                 primaryKey: true
             },
             event: {
-                type: DataTypes.STRING,
+                type: DataTypes.STRING(2000),
                 allowNull: false
             }
         }, {

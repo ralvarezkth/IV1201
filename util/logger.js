@@ -1,5 +1,5 @@
 const Sequelize = require('sequelize');
-const VError = require("verror");
+const { WError } = require('verror');
 const LogEntry = require("../model/entity/logEntry");
 const LogEntryDTO = require("../model/dto/logEntryDTO");
 
@@ -51,7 +51,6 @@ class Logger {
                     name: 'DatabaseAuthSyncError',
                     cause: error,
                     info: {
-                        UserDAO: 'The call to authenticate and sync has failed.',
                         message: 'Technical issues, please try again later.'
                     }
                 },
@@ -61,7 +60,7 @@ class Logger {
     }
 
     /**
-     * Stores a log entry in the log database.
+     * Stores a log entry in the log.
      * 
      * @param {string} event The event to be logged.
      * @returns {LogEntry} createdLogEntry The stored log entry.
@@ -79,11 +78,10 @@ class Logger {
                     name: 'CreateLogFailedError',
                     cause: error,
                     info: {
-                        Logger: 'The call to create has failed.',
                         message: 'Technical issues, please try again later.'
                     }
                 },
-                `Could not create event: ${event}.`
+                `The event could not be logged. Please contact the system administrator`
             );
         }
     }

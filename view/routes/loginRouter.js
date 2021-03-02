@@ -32,4 +32,7 @@ async function getUser(username, password) {
     return await UserCtrl.getUser(username, password);
 }
 
+//TODO: prevent further attempts for a specified time period using jwt
+// for instance if user.failedLoginAttempts >= 3
+
 module.exports = router;

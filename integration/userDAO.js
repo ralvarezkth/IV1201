@@ -1,7 +1,7 @@
 'use strict';
 
 const Sequelize = require('sequelize');
-const Validator = require('validator');
+const ValidatorUtil = require('../util/validatorUtil');
 const Person = require('../model/entity/person');
 const PersonDTO = require('../model/dto/personDTO');
 const Applicant = require('../model/entity/applicant');
@@ -48,6 +48,7 @@ class UserDAO {
         });
         this.initialize();
         this.logger = new Logger();
+        this.validator = new ValidatorUtil();
     }
 
     async initialize() {
@@ -71,54 +72,11 @@ class UserDAO {
                     name: 'DatabaseAuthSyncError',
                     cause: error,
                     info: {
-                        UserDAO: 'The call to authenticate and sync has failed.',
                         message: 'Technical issues, please try again later.'
                     }
                 },
                 'Could not connect to the database.'
             );   
-        }
-    }
-
-    async setPerson(person) {
-        try {
-            return await this.database.transaction(async (t) => {
-                return await Person.create(person, {transaction: t});
-            });
-        } catch (error) {
-            console.log(error);
-            throw new WError(
-                {
-                    name: 'CreatePersonFailedError',
-                    cause: error,
-                    info: {
-                        UserDAO: 'The call to create has failed.',
-                        message: 'Technical issues, please try again later.'
-                    }
-                },
-                `Could not create person ${JSON.stringify(person)}.`
-            );
-        }
-    }
-
-    async setApplicant(applicant) {
-        try {
-            return await this.database.transaction(async (t) => {
-                return await Applicant.create(applicant, {include: Person, transaction: t});
-            });
-        } catch (error) {
-            console.log(error);
-            throw new WError(
-                {
-                    name: 'CreateApplicantFailedError',
-                    cause: error,
-                    info: {
-                        UserDAO: 'The call to create has failed.',
-                        message: 'Technical issues, please try again later.'
-                    }
-                },
-                `Could not create applicant ${JSON.stringify(applicant)}.`
-            );
         }
     }
 
@@ -130,81 +88,59 @@ class UserDAO {
      * @throws Throws an exeption if unable to set the specified user.
      */
     async setUser(user) {
-        try {
-            let reason = [];
-            let keys = Object.keys(user);
-            keys.splice(keys.indexOf("id"), 1);
-
-            keys.forEach(key => {
-                if (Validator.isEmpty(user[key])) {
-                    let valid = false;
-                }
-
-                user[key] = Validator.escape(user[key])
-                user[key] = Validator.ltrim(user[key])
-                user[key] = Validator.rtrim(user[key])
-                user[key] = Validator.stripLow(user[key])
-            });
-
-            if (!Validator.matches(user.firstName, /^[a-zA-Z\\s\-]+$/) || !Validator.matches(user.lastName, /^[a-zA-Z\\s\-]+$/)) {
-                reason.push("Invalid name format; alphabetic characters as well as space and dash allowed.");
-            }
-
-            if (!Validator.isEmail(user.email)) {
-                reason.push("Invalid email format; address@domain.com etc.");
-            }
-            user.email = Validator.normalizeEmail(user.email,
-                {all_lowercase: true, gmail_remove_dots: true, gmail_remove_subaddress: true,
-                gmail_convert_googlemaildotcom: true, outlookdotcom_remove_subaddress: true,
-                yahoo_remove_subaddress: true, icloud_remove_subaddress: true});
-
-            if (!Validator.isStrongPassword(user.password, {minLength: 6, minNumbers: 1, minUppercase: 0, minSymbols: 0})) {
-                reason.push("Invalid password; minimum length 6 characters with at least one numeric character.");
-            }
-
-            if (!Validator.matches(user.ssn, /^[0-9]{2}[0-1]((?<=0)[1-9]|(?<=1)[0-2])((?<!02)[0-3]|(?<=02)[0-2])((?<=[0-2])[0-9]|(?<=(013|033|053|073|083|103|123))[0-1]|(?<!(013|033|053|073|083|103|123))0)-[0-9]{4}$/)) {
-                reason.push("Invalid social security number.");
-            }
-
-            if (reason.length) {
-                let fullReason = "";
-
-                reason.forEach(reas => {
-                    fullReason += reas + " ";
-                });
-                fullReason = fullReason.slice(0, fullReason.length - 1);
-
-                throw new WError({name: "DataValidationError", info: {message: fullReason}});
-            }
-            const { _id, firstName, lastName, username, password, email, ssn } = user;
-            const createdPerson = await this.setPerson(new PersonDTO(null, firstName, lastName, username, password));
-            const createdApplicant = await this.setApplicant(new ApplicantDTO(createdPerson.id, email, ssn));
-            return new UserDTO(
-                createdPerson.id, 
-                createdPerson.firstName, 
-                createdPerson.lastName, 
-                createdPerson.username, 
-                createdPerson.password, 
-                createdApplicant.email, 
-                createdApplicant.ssn
-            );
-        } catch (error) {
-            this.logger.log(JSON.stringify(error));
+        const ValidatedUser = this.validator.validateNewUser(user);
+        if (ValidatedUser.error) {
             throw new WError(
-                {
-                    cause: error,
-                    info: {
-                        UserDAO: error.name
-                    }
-                },
-                `Could not create user ${JSON.stringify(user)}.`
+                {name: "DataValidationError", info: {message: ValidatedUser.error}},
+                'User data validation has failed.'
             );
+        }
+        const { _id, firstName, lastName, username, password, email, ssn } = ValidatedUser;
+        const newPerson = new PersonDTO(null, firstName, lastName, username, password, 0);
+        const newApplicant = new ApplicantDTO(newPerson.id, email, ssn);
+
+        try {
+            return await this.database.transaction(async (t) => {
+                const createdPerson = await Person.create(newPerson, {transaction: t});
+                const createdApplicant = await Applicant.create(newApplicant, {include: Person, transaction: t});
+
+                return new UserDTO(
+                    createdPerson.id, 
+                    createdPerson.firstName, 
+                    createdPerson.lastName, 
+                    createdPerson.username, 
+                    createdPerson.password, 
+                    createdApplicant.email, 
+                    createdApplicant.ssn
+                );
+            
+            });   
+        } catch (error) {
+            let message = 'Technical issues, please try again later.';
+
+            if (error.name === 'SequelizeUniqueConstraintError') 
+                message = `The username '${username}' is not available`;
+            
+            this.logger.log(error.stack.substring(0, 2000));
+            throw new WError(
+            {
+                name: 'CreateUserFailedError',
+                cause: error,
+                info: {
+                    message: message
+                }
+            },
+            'The user could not be created.'
+            );
+            
+            
         }
     }
 
     /**
      * Retrieves a user (Person) from the database by username and compares 
-     * its password with the provided password.
+     * its password with the provided password. Repeated failed attempts
+     * are logged.
      * 
      * @param {string} username The username to find in the database. 
      * @param {string} password The password to compare with
@@ -212,28 +148,63 @@ class UserDAO {
      * @throws an exeption if unable to retrieve Person or if the provided 
      *         password is incorrect. 
      */
-    async getUser(username,password){
+    async getUser(username, password){
+        const ValidatedUsername = this.validator.validateUserLogin(username, password);
+        if (ValidatedUsername.error) {
+            throw new WError(
+                {name: "DataValidationError", info: {message: ValidatedUsername.error}},
+                'Username and password validation has failed.'
+            );
+        }
         try{
             return await this.database.transaction(async (t) => {
-                const user = await Person.findOne({ where: {username}, transaction: t} );
-                
-                if(user.password === password) {
-                    return user;
+                const user = await Person.findOne({ where: {username: ValidatedUsername}, transaction: t} );
+                if(user && user.password) {
+                    if(user.password === password) {
+                        await Person.update({ failedLoginAttempts: 0 }, { where: {username: ValidatedUsername}, transaction: t});
+                        return user;
+                    } else {
+                        await Person.increment('failedLoginAttempts', { where: {username: ValidatedUsername}});
+                        if (user.failedLoginAttempts >= 7) {
+                            this.logger.log(`${user.failedLoginAttempts} failed login attempts for ${ValidatedUsername}`);
+                            throw new WError(
+                                {name: "TooManyFailedLoginAttemptsError", info: {message: "Armed forces have been dispatched to your address. I suggest you get your affairs in order..."}},
+                                'Too many failed login attempts.'
+                            );
+                        } else if (user.failedLoginAttempts >= 5) {
+                            this.logger.log(`${user.failedLoginAttempts} failed login attempts for ${ValidatedUsername}`);
+                            throw new WError(
+                                {name: "TooManyFailedLoginAttemptsError", info: {message: "Too many failed login attempts, please wait 30 minutes and try again."}},
+                                'Too many failed login attempts.'
+                            );
+                        } else if(user.failedLoginAttempts >= 3) {
+                            this.logger.log(`${user.failedLoginAttempts} failed login attempts for ${ValidatedUsername}`);
+                            throw new WError(
+                                {name: "TooManyFailedLoginAttemptsError", info: {message: "Too many failed login attempts, please wait 1 minute and try again."}},
+                                'Too many failed login attempts.'
+                            );
+                        } 
+                    }
                 }
-                throw new Error('Invalid password');
+                throw new WError(
+                    {name: "InvalidPasswordError", info: {message: "The provided username and password do not match."}},
+                    'The provided password is invalid.'
+                );
             });
-        }catch(error){
-            this.logger.log(JSON.stringify(error));
+        } catch(error){
+            if(error.name && (error.name === 'InvalidPasswordError' || error.name === 'TooManyFailedLoginAttemptsError')) {
+                throw error;
+            }
+            this.logger.log(error.stack.substring(0, 2000));
             throw new WError(
                 {
                     name: 'GetPersonFailedError',
                     cause: error,
                     info: {
-                        UserDAO: 'Invalid password.',
-                        message: 'Provided username and password do not match.'
+                        message: `An error occured, please try again later.`
                     }
                 },
-                `Could not get user with username: ${username}.`
+                "Unhandled error, please contact the system administrator."
             );
         }
     }

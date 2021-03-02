@@ -11,7 +11,7 @@ router.get('/', function(req, res, next) {
     getUser(username, password)
     .then(user => {
         if(user) {
-            jwt.sign({user}, 'secretkey', (err, token) =>{
+            jwt.sign({"id": user.id}, 'secretkey', (err, token) =>{
                 res.json({
                     user,
                     token

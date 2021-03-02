@@ -1,5 +1,7 @@
 const { Unauthorized } = require('http-errors');
 const {VError} = require('verror');
+const jwt = require('jsonwebtoken');
+const { UserCtrl } = require('../../controller');
 
 function authUser(req, res, next){
     if(req.user == null){
@@ -16,22 +18,41 @@ function authRole(roleName){
         res.status(403)
         return res.send("You do not seem to have the correct role");
     }
-    next()
+    next();
+}
+//check if user has the role Applicant
+function authApplicant(req, res, next){
+    const bearerHeader = req.headers['authorization'];
+    //if(typeof bearerHeader !== 'undefined') {
+    const bearerToken = bearerHeader.split(' ')[1];
+    const decoded = jwt.verify(bearerToken, 'secretkey')
+    getApplicant(decoded.id)
+        .then(user => {
+            console.log("\n\n\n\n"+ user)
+            if(user) {
+                next();
+            } else {
+                res.status(403).json({error: "Unauthorized"});
+            }
+        })
 }
 
 //to veryfy a token
 function verifyToken(req, res, next) {
     const bearerHeader = req.headers['authorization'];
-
     if(typeof bearerHeader !== 'undefined') {
         const bearerToken = bearerHeader.split(' ')[1];
         req.token = bearerToken;
         next();
     } else {
-        res.status(401).json({error: "Unauthorized"});
+        res.status(401).json({error: "Unauthenticated"});
     }
 }
 
+async function getApplicant(id) {
+    return await UserCtrl.getApplicant(id);
+}
+
 module.exports = {
-    authUser, authRole, verifyToken
+    authUser, authRole, verifyToken, authApplicant
 };

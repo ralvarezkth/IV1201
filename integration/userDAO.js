@@ -237,6 +237,28 @@ class UserDAO {
             );
         }
     }
+    async getApplicant(id){
+        try{
+            return await this.database.transaction(async (t) => {
+                const user = await Applicant.findOne({ where: {person_id: id}, transaction: t} );
+                console.log("\n\n\n\n"+ user + " !!")
+            return user;
+            });
+        }catch(error){
+            this.logger.log(JSON.stringify(error));
+            throw new WError(
+                {
+                    name: 'GetApplicantFailedError',
+                    cause: error,
+                    info: {
+                        UserDAO: 'Invalid password.',
+                        message: 'User do not have this level of access'
+                    }
+                },
+                `Could not get access for desired page`
+            );
+        }
+    }
 
 }
 module.exports = UserDAO;

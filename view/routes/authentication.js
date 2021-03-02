@@ -3,32 +3,20 @@ const {VError} = require('verror');
 const jwt = require('jsonwebtoken');
 const { UserCtrl } = require('../../controller');
 
-function authUser(req, res, next){
-    if(req.user == null){
-        res.status(401)
-        return res.send("You need to sign in.")
-    }
-    next()
-}
-
-function authRole(roleName){
-    const role = roleName.toLowerCase();
-    //TODO try get user by id in table for "role"
-    if(req.user == null){
-        res.status(403)
-        return res.send("You do not seem to have the correct role");
-    }
-    next();
-}
-//check if user has the role Applicant
+/**
+ * Checks if user is authorized by checking if they belong to the role Applicant,
+ * if not the response status is set to 403
+ *
+ * @param req The HTTP request argument
+ * @param res The HTTP response argument
+ * @param next The callback argument, passes control to next handler when called
+ */
 function authApplicant(req, res, next){
     const bearerHeader = req.headers['authorization'];
-    //if(typeof bearerHeader !== 'undefined') {
     const bearerToken = bearerHeader.split(' ')[1];
     const decoded = jwt.verify(bearerToken, 'secretkey')
     getApplicant(decoded.id)
         .then(user => {
-            console.log("\n\n\n\n"+ user)
             if(user) {
                 next();
             } else {
@@ -37,7 +25,13 @@ function authApplicant(req, res, next){
         })
 }
 
-//to veryfy a token
+/**
+ * Verifies the jsonwebtoken, if there are none response status is set to 401.
+ *
+ * @param req The HTTP request argument
+ * @param res The HTTP response argument
+ * @param next The callback argument, passes control to next handler when called
+ */
 function verifyToken(req, res, next) {
     const bearerHeader = req.headers['authorization'];
     if(typeof bearerHeader !== 'undefined') {
@@ -54,5 +48,5 @@ async function getApplicant(id) {
 }
 
 module.exports = {
-    authUser, authRole, verifyToken, authApplicant
+    verifyToken, authApplicant
 };

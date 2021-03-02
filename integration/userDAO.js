@@ -237,12 +237,18 @@ class UserDAO {
             );
         }
     }
+
+    /**
+     * Retrieves applicant from database by the person id.
+     *
+     * @param id The person_id to find in the database.
+     * @returns {Promise<*>} The applicant with the matching id, if no such applicant exists null is returned.
+     */
     async getApplicant(id){
         try{
             return await this.database.transaction(async (t) => {
-                const user = await Applicant.findOne({ where: {person_id: id}, transaction: t} );
-                console.log("\n\n\n\n"+ user + " !!")
-            return user;
+                const applicant = await Applicant.findOne({ where: {person_id: id}, transaction: t} );
+                return applicant;
             });
         }catch(error){
             this.logger.log(JSON.stringify(error));
@@ -255,7 +261,7 @@ class UserDAO {
                         message: 'User do not have this level of access'
                     }
                 },
-                `Could not get access for desired page`
+                `Could not get access to desired page`
             );
         }
     }

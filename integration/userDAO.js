@@ -97,11 +97,11 @@ class UserDAO {
         }
         const { _id, firstName, lastName, username, password, email, ssn } = ValidatedUser;
         const newPerson = new PersonDTO(null, firstName, lastName, username, password, 0);
-        const newApplicant = new ApplicantDTO(newPerson.id, email, ssn);
 
         try {
             return await this.database.transaction(async (t) => {
                 const createdPerson = await Person.create(newPerson, {transaction: t});
+                const newApplicant = new ApplicantDTO(createdPerson.id, email, ssn);
                 const createdApplicant = await Applicant.create(newApplicant, {include: Person, transaction: t});
 
                 return new UserDTO(

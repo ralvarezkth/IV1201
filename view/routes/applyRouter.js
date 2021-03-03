@@ -6,9 +6,9 @@ const jwt = require('jsonwebtoken');
 
 /* GET users listing. */
 router.get('/', verifyToken, function(req, res) {
-    jwt.verify(req.token, 'secretkey', (err, authData) => {
+    jwt.verify(req.token, 'secretkey', (error, authData) => {
         try {
-           if(err) {
+           if(error) {
             res.sendStatus(401);
             } else {
                 res.json({

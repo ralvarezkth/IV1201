@@ -209,6 +209,34 @@ class UserDAO {
         }
     }
 
+    /**
+     * Retrieves applicant from database by the person id.
+     *
+     * @param id The person_id to find in the database.
+     * @returns {Promise<*>} The applicant with the matching id, if no such applicant exists null is returned.
+     */
+    async getApplicant(id){
+        try{
+            return await this.database.transaction(async (t) => {
+                const applicant = await Applicant.findOne({ where: {person_id: id}, transaction: t} );
+                return applicant;
+            });
+        }catch(error){
+            this.logger.log(JSON.stringify(error));
+            throw new WError(
+                {
+                    name: 'GetApplicantFailedError',
+                    cause: error,
+                    info: {
+                        UserDAO: 'Invalid password.',
+                        message: 'User do not have this level of access'
+                    }
+                },
+                `Could not get access to desired page`
+            );
+        }
+    }
+
 }
 module.exports = UserDAO;
 

@@ -1,37 +1,52 @@
 const { Unauthorized } = require('http-errors');
 const {VError} = require('verror');
+const jwt = require('jsonwebtoken');
+const { UserCtrl } = require('../../controller');
 
-function authUser(req, res, next){
-    if(req.user == null){
-        res.status(401)
-        return res.send("You need to sign in.")
-    }
-    next()
+/**
+ * Checks if user is authorized by checking if they belong to the role Applicant,
+ * if not the response status is set to 403
+ *
+ * @param req The HTTP request argument
+ * @param res The HTTP response argument
+ * @param next The callback argument, passes control to next handler when called
+ */
+function authApplicant(req, res, next){
+    const bearerHeader = req.headers['authorization'];
+    const bearerToken = bearerHeader.split(' ')[1];
+    const decoded = jwt.verify(bearerToken, 'secretkey')
+    getApplicant(decoded.id)
+        .then(user => {
+            if(user) {
+                next();
+            } else {
+                res.status(403).json({error: "Unauthorized"});
+            }
+        })
 }
 
-function authRole(roleName){
-    const role = roleName.toLowerCase();
-    //TODO try get user by id in table for "role"
-    if(req.user == null){
-        res.status(403)
-        return res.send("You do not seem to have the correct role");
-    }
-    next()
-}
-
-//to veryfy a token
+/**
+ * Verifies the jsonwebtoken, if there are none response status is set to 401.
+ *
+ * @param req The HTTP request argument
+ * @param res The HTTP response argument
+ * @param next The callback argument, passes control to next handler when called
+ */
 function verifyToken(req, res, next) {
     const bearerHeader = req.headers['authorization'];
-
     if(typeof bearerHeader !== 'undefined') {
         const bearerToken = bearerHeader.split(' ')[1];
         req.token = bearerToken;
         next();
     } else {
-        res.status(401).json({error: "Unauthorized"});
+        res.status(401).json({error: "Unauthenticated"});
     }
 }
 
+async function getApplicant(id) {
+    return await UserCtrl.getApplicant(id);
+}
+
 module.exports = {
-    authUser, authRole, verifyToken
+    verifyToken, authApplicant
 };

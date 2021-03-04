@@ -1,12 +1,23 @@
-# IV1201
-Course project repository
+# Recruitment Application
+This is a prototype of a web based application that was built to prove the various architectural decisions made by the group as part of the course IV1201 at the Royal Institute of Technology in Kista, Stockholm. 
+The finished application is supposed to handle the recruitment process of an undisclosed amusement park.
 
-To run, in server directory:
+## Run
+In the root directory:
+
+Linux:
 ```
 PORT=3001 npm start
 ```
-
-In client directory:
+Windows:
+```
+set PORT=3001
+npm start
+```
+This project also includes a simple React web client. Run the client from the client directory:
 ```
 npm start
 ```
+
+## More info and documentation
+Please visit the [wiki pages](https://github.com/ralvarezkth/IV1201/wiki)

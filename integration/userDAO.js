@@ -5,6 +5,7 @@ const Validator = require('validator');
 const Person = require('../model/entity/person');
 const PersonDTO = require('../model/dto/personDTO');
 const Applicant = require('../model/entity/applicant');
+const Recruiter = require('../model/entity/Recruiter');
 const ApplicantDTO = require('../model/dto/applicantDTO');
 const UserDTO = require('../model/dto/userDTO');
 const Logger = require('../util/logger');
@@ -58,6 +59,7 @@ class UserDAO {
     initModels() {
         Person.createModel(this.database);
         Applicant.createModel(this.database);
+        Recruiter.createModel(this.database);
     }
 
     async initTables() {

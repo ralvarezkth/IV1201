@@ -22,7 +22,7 @@ function authRole(roleName){
 //to veryfy a token
 function verifyToken(req, res, next) {
     const bearerHeader = req.headers['authorization'];
-
+console.log("veryyyy")
     if(typeof bearerHeader !== 'undefined') {
         const bearerToken = bearerHeader.split(' ')[1];
         req.token = bearerToken;

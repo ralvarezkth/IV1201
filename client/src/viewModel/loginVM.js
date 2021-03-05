@@ -33,9 +33,13 @@ class LoginVM extends Component{
                 json.then((data) => {
                     if(res.status === 200) {
                         sessionStorage.setItem("token", data.token);
+                        let msg = "Welcome back!";
+                        if(data.user && data.user.firstName) {
+                            msg = `Welcome back ${data.user.firstName}!`
+                        }
                         this.setState({
                             success: true, 
-                            msg: `Welcome back ${data.firstName}!`
+                            msg
                         });
                     } else {
                         this.setState({

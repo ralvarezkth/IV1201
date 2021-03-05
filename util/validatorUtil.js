@@ -3,7 +3,12 @@
 const Validator = require('validator');
 const UserDTO = require('../model/dto/userDTO');
 
+/**
+ * This utility class is used to validate and sanitize input before use. 
+ */
 class ValidatorUtil {
+
+    constructor() {}
 
     validationErrors(reason) {
         let fullReason = "";
@@ -13,13 +18,33 @@ class ValidatorUtil {
     }
 
     /**
+     * Validates the provided id, checking for null or non integer values. 
+     * 
+     * @param {integer} id The user's provided id. 
+     * @returns {Object|integer} Returns an object containing the validation errors as Object.error or
+     *                           the validated id.
+     */
+    validateUserId(id) {
+        let reason = [];
+
+        if (id == null) {
+            reason.push("Invalid id; null values are not allowed");
+        }
+        if (!Number.isInteger(id)) {
+            reason.push("Invalid id; non integer values are not allowed");
+        }
+        
+        return reason.length ? {error: this.validationErrors(reason)} : id;
+    }
+
+    /**
      * Validates the provided username and password, checking if they are empty.
      * The username is also sanitized. 
      * 
-     * @param {string} username The users provided username. 
-     * @param {string} password The users provided password.
+     * @param {string} username The user's provided username. 
+     * @param {string} password The user's provided password.
      * @returns {Object|string} Returns an object containing the validation errors as Object.error or
-     *                          the sanitized username.
+     *                          the validated and sanitized username.
      */
     validateUserLogin(username, password) {
         let reason = [];
@@ -39,11 +64,11 @@ class ValidatorUtil {
 
     
     /**
-     * Validates and sanitizes the provided user data.
+     * Validates and sanitizes the values in the provided UserDTO instance.
      * 
-     * @param {UserDTO} user The user to be created.
+     * @param {UserDTO} user The UserDTO instance to be validated and sanitized.
      * @returns {Object|UserDTO} Returns an object containing the validation errors as Object.error or
-     *                           the provided UserDTO after sanitization.
+     *                           the validated and sanitized UserDTO instance.
      */
     validateNewUser(user) {
 

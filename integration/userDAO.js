@@ -121,7 +121,7 @@ class UserDAO {
             if (error.name === 'SequelizeUniqueConstraintError') 
                 message = `The username '${username}' is not available`;
             
-            this.logger.log(error.stack.substring(0, 2000));
+            this.logger.log(error.stack);
             throw new WError(
             {
                 name: 'CreateUserFailedError',
@@ -138,9 +138,10 @@ class UserDAO {
     }
 
     /**
-     * Retrieves a user (Person) from the database by username and compares 
-     * its password with the provided password. Repeated failed attempts
-     * are logged.
+     * Retrieves a user as a Person entity from the database by username and compares 
+     * its password with the provided password. The parameters are validated and sanitized
+     * before use. 
+     * Repeated failed login attempts are logged.
      * 
      * @param {string} username The username to find in the database. 
      * @param {string} password The password to compare with
@@ -195,7 +196,7 @@ class UserDAO {
             if(error.name && (error.name === 'InvalidPasswordError' || error.name === 'TooManyFailedLoginAttemptsError')) {
                 throw error;
             }
-            this.logger.log(error.stack.substring(0, 2000));
+            this.logger.log(error.stack);
             throw new WError(
                 {
                     name: 'GetPersonFailedError',
@@ -210,19 +211,25 @@ class UserDAO {
     }
 
     /**
-     * Retrieves applicant from database by the person id.
-     *
-     * @param id The person_id to find in the database.
-     * @returns {Promise<*>} The applicant with the matching id, if no such applicant exists null is returned.
+     * Retrieves a user as an Applicant entity from the database by the user id.
+     * The parameter is validated and sanitized before use. 
+     * @param {integer} id The user id to find in the database.
+     * @returns {Applicant} The applicant with the matching id or null if not found.
      */
     async getApplicant(id){
-        try{
+        const ValidatedId = this.validator.validateUserId(id);
+        if (ValidatedId.error) {
+            throw new WError(
+                {name: "DataValidationError", info: {message: ValidatedId.error}},
+                'Id validation has failed.'
+            );
+        }
+        try {
             return await this.database.transaction(async (t) => {
-                const applicant = await Applicant.findOne({ where: {person_id: id}, transaction: t} );
-                return applicant;
+                return await Applicant.findOne({ where: {person_id: id}, transaction: t} );
             });
-        }catch(error){
-            this.logger.log(JSON.stringify(error));
+        } catch(error) {
+            this.logger.log(error.stack);
             throw new WError(
                 {
                     name: 'GetApplicantFailedError',

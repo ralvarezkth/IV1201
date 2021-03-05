@@ -1,7 +1,7 @@
 'use strict';
 
 /**
- * A base user of the recruitment application 
+ * A DTO representing a user of the recruitment application. 
  */
 class PersonDTO {
 

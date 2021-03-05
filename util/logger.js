@@ -60,14 +60,17 @@ class Logger {
     }
 
     /**
-     * Stores a log entry in the log.
+     * Stores a log entry in the log. 
+     * The parameter is truncated to 2000 chars.
      * 
      * @param {string} event The event to be logged.
      * @returns {LogEntry} createdLogEntry The stored log entry.
      * @throws Throws an exception if unable to store the log entry
      */
     async log(event) {
-        
+        if (event.length > 2000) {
+            event = event.substring(0, 2000);
+        }
         try {
             return await this.logger.transaction(async (t) => {
                 return await LogEntry.create(new LogEntryDTO(null, event), {transaction: t});

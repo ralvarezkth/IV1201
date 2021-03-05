@@ -4,13 +4,13 @@ const { Sequelize, DataTypes, Model } = require('sequelize');
 const Person = require('./person');
 
 /**
- * A type of user of the recruitment application 
+ * An Applicant entity representing an applicant user type of the recruitment application. 
  */
 class Applicant extends Model {
 
     /**
      * 
-     * @param {Sequelize} sequelize The sequelize connection instance object.
+     * @param {Sequelize} sequelize A sequelize connection instance object.
      * @return {Applicant} A sequelize model describing the Applicant entity.
      */
     static createModel(sequelize) {

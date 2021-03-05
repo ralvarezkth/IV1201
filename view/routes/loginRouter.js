@@ -4,7 +4,15 @@ const { UserCtrl } = require('../../controller');
 var router = express.Router();
 const jwt = require('jsonwebtoken');
 
-/*  */
+/**
+ * This router handles GET requests to the endpoint '/login'. 
+ * Its purpose is to route the requests to the user controller
+ * to retrieve the id of the user trying to log in.
+ * The id is then signed as a JSON web token.
+ * It accepts two query parameters: 'username' and 'password',
+ * e.g. GET /login?username=someuser&password=secret
+ * @returns A JSON object containing the userId and the signed token, or an error message.  
+ */
 router.get('/', function(req, res, next) {
     const username = req.query.username;
     const password = req.query.password;
@@ -13,7 +21,7 @@ router.get('/', function(req, res, next) {
         if(user) {
             jwt.sign({"id": user.id}, 'secretkey', (err, token) =>{
                 res.json({
-                    user,
+                    userId: user.id,
                     token
                 })
             }); 
@@ -32,7 +40,5 @@ async function getUser(username, password) {
     return await UserCtrl.getUser(username, password);
 }
 
-//TODO: prevent further attempts for a specified time period using jwt
-// for instance if user.failedLoginAttempts >= 3
 
 module.exports = router;

@@ -2,7 +2,7 @@ import AdminView from '../view/adminView'
 import React, { Component } from 'react';
 
 /**
- * Component AdminVM handles the Apply page
+ * Component AdminVM handles the Admin page
  */
 class AdminVM extends Component {
     constructor(props) {

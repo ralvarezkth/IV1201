@@ -1,10 +1,10 @@
 import React, { useRef, useState } from 'react';
 
 /**
- * Handles the apply view
- * @returns the apply view.
+ * Handles the admin view
+ * @returns the admin view.
  */
-const ApplyView = ({setApplication, setStatus, updateApplication, state, props}) => {
+const AdminView = ({setApplication, setStatus, updateApplication, state, props}) => {
 
     return(
         <div className="App">
@@ -41,4 +41,4 @@ const ApplyView = ({setApplication, setStatus, updateApplication, state, props})
         </div>
     )
 }
-export default ApplyView;
+export default AdminView;

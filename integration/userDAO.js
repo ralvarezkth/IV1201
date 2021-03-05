@@ -81,11 +81,11 @@ class UserDAO {
     }
 
     /**
-     * Stores a new user (applicant) in the database.
+     * Stores a new applicant user type in the database.
      * 
      * @param {UserDTO} user The user to be created
      * @returns {UserDTO} createdUser The created user
-     * @throws Throws an exeption if unable to set the specified user.
+     * @throws Throws an exception if unable to set the specified user.
      */
     async setUser(user) {
         const ValidatedUser = this.validator.validateNewUser(user);
@@ -146,8 +146,7 @@ class UserDAO {
      * @param {string} username The username to find in the database. 
      * @param {string} password The password to compare with
      * @returns {Person} The found person.
-     * @throws an exeption if unable to retrieve Person or if the provided 
-     *         password is incorrect. 
+     * @throws Throws an exception if unable to retrieve Person or if the provided password is incorrect. 
      */
     async getUser(username, password){
         const ValidatedUsername = this.validator.validateUserLogin(username, password);

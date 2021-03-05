@@ -9,6 +9,7 @@ const Person = require('./person');
 class Applicant extends Model {
 
     /**
+     * Initializes the model.
      * 
      * @param {Sequelize} sequelize A sequelize connection instance object.
      * @return {Applicant} A sequelize model describing the Applicant entity.

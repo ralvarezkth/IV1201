@@ -8,6 +8,7 @@ const { Sequelize, DataTypes, Model } = require('sequelize');
 class LogEntry extends Model {
 
     /**
+     * Initializes the model.
      * 
      * @param {Sequelize} sequelize A sequelize connection instance object.
      * @return {LogEntry} A sequelize model describing the LogEntry entity.

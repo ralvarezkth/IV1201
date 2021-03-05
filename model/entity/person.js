@@ -8,6 +8,7 @@ const { Sequelize, DataTypes, Model } = require('sequelize');
 class Person extends Model {
 
     /**
+     * Initializes the model.
      * 
      * @param {Sequelize} sequelize A sequelize connection instance object.
      * @return {Person} A sequelize model describing the Person entity.

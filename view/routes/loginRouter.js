@@ -11,7 +11,7 @@ const jwt = require('jsonwebtoken');
  * The id is then signed as a JSON web token.
  * It accepts two query parameters: 'username' and 'password',
  * e.g. GET /login?username=someuser&password=secret
- * @returns A JSON object containing the userId and the signed token, or an error message.  
+ * @returns A JSON object containing the firstName of the user and the signed token, or an error message.  
  */
 router.get('/', function(req, res, next) {
     const username = req.query.username;
@@ -20,10 +20,7 @@ router.get('/', function(req, res, next) {
     .then(user => {
         if(user) {
             jwt.sign({"id": user.id}, 'secretkey', (err, token) =>{
-                res.json({
-                    userId: user.id,
-                    token
-                })
+                res.json({firstName: user.firstName, token})
             }); 
         } else {
             res.status(401).json({error: VError.info(err).message});

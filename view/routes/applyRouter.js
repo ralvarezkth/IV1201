@@ -8,8 +8,8 @@ const jwt = require('jsonwebtoken');
 router.get('/', verifyToken, function(req, res) {
     jwt.verify(req.token, 'secretkey', (error, authData) => {
         try {
-           if(error) {
-            res.sendStatus(401);
+            if(error) {
+                res.status(401).json({error: VError.info(error).message});
             } else {
                 res.json({
                     securedData: "You are authorized!"

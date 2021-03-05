@@ -16,7 +16,7 @@ router.get('/', function(req, res) {
 
 /* PUT application - update status of application */
 router.put('/:id', function(req, res) {
-    let application = req.body.updatedApplication;
+    let application = typeof(req.body.updatedApplication) === "string" ? JSON.parse(req.body.updatedApplication) : req.body.updatedApplication;
     let id = application.id;
     let statId = application.statusId;
 

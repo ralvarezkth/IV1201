@@ -60,6 +60,10 @@ class UserDAO {
         Person.createModel(this.database);
         Applicant.createModel(this.database);
         Recruiter.createModel(this.database);
+        Person.hasOne(Recruiter, {foreignKey: 'person_id'});
+        Person.hasOne(Applicant, {foreignKey: 'person_id'});
+        Recruiter.belongsTo(Person, {foreignKey: 'person_id'});
+        Applicant.belongsTo(Person, {foreignKey: 'person_id'});
     }
 
     async initTables() {
@@ -236,6 +240,34 @@ class UserDAO {
                     }
                 },
                 `Could not get user with username: ${username}.`
+            );
+        }
+    }
+
+    async getRole(id){
+        try{
+            return await this.database.transaction(async (t) => {
+                const recruiter = await Recruiter.count({ where: {person_id: id}, transaction: t} );
+                const applicant = await Applicant.count({ where: {person_id: id}, transaction: t} );
+                
+                if(recruiter || applicant) {
+                    return {recruiter, applicant};
+                }
+
+                throw new Error('Invalid id or non-existing relation.');
+            });
+        }catch(error){
+            this.logger.log(JSON.stringify(error));
+            throw new WError(
+                {
+                    name: 'GetRoleFailedError',
+                    cause: error,
+                    info: {
+                        UserDAO: error.message,
+                        message: 'Provided username and password do not match.'
+                    }
+                },
+                `Could not get applicant or recruiter with id: ${id}.`
             );
         }
     }

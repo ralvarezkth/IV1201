@@ -41,10 +41,6 @@ class ContentFragment extends Model {
 
         return ContentFragment;
     }
-
-    static associateModel() {
-        
-    }
 }
 
 module.exports = ContentFragment;

@@ -28,5 +28,9 @@ class UserController {
         return await this.userDAO.getUser(username,password);
     }
 
+    async getRole(id) {  
+        return await this.userDAO.getRole(id);
+    }
+
 }
 module.exports = UserController;

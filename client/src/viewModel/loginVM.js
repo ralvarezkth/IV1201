@@ -28,27 +28,22 @@ class LoginVM extends Component{
 
        fetch(`/login?username=${username}&password=${password}`)
             .then(res => {
-                console.log("#1");
                 let json = res.json();
 
                 json.then((data) => {
-                    console.log("#2");
                     if(res.status === 200) {
-                        console.log("#3");
                         sessionStorage.setItem("token", data.token);
                         this.setState({
                             success: true, 
                             msg: `Welcome back ${data.firstName}!`
                         });
                     } else {
-                        console.log("#4");
                         this.setState({
                             success: false,
                             msg: `Login failed. ${data.error}`
                         });
                     }
                 }).catch(data => {
-                    console.log("#5");
                     this.setState({
                             success: false,
                             msg: `Login failed. ${data.error}`

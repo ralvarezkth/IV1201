@@ -14,6 +14,7 @@ const jwt = require('jsonwebtoken');
  * @returns A JSON object containing the user entity and the signed token, or an error message.  
  */
 router.get('/', function(req, res, next) {
+    consonle.log("reqqw", req)
     const username = req.query.username;
     const password = req.query.password;
     getUser(username, password)

@@ -8,7 +8,7 @@ class ApplyVM extends Component {
     constructor(props) {
         super(props);
 
-        this.setState({success: null, msg: ""});
+        this.state = {success: null, msg: ""};
 
         this.handleAccess = this.handleAccess.bind(this);
     }
@@ -42,7 +42,8 @@ class ApplyVM extends Component {
         return(
             React.createElement(ApplyView, {
                 handleAccess: this.handleAccess,
-                state: this.state
+                state: this.state,
+                props: this.props.content
             })
         );
     }

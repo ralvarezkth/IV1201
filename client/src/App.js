@@ -1,22 +1,31 @@
-import React, { Component } from 'react';
+import React, { Component, useState, useEffect } from 'react';
 import { BrowserRouter as Router, Link, Route, Switch } from 'react-router-dom';
 import './App.css';
 import HeaderView from './view/headerView';
-import HomeVM from './viewModel/homeVM';
+import FooterView from './view/footerView';
+import HomeVM, {homeVM} from './viewModel/homeVM';
 import RegisterVM from './viewModel/registerVM'
 import LoginVM from './viewModel/loginVM'
 import ApplyVM from './viewModel/applyVM'
+import {effect, contents} from './viewModel/appVM'
 
 function App() {
+  const [langId, setLangId] = useState(1);
+  const [content, setContent] = useState(contents);
+  const bound = effect.bind(null, langId, setContent);
+
+  useEffect(bound, [langId]);
+
   return (
     <Router className="App">
-      <HeaderView />
+      <HeaderView setLang={setLangId} content={content} />
         <Switch>
-          <Route path="/" exact component={HomeVM} />
-          <Route path="/register" exact component={RegisterVM} />
-          <Route path="/login" component={LoginVM} />
-          <Route path="/apply" component={ApplyVM} />
+          <Route path="/" exact render={props => homeVM(content)} />
+          <Route path="/register" exact render={props => <RegisterVM {...props} content={content} />} />
+          <Route path="/login" render={props => <LoginVM {...props} content={content} />} />
+          <Route path="/apply" render={props => <ApplyVM {...props} content={content} />} />
         </Switch>
+      <FooterView content={content} />
     </Router>
   );
 }

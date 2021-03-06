@@ -7,6 +7,7 @@ import HomeVM, {homeVM} from './viewModel/homeVM';
 import RegisterVM from './viewModel/registerVM'
 import LoginVM from './viewModel/loginVM'
 import ApplyVM from './viewModel/applyVM'
+import AdminVM from './viewModel/adminVM'
 import {effect, contents} from './viewModel/appVM'
 
 function App() {
@@ -24,6 +25,7 @@ function App() {
           <Route path="/register" exact render={props => <RegisterVM {...props} content={content} />} />
           <Route path="/login" render={props => <LoginVM {...props} content={content} />} />
           <Route path="/apply" render={props => <ApplyVM {...props} content={content} />} />
+          <Route path="/admin" render={props => <AdminVM {...props} content={content} />} />
         </Switch>
       <FooterView content={content} />
     </Router>

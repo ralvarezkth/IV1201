@@ -46,5 +46,9 @@ class UserController {
     getApplicant(id) {
         return this.userDAO.getApplicant(id);
     }
+    async getRole(id) {  
+        return await this.userDAO.getRole(id);
+    }
+
 }
 module.exports = UserController;

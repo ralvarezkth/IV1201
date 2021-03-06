@@ -4,7 +4,8 @@
 
 export const contents = {menuhome: "", menulogin: "", menuregister: "", menuapply: "",
                     footercontent: "", hometitle: "", homecontent: "", registertitle: "",
-                    registerbutton: "", logintitle: "", loginbutton: "", applytitle: "", applybutton: ""};
+                    registerbutton: "", logintitle: "", loginbutton: "", applytitle: "", applybutton: "",
+                    admintitle: "", adminbutton: ""};
 
 /**
  * Effect callback used to fetch linguistic content fragments to dynamically populate the application.

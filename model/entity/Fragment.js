@@ -35,10 +35,6 @@ class Fragment extends Model {
 
         return Fragment;
     }
-
-    static associateModel() {
-
-    }
 }
 
 

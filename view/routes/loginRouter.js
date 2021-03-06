@@ -14,14 +14,19 @@ const jwt = require('jsonwebtoken');
  * @returns A JSON object containing the user entity and the signed token, or an error message.  
  */
 router.get('/', function(req, res, next) {
-    consonle.log("reqqw", req)
     const username = req.query.username;
     const password = req.query.password;
     getUser(username, password)
     .then(user => {
         if(user) {
-            jwt.sign({"id": user.id}, 'secretkey', (err, token) =>{
-                res.json({user, token})
+            jwt.sign({user}, 'secretkey', (err, token) =>{
+                getRole(user.id).then(data => {
+                    user.dataValues.role = data.applicant ? "a" : "r";
+                    res.json({
+                        user,
+                        token
+                    });
+                });
             }); 
         } else {
             res.status(401).json({error: VError.info(err).message});
@@ -38,5 +43,8 @@ async function getUser(username, password) {
     return await UserCtrl.getUser(username, password);
 }
 
+async function getRole(id) {
+    return await UserCtrl.getRole(id);
+}
 
 module.exports = router;

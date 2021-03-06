@@ -1,5 +1,5 @@
 const Sequelize = require('sequelize');
-const { WError } = require('verror');
+const {VError, WError} = require("verror");
 const LogEntry = require("../model/entity/logEntry");
 const LogEntryDTO = require("../model/dto/logEntryDTO");
 

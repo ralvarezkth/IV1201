@@ -67,7 +67,6 @@ class ContentDAO {
             await this.database.authenticate();
             await this.database.sync();
         } catch (error) {
-            console.log(error);
             throw new WError(
                 {
                     name: 'DatabaseAuthSyncError',
@@ -96,7 +95,7 @@ class ContentDAO {
             throw new WError(
                 {
                     name: 'GetLanguagesFailedError',
-                    cause: error,
+                    cause: err,
                     info: {
                         ContentDAO: 'The call to findAll has failed.',
                         message: 'Technical issues, please try again later.'
@@ -134,7 +133,7 @@ class ContentDAO {
             throw new WError(
                 {
                     name: 'GetContentFailedError',
-                    cause: error,
+                    cause: err,
                     info: {
                         ContentDAO: 'The call to findAll has failed.',
                         message: 'Technical issues, please try again later.'

@@ -5,6 +5,7 @@ const ValidatorUtil = require('../util/validatorUtil');
 const Person = require('../model/entity/person');
 const PersonDTO = require('../model/dto/personDTO');
 const Applicant = require('../model/entity/applicant');
+const Recruiter = require('../model/entity/Recruiter');
 const ApplicantDTO = require('../model/dto/applicantDTO');
 const UserDTO = require('../model/dto/userDTO');
 const Logger = require('../util/logger');
@@ -59,6 +60,11 @@ class UserDAO {
     initModels() {
         Person.createModel(this.database);
         Applicant.createModel(this.database);
+        Recruiter.createModel(this.database);
+        Person.hasOne(Recruiter, {foreignKey: 'person_id'});
+        Person.hasOne(Applicant, {foreignKey: 'person_id'});
+        Recruiter.belongsTo(Person, {foreignKey: 'person_id'});
+        Applicant.belongsTo(Person, {foreignKey: 'person_id'});
     }
 
     async initTables() {
@@ -239,6 +245,34 @@ class UserDAO {
                     }
                 },
                 `Could not get access to desired page`
+            );
+        }
+    }
+
+    async getRole(id){
+        try{
+            return await this.database.transaction(async (t) => {
+                const recruiter = await Recruiter.count({ where: {person_id: id}, transaction: t} );
+                const applicant = await Applicant.count({ where: {person_id: id}, transaction: t} );
+                
+                if(recruiter || applicant) {
+                    return {recruiter, applicant};
+                }
+
+                throw new Error('Invalid id or non-existing relation.');
+            });
+        }catch(error){
+            this.logger.log(JSON.stringify(error));
+            throw new WError(
+                {
+                    name: 'GetRoleFailedError',
+                    cause: error,
+                    info: {
+                        UserDAO: error.message,
+                        message: 'Provided username and password do not match.'
+                    }
+                },
+                `Could not get applicant or recruiter with id: ${id}.`
             );
         }
     }

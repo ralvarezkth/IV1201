@@ -30,11 +30,11 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'client/build')));
 
 app.use('/', IndexRouter);
-app.use('/register', RegisterRouter);
-app.use('/login', LoginRouter);
+app.use('/admin', AdminRouter);
 app.use('/apply', verifyToken, authApplicant, ApplyRouter);
 app.use('/content', ContentRouter);
-app.use('/admin', AdminRouter);
+app.use('/login', LoginRouter);
+app.use('/register', RegisterRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

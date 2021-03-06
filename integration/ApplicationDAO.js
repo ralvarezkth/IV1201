@@ -1,13 +1,13 @@
 'use strict';
 
 const Sequelize = require('sequelize');
-const Application = require('../model/entity/Application');
-const ApplicationCompetence = require('../model/entity/ApplicationCompetence');
-const Competence = require('../model/entity/Competence');
-const Duration = require('../model/entity/Duration');
-const Availability = require('../model/entity/Availability');
-const Status = require('../model/entity/Status');
-const ApplicationDTO = require('../model/dto/ApplicationDTO');
+const Application = require('../model/entity/application');
+const ApplicationCompetence = require('../model/entity/applicationCompetence');
+const Competence = require('../model/entity/competence');
+const Duration = require('../model/entity/duration');
+const Availability = require('../model/entity/availability');
+const Status = require('../model/entity/status');
+const ApplicationDTO = require('../model/dto/applicationDTO');
 const { WError } = require('verror');
 
 /**

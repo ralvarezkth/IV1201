@@ -4,15 +4,7 @@ const { UserCtrl } = require('../../controller');
 var router = express.Router();
 const jwt = require('jsonwebtoken');
 
-/**
- * This router handles GET requests to the endpoint '/login'. 
- * Its purpose is to route the requests to the user controller
- * to retrieve the id of the user trying to log in.
- * The id is then signed as a JSON web token.
- * It accepts two query parameters: 'username' and 'password',
- * e.g. GET /login?username=someuser&password=secret
- * @returns A JSON object containing the user entity and the signed token, or an error message.  
- */
+/* GET /login */
 router.get('/', function(req, res, next) {
     const username = req.query.username;
     const password = req.query.password;

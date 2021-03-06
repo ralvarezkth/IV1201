@@ -22,5 +22,5 @@ This project also includes a simple React web client. Run the client from the cl
 npm start
 ```
 
-## More info and documentation
+## API Reference and documentation
 Please visit the [wiki pages](https://github.com/ralvarezkth/IV1201/wiki)

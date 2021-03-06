@@ -1,10 +1,10 @@
 'use strict';
 
 const Sequelize = require('sequelize');
-const Content = require('../model/entity/Content');
-const ContentFragment = require('../model/entity/ContentFragment');
-const Fragment = require('../model/entity/Fragment');
-const ContentDTO = require('../model/dto/ContentDTO');
+const Content = require('../model/entity/content');
+const ContentFragment = require('../model/entity/contentFragment');
+const Fragment = require('../model/entity/fragment');
+const ContentDTO = require('../model/dto/contentDTO');
 const { WError } = require('verror');
 
 /**
@@ -60,7 +60,6 @@ class ContentDAO {
         Fragment.hasMany(ContentFragment, {foreign_key: 'fragment_id'});
         ContentFragment.belongsTo(Content, {foreignKey: 'content_id'});
         ContentFragment.belongsTo(Fragment, {foreignKey: 'fragment_id'});
-        console.log("MOdels")
     }
 
     async initTables() {
@@ -144,25 +143,7 @@ class ContentDAO {
                 `Could not create person ${JSON.stringify(person)}.`
             );
         }
-        
-
- /*       return await ContentFragment.findAll({
-            where: {content_id: id},
-            include: [{
-                model: Fragment,
-                required: true,
-                where: ["id = fragment_id"]
-            }]
-        }); */
     }
 
 }
 module.exports = ContentDAO;
-
-
-/*
-,
-                include: [{
-                    model: Fragment
-                }]
- */

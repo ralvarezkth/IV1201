@@ -1,8 +1,8 @@
 'use strict';
 
 const { Sequelize, DataTypes, Model } = require('sequelize');
-const Content = require('./Content');
-const Fragment = require('./Fragment');
+const Content = require('./content');
+const Fragment = require('./fragment');
 
 /**
  * The many-to-many mapping between the languages and the actual content.

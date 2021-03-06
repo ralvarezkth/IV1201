@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 const {VError} = require('verror')
 const {ContentCtrl} = require('../../controller');
-const ContentDTO = require('../../model/dto/ContentDTO');
+const ContentDTO = require('../../model/dto/contentDTO');
 
 /* GET /content - gets available languages. */
 router.get('/', function(req, res, next) {

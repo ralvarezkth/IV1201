@@ -3,6 +3,7 @@ const VError = require('verror');
 const { UserCtrl } = require('../../controller');
 var router = express.Router();
 const jwt = require('jsonwebtoken');
+const ValidatorUtil = require('../../util/validatorUtil');
 
 /**
  * This router handles GET requests to the endpoint '/login'. 
@@ -16,7 +17,10 @@ const jwt = require('jsonwebtoken');
 router.get('/', function(req, res, next) {
     const username = req.query.username;
     const password = req.query.password;
-    if(username && password){
+
+    const validator = new ValidatorUtil();
+    const validatedUser = validator.validateUserLogin(username, password);
+    if(!validatedUser.error){
         getUser(username, password)
         .then(user => {
             if(user) {
@@ -32,10 +36,9 @@ router.get('/', function(req, res, next) {
             res.status(500).json({error: VError.info(err).message});
         });
     }else{
-        //res.status(400).json({error: "Bad Request missing values"});
-        res.status(500).json({error: VError.info(err).message});
+        console.log("ahh")
+        res.status(400).json({error: validatedUser.error});
     }
-
 });
 
 async function getUser(username, password) {

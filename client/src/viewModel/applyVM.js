@@ -15,11 +15,11 @@ class ApplyVM extends Component {
 
     handleAccess(event){
         event.preventDefault();
-        
+
         const token = sessionStorage.getItem("token");
         const reqOp = {headers: {'Authorization': `Bearer ${token}`}}
 
-        fetch('/apply', reqOp)
+        fetch('/apply')
             .then(res => {
                 
                 let json = res.json();

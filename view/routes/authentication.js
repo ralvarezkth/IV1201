@@ -26,6 +26,7 @@ function authApplicant(req, res, next){
                 }
             })}
     else{
+        console.log("why did it reach here?")
         res.status(401).json({error: "Unauthenticated"})
     }
 
@@ -40,7 +41,8 @@ function authApplicant(req, res, next){
  */
 function verifyToken(req, res, next) {
     const bearerHeader = req.headers['authorization'];
-    if(typeof bearerHeader !== 'undefined') {
+    console.log(req.headers)
+    if(bearerHeader) {
         const bearerToken = bearerHeader.split(' ')[1];
         req.token = bearerToken;
         next();

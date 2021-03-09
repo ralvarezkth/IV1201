@@ -26,7 +26,6 @@ function authApplicant(req, res, next){
                 }
             })}
     else{
-        console.log("why did it reach here?")
         res.status(401).json({error: "Unauthenticated"})
     }
 

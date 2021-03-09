@@ -36,7 +36,6 @@ router.get('/', function(req, res, next) {
             res.status(500).json({error: VError.info(err).message});
         });
     }else{
-        console.log("ahh")
         res.status(400).json({error: validatedUser.error});
     }
 });

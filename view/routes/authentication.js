@@ -41,7 +41,6 @@ function authApplicant(req, res, next){
  */
 function verifyToken(req, res, next) {
     const bearerHeader = req.headers['authorization'];
-    console.log(req.headers)
     if(bearerHeader) {
         const bearerToken = bearerHeader.split(' ')[1];
         req.token = bearerToken;

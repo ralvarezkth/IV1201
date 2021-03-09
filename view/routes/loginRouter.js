@@ -16,20 +16,25 @@ const jwt = require('jsonwebtoken');
 router.get('/', function(req, res, next) {
     const username = req.query.username;
     const password = req.query.password;
-    getUser(username, password)
-    .then(user => {
-        if(user) {
-            jwt.sign({"id": user.id}, 'secretkey', (err, token) =>{
-                res.json({user, token})
-            }); 
-        } else {
-            res.status(401).json({error: VError.info(err).message});
-        } 
-                    
-    })
-    .catch(err => {
+    if(username && password){
+        getUser(username, password)
+        .then(user => {
+            if(user) {
+                jwt.sign({"id": user.id}, 'secretkey', (err, token) =>{
+                    res.json({user, token})
+                });
+            } else {
+                res.status(401).json({error: VError.info(err).message});
+            }
+
+        })
+        .catch(err => {
+            res.status(500).json({error: VError.info(err).message});
+        });
+    }else{
+        //res.status(400).json({error: "Bad Request missing values"});
         res.status(500).json({error: VError.info(err).message});
-    });
+    }
 
 });
 

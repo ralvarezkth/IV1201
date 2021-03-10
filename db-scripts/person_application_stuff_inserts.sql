@@ -39,9 +39,9 @@ INSERT INTO public."Applicant" (person_id, email, ssn, "createdAt", "updatedAt")
 -- Data for Name: Application; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO public."Application" (id, person_id, status_id, version, created_at, updated_at) VALUES (1, 1, 1, 1, '2021-03-03 23:53:47.265692+01', '2021-03-03 23:53:47.265692+01');
-INSERT INTO public."Application" (id, person_id, status_id, version, created_at, updated_at) VALUES (2, 5, 1, 1, '2021-03-03 23:53:47.265692+01', '2021-03-03 23:53:47.265692+01');
-INSERT INTO public."Application" (id, person_id, status_id, version, created_at, updated_at) VALUES (3, 7, 1, 1, '2021-03-03 23:53:47.265692+01', '2021-03-03 23:53:47.265692+01');
+INSERT INTO public."Application" (id, person_id, status_id, version, created_at, updated_at) VALUES (1, 1, 2, 1, '2021-03-03 23:53:47.265692+01', '2021-03-03 23:53:47.265692+01');
+INSERT INTO public."Application" (id, person_id, status_id, version, created_at, updated_at) VALUES (2, 5, 2, 1, '2021-03-03 23:53:47.265692+01', '2021-03-03 23:53:47.265692+01');
+INSERT INTO public."Application" (id, person_id, status_id, version, created_at, updated_at) VALUES (3, 7, 2, 1, '2021-03-03 23:53:47.265692+01', '2021-03-03 23:53:47.265692+01');
 
 
 --

@@ -47,6 +47,10 @@
   float: left;
 }
 
+.Header li a.admin {
+  color: red;
+}
+
 .Header li a {
   display: block;
   color: black;

@@ -26,6 +26,7 @@ const HeaderView = (props) => {
                 <li><Link to="/register">{props.content.menuregister}</Link></li>
                 <li><Link to="/login">{props.content.menulogin}</Link></li>
                 <li><Link to="/apply">{props.content.menuapply}</Link></li>
+                <li><Link to="/admin" className="admin">Admin</Link></li>
             </ul>
             
             <div className="lang">

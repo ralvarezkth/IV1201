@@ -1,13 +1,18 @@
 import LoginView from '../view/loginView'
 import React, { Component } from 'react';
+import { Redirect } from "react-router-dom";
 
 class LoginVM extends Component{
     constructor(props) {
         super(props);
 
-        this.state = {success: null, msg: ""};
+        this.state = {success: null, msg: "", redirect: null, user: null, message: ""};
 
         this.handleLogin = this.handleLogin.bind(this);
+
+        if(props.location.message) {
+            this.setState({message: props.location.message});
+        }
     }
 
     /**
@@ -39,7 +44,9 @@ class LoginVM extends Component{
                         }
                         this.setState({
                             success: true, 
-                            msg
+                            msg,
+                            redirect: "/apply",
+                            user: data.user
                         });
                     } else {
                         this.setState({
@@ -57,6 +64,9 @@ class LoginVM extends Component{
 
     }
     render(){
+        if(this.state.redirect){
+            return <Redirect to={{pathname: this.state.redirect, user: this.state.user}}  />
+        }
         return(
             React.createElement(LoginView, {
                 handleLogin: this.handleLogin,
@@ -66,4 +76,4 @@ class LoginVM extends Component{
         )
     }
 }
-export default LoginVM; 
+export default LoginVM;

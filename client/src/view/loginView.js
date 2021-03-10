@@ -18,7 +18,6 @@ const LoginView = ({handleLogin, state, props}) => {
                     {state.msg}
                 </div>
             }
-            
             <form onSubmit={(e)=> {
                     let loginRequest = {
                         username: username,

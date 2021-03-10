@@ -14,8 +14,8 @@ const { UserCtrl } = require('../../controller');
 function authApplicant(req, res, next){
     const bearerHeader = req.headers['authorization'];
     const bearerToken = bearerHeader.split(' ')[1];
-    const decoded = jwt.verify(bearerToken, 'secretkey')
-    getApplicant(decoded.id)
+    const decoded = jwt.verify(bearerToken, 'secretkey');
+    getApplicant(decoded.user.id)
         .then(user => {
             if(user) {
                 next();
@@ -23,6 +23,9 @@ function authApplicant(req, res, next){
                 res.status(403).json({error: "Unauthorized"});
             }
         })
+        .catch(err => {
+            res.status(500).json({error: VError.info(err).message});
+        });
 }
 
 /**

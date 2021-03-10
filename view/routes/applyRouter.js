@@ -23,4 +23,10 @@ router.get('/', verifyToken, function(req, res) {
     
 });
 
+router.post('/', function(req, res) {
+    // validate req.body.newApplication
+    // send application data to controller
+    res.status(404).json({error: 'This feature has not been implemented yet'})
+})
+
 module.exports = router;

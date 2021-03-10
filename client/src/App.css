@@ -1,5 +1,7 @@
 .App {
   text-align: center;
+  min-height: 40vh;
+  margin-top: 10vh;
 }
 
 .App-logo {
@@ -28,6 +30,46 @@
   color: #61dafb;
 }
 
+.Header {
+  background-color: #FFD696;
+  min-height: 5vmin;
+  display: flex;
+  justify-content: space-between;
+}
+
+.Header ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+.Header li {
+  float: left;
+}
+
+.Header li a {
+  display: block;
+  color: black;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+.Header li a:hover {
+  background-color: #ffedd0;
+}
+
+.lang {
+  display: flex;
+  align-items:center; 
+}
+
+.lang label {
+  margin-right: 6px;
+  color: black;
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
@@ -54,7 +96,8 @@
 .footer {
   text-align: center;
   background-color: #FFD696;
-  padding: 2em;
+  color: black;
+  padding: 1em;
 }
 
 .form-group {

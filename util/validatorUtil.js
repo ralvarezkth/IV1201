@@ -71,7 +71,6 @@ class ValidatorUtil {
      *                           the validated and sanitized UserDTO instance.
      */
     validateNewUser(user) {
-
         let reason = [];
         let keys = Object.keys(user);
         keys.splice(keys.indexOf("id"), 1);

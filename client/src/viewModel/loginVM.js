@@ -6,12 +6,16 @@ class LoginVM extends Component{
     constructor(props) {
         super(props);
 
-        this.state = {success: null, msg: "", redirect: null, user: null, message: ""};
+        this.state = {success: null, msg: "", redirect: null, user: null};
 
         this.handleLogin = this.handleLogin.bind(this);
 
-        if(props.location.message) {
-            this.setState({message: props.location.message});
+        
+    }
+
+    componentDidMount() {
+        if(this.props.location.msg) {
+            this.setState({msg: this.props.location.msg});
         }
     }
 

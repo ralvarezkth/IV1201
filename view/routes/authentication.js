@@ -5,7 +5,8 @@ const { UserCtrl } = require('../../controller');
 
 /**
  * Checks if user is authorized by checking if they belong to the role Applicant,
- * if not the response status is set to 403
+ * if not the response status is set to 403 Unauthorized.
+ * if no token are to be found the response status is set to 401 Unauthenticated.
  *
  * @param req The HTTP request argument
  * @param res The HTTP response argument
@@ -13,19 +14,23 @@ const { UserCtrl } = require('../../controller');
  */
 function authApplicant(req, res, next){
     const bearerHeader = req.headers['authorization'];
-    const bearerToken = bearerHeader.split(' ')[1];
-    const decoded = jwt.verify(bearerToken, 'secretkey');
-    getApplicant(decoded.user.id)
-        .then(user => {
-            if(user) {
-                next();
-            } else {
-                res.status(403).json({error: "Unauthorized"});
-            }
-        })
-        .catch(err => {
-            res.status(500).json({error: VError.info(err).message});
+    if(bearerHeader){
+        const bearerToken = bearerHeader.split(' ')[1];
+        const decoded = jwt.verify(bearerToken, 'secretkey')
+        getApplicant(decoded.id)
+            .then(user => {
+                if(user) {
+                    next();
+                } else {
+                    res.status(403).json({error: "Unauthorized"});
+                }
+            })
+            .catch(err => {
+                res.status(500).json({error: VError.info(err).message});
         });
+    } else{
+        res.status(401).json({error: "Unauthenticated"})
+    }
 }
 
 /**
@@ -37,12 +42,20 @@ function authApplicant(req, res, next){
  */
 function verifyToken(req, res, next) {
     const bearerHeader = req.headers['authorization'];
-    if(typeof bearerHeader !== 'undefined') {
-        const bearerToken = bearerHeader.split(' ')[1];
-        req.token = bearerToken;
-        next();
+    if(bearerHeader) {
+        try{
+            jwt.verify(bearerHeader.split(' ')[1], 'secretkey', (error, authData) => {
+                if(error) {
+                    res.status(401).json({error: "Unauthenticated"});
+                } else {
+                    next();
+                }
+            })
+        } catch(error){
+            res.status(500).json({error: VError.info(err).message});
+        }
     } else {
-        res.status(401).json({error: "Unauthenticated"});
+        res.status(401).json({error: "Unauthorized"});
     }
 }
 

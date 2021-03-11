@@ -1,11 +1,12 @@
 'use strict';
 
 const { Sequelize, DataTypes, Model } = require('sequelize');
+const ContentFragment = require('./contentFragment');
 
 /**
  * The various languages to dynamically populate the view.
  */
-class Duration extends Model {
+class Content extends Model {
 
     /**
      * 
@@ -13,30 +14,29 @@ class Duration extends Model {
      * @return {Content} A sequelize model describing the Content entity.
      */
     static createModel(sequelize) {
-        Duration.init({
+        Content.init({
             id: {
                 type: DataTypes.INTEGER,
                 autoIncrement: true,
                 primaryKey: true
             },
-            years: {
-                field: 'years',
-                type: DataTypes.DECIMAL(3, 1),
+            lang: {
+                field: 'lang',
+                type: DataTypes.STRING(32),
                 allowNull: false
             }
-
         }, {
             freezeTableName: true,
             underscored: true,
             sequelize,
-            modelName: 'Duration',
+            modelName: 'Content',
             paranoid: false
         });
 
-        return Duration;
+        return Content;
     }
 }
 
 
 
-module.exports = Duration;
+module.exports = Content;

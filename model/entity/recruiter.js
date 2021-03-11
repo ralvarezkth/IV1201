@@ -5,7 +5,7 @@ const { Sequelize, DataTypes, Model } = require('sequelize');
 /**
  * The various languages to dynamically populate the view.
  */
-class ApplicationCompetence extends Model {
+class Recruiter extends Model {
 
     /**
      * 
@@ -13,35 +13,24 @@ class ApplicationCompetence extends Model {
      * @return {Content} A sequelize model describing the Content entity.
      */
     static createModel(sequelize) {
-        ApplicationCompetence.init({
-            application_id: {
-                field: 'application_id',
+        Recruiter.init({
+            person_id: {
                 type: DataTypes.INTEGER,
                 primaryKey: true
-            },
-            competence_id: {
-                field: 'competence_id',
-                type: DataTypes.INTEGER,
-                primaryKey: true
-            },
-            duration_id: {
-                field: 'duration_id',
-                type: DataTypes.INTEGER,
-                allowNull: false
             }
 
         }, {
             freezeTableName: true,
             underscored: true,
             sequelize,
-            modelName: 'ApplicationCompetence',
+            modelName: 'Recruiter',
             paranoid: false
         });
 
-        return ApplicationCompetence;
+        return Recruiter;
     }
 }
 
 
 
-module.exports = ApplicationCompetence;
+module.exports = Recruiter;

@@ -1,6 +1,6 @@
 'use strict';
 
-const ApplicationDAO = require('../integration/ApplicationDAO');
+const ApplicationDAO = require('../integration/applicationDAO');
 
 class ApplicationController {
     

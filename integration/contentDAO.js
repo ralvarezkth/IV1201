@@ -1,10 +1,10 @@
 'use strict';
 
 const Sequelize = require('sequelize');
-const Content = require('../model/entity/Content');
-const ContentFragment = require('../model/entity/ContentFragment');
-const Fragment = require('../model/entity/Fragment');
-const ContentDTO = require('../model/dto/ContentDTO');
+const Content = require('../model/entity/content');
+const ContentFragment = require('../model/entity/contentFragment');
+const Fragment = require('../model/entity/fragment');
+const ContentDTO = require('../model/dto/contentDTO');
 const { WError } = require('verror');
 
 /**

@@ -1,7 +1,8 @@
 'use strict';
 
 /**
- * A user (applicant) of the recruitment application. 
+ * A DTO representing a full user of applicant user type of the recruitment application.
+ * This class includes the fields of the corresponding person entity.   
  */
 class UserDTO {
 

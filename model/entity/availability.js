@@ -5,7 +5,7 @@ const { Sequelize, DataTypes, Model } = require('sequelize');
 /**
  * The various languages to dynamically populate the view.
  */
-class Application extends Model {
+class Availability extends Model {
 
     /**
      * 
@@ -13,25 +13,19 @@ class Application extends Model {
      * @return {Content} A sequelize model describing the Content entity.
      */
     static createModel(sequelize) {
-        Application.init({
-            id: {
+        Availability.init({
+            application_id: {
                 type: DataTypes.INTEGER,
-                autoIncrement: true,
                 primaryKey: true
             },
-            person_id: {
-                field: 'person_id',
-                type: DataTypes.INTEGER,
-                allowNull: false
+            from_date: {
+                field: 'from_date',
+                type: DataTypes.BIGINT,
+                primaryKey: true
             },
-            status_id: {
-                field: 'status_id',
-                type: DataTypes.INTEGER,
-                allowNull: false
-            },
-            version: {
-                field: 'version',
-                type: DataTypes.INTEGER,
+            to_date: {
+                field: 'to_date',
+                type: DataTypes.BIGINT,
                 allowNull: false
             }
 
@@ -39,14 +33,14 @@ class Application extends Model {
             freezeTableName: true,
             underscored: true,
             sequelize,
-            modelName: 'Application',
+            modelName: 'Availability',
             paranoid: false
         });
 
-        return Application;
+        return Availability;
     }
 }
 
 
 
-module.exports = Application;
+module.exports = Availability;

@@ -5,7 +5,7 @@ const { Sequelize, DataTypes, Model } = require('sequelize');
 /**
  * The various languages to dynamically populate the view.
  */
-class Availability extends Model {
+class Duration extends Model {
 
     /**
      * 
@@ -13,19 +13,15 @@ class Availability extends Model {
      * @return {Content} A sequelize model describing the Content entity.
      */
     static createModel(sequelize) {
-        Availability.init({
-            application_id: {
+        Duration.init({
+            id: {
                 type: DataTypes.INTEGER,
+                autoIncrement: true,
                 primaryKey: true
             },
-            from_date: {
-                field: 'from_date',
-                type: DataTypes.BIGINT,
-                primaryKey: true
-            },
-            to_date: {
-                field: 'to_date',
-                type: DataTypes.BIGINT,
+            years: {
+                field: 'years',
+                type: DataTypes.DECIMAL(3, 1),
                 allowNull: false
             }
 
@@ -33,14 +29,14 @@ class Availability extends Model {
             freezeTableName: true,
             underscored: true,
             sequelize,
-            modelName: 'Availability',
+            modelName: 'Duration',
             paranoid: false
         });
 
-        return Availability;
+        return Duration;
     }
 }
 
 
 
-module.exports = Availability;
+module.exports = Duration;

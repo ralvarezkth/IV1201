@@ -1,6 +1,6 @@
 'use strict';
 
-const ContentDAO = require('../integration/ContentDAO');
+const ContentDAO = require('../integration/contentDAO');
 
 class ContentController {
     

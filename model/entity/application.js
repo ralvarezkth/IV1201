@@ -5,7 +5,7 @@ const { Sequelize, DataTypes, Model } = require('sequelize');
 /**
  * The various languages to dynamically populate the view.
  */
-class Status extends Model {
+class Application extends Model {
 
     /**
      * 
@@ -13,15 +13,25 @@ class Status extends Model {
      * @return {Content} A sequelize model describing the Content entity.
      */
     static createModel(sequelize) {
-        Status.init({
+        Application.init({
             id: {
                 type: DataTypes.INTEGER,
                 autoIncrement: true,
                 primaryKey: true
             },
-            name: {
-                field: 'name',
-                type: DataTypes.STRING(32),
+            person_id: {
+                field: 'person_id',
+                type: DataTypes.INTEGER,
+                allowNull: false
+            },
+            status_id: {
+                field: 'status_id',
+                type: DataTypes.INTEGER,
+                allowNull: false
+            },
+            version: {
+                field: 'version',
+                type: DataTypes.INTEGER,
                 allowNull: false
             }
 
@@ -29,14 +39,14 @@ class Status extends Model {
             freezeTableName: true,
             underscored: true,
             sequelize,
-            modelName: 'Status',
+            modelName: 'Application',
             paranoid: false
         });
 
-        return Status;
+        return Application;
     }
 }
 
 
 
-module.exports = Status;
+module.exports = Application;

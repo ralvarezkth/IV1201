@@ -3,7 +3,7 @@
 /**
  * Linguistic (content) to populate the client side view of the application. 
  */
-class ApplicationDTO {
+class ContentDTO {
 
     /**
      * 
@@ -13,14 +13,13 @@ class ApplicationDTO {
      * @param {string} menuRegister The content of the registration link.
      * @param {string} menuApply The content of the apply link.
      */
-    constructor(id, competence, availability, version, statusId, status) {
+    constructor(id, menuHome, menuLogin, menuRegister, menuApply) {
         this.id = id;
-        this.competence = competence;
-        this.availability = availability;
-        this.version = version;
-        this.statusId = statusId;
-        this.status = status;
+        this.menuHome = menuHome;
+        this.menuLogin = menuLogin;
+        this.menuRegister = menuRegister;
+        this.menuApply = menuApply;
     }
 }
 
-module.exports = ApplicationDTO;
+module.exports = ContentDTO;

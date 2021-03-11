@@ -21,7 +21,7 @@ const customChromePath = '/bin/brave';
     try {
         await driver.get('http://localhost:3000');
         await driver.sleep(100);
-        let el = await driver.findElements(By.xpath("//div[@class='Header']/a"));
+        let el = await driver.findElements(By.xpath("//div[@class='Header']//a"));
         let home = el[0];
         let reg = el[1];
 
@@ -55,7 +55,7 @@ const customChromePath = '/bin/brave';
         });
 
         lastName.getText().then(text => {
-            assert.strictEquals("", text, "Client validation input expected empty but appears not to be");
+            assert.strictEqual("", text, "Client validation input expected empty but appears not to be");
         });
 
         await driver.sleep(100);

@@ -21,7 +21,7 @@ const customChromePath = '/bin/brave';
     try {
         await driver.get('http://localhost:3000');
         await driver.sleep(100);
-        let el = await driver.findElements(By.xpath("//div[@class='Header']/a"));
+        let el = await driver.findElements(By.xpath("//div[@class='Header']//a"));
         let home = el[0];
         let reg = el[1];
         let login = el[2];

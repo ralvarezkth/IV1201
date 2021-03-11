@@ -4,7 +4,7 @@
 
 -- Dumped from database version 13.1
 -- Dumped by pg_dump version 13.1
-\c
+\c dbtest
 SET statement_timeout = 0;
 SET lock_timeout = 0;
 SET idle_in_transaction_session_timeout = 0;
@@ -20,19 +20,19 @@ SET row_security = off;
 -- Data for Name: Person; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO public."Person" (id, first_name, last_name, username, password, "createdAt", "updatedAt") VALUES (1, 'test', 'test', 'test', 'test444', '2021-02-13 16:08:23.101+01', '2021-02-13 16:08:23.101+01');
-INSERT INTO public."Person" (id, first_name, last_name, username, password, "createdAt", "updatedAt") VALUES (5, 'test', 'test', 'teste', 'test444', '2021-02-13 16:26:01.217+01', '2021-02-13 16:26:01.217+01');
-INSERT INTO public."Person" (id, first_name, last_name, username, password, "createdAt", "updatedAt") VALUES (6, 'rec', 'ruiter', 'recruiter', 'rec123', '2021-03-03 23:47:59.223189+01', '2021-03-03 23:47:59.223189+01');
-INSERT INTO public."Person" (id, first_name, last_name, username, password, "createdAt", "updatedAt") VALUES (7, 'app', 'licant', 'applicant', 'app123', '2021-03-03 23:47:59.223189+01', '2021-03-03 23:47:59.223189+01');
+INSERT INTO public."Person" (id, first_name, last_name, username, password, failed_login_attempts, "createdAt", "updatedAt") VALUES (1, 'test', 'test', 'test', 'test444', 0, '2021-02-13 16:08:23.101+01', '2021-02-13 16:08:23.101+01');
+INSERT INTO public."Person" (id, first_name, last_name, username, password, failed_login_attempts, "createdAt", "updatedAt") VALUES (2, 'test', 'test', 'teste', 'test444', 0, '2021-02-13 16:26:01.217+01', '2021-02-13 16:26:01.217+01');
+INSERT INTO public."Person" (id, first_name, last_name, username, password, failed_login_attempts, "createdAt", "updatedAt") VALUES (3, 'rec', 'ruiter', 'recruiter', 'rec123', 0, '2021-03-03 23:47:59.223189+01', '2021-03-03 23:47:59.223189+01');
+INSERT INTO public."Person" (id, first_name, last_name, username, password, failed_login_attempts, "createdAt", "updatedAt") VALUES (4, 'app', 'licant', 'applicant', 'app123', 0, '2021-03-03 23:47:59.223189+01', '2021-03-03 23:47:59.223189+01');
 
 
 --
 -- Data for Name: Applicant; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO public."Applicant" (person_id, email, dob, "createdAt", "updatedAt") VALUES (1, 'test@mail.com', '210201', '2021-02-13 16:08:23.11+01', '2021-02-13 16:08:23.11+01');
-INSERT INTO public."Applicant" (person_id, email, dob, "createdAt", "updatedAt") VALUES (5, 'test@mail.com', '210201', '2021-02-13 16:26:01.228+01', '2021-02-13 16:26:01.228+01');
-INSERT INTO public."Applicant" (person_id, email, dob, "createdAt", "updatedAt") VALUES (7, 'applicant@mail.com', '210301', '2021-03-03 23:49:38.43718+01', '2021-03-03 23:49:38.43718+01');
+INSERT INTO public."Applicant" (person_id, email, ssn, "createdAt", "updatedAt") VALUES (1, 'test@mail.com', '210201-1111', '2021-02-13 16:08:23.11+01', '2021-02-13 16:08:23.11+01');
+INSERT INTO public."Applicant" (person_id, email, ssn, "createdAt", "updatedAt") VALUES (2, 'test@mail.com', '210201-2222', '2021-02-13 16:26:01.228+01', '2021-02-13 16:26:01.228+01');
+INSERT INTO public."Applicant" (person_id, email, ssn, "createdAt", "updatedAt") VALUES (4, 'applicant@mail.com', '210301-3333', '2021-03-03 23:49:38.43718+01', '2021-03-03 23:49:38.43718+01');
 
 
 --
@@ -40,8 +40,8 @@ INSERT INTO public."Applicant" (person_id, email, dob, "createdAt", "updatedAt")
 --
 
 INSERT INTO public."Application" (id, person_id, status_id, version, created_at, updated_at) VALUES (1, 1, 1, 1, '2021-03-03 23:53:47.265692+01', '2021-03-03 23:53:47.265692+01');
-INSERT INTO public."Application" (id, person_id, status_id, version, created_at, updated_at) VALUES (2, 5, 1, 1, '2021-03-03 23:53:47.265692+01', '2021-03-03 23:53:47.265692+01');
-INSERT INTO public."Application" (id, person_id, status_id, version, created_at, updated_at) VALUES (3, 7, 1, 1, '2021-03-03 23:53:47.265692+01', '2021-03-03 23:53:47.265692+01');
+INSERT INTO public."Application" (id, person_id, status_id, version, created_at, updated_at) VALUES (2, 2, 1, 1, '2021-03-03 23:53:47.265692+01', '2021-03-03 23:53:47.265692+01');
+INSERT INTO public."Application" (id, person_id, status_id, version, created_at, updated_at) VALUES (3, 4, 1, 1, '2021-03-03 23:53:47.265692+01', '2021-03-03 23:53:47.265692+01');
 
 
 --
@@ -69,7 +69,7 @@ INSERT INTO public."Availability" (application_id, from_date, to_date, created_a
 -- Data for Name: Recruiter; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO public."Recruiter" (person_id, created_at, updated_at) VALUES (6, '2021-03-03 23:48:39.05045+01', '2021-03-03 23:48:39.05045+01');
+INSERT INTO public."Recruiter" (person_id, created_at, updated_at) VALUES (3, '2021-03-03 23:48:39.05045+01', '2021-03-03 23:48:39.05045+01');
 
 
 --

@@ -5,7 +5,7 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
-const {verifyToken, authApplicant} = require('./view/routes/authentication')
+const {verifyToken, authRole} = require('./view/routes/authentication')
 
 const IndexRouter = require('./view/routes/indexRouter');
 const ApplyRouter = require('./view/routes/applyRouter');
@@ -28,8 +28,12 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'client/build')));
 
 app.use('/', IndexRouter);
-app.use('/register', RegisterRouter);
+
+app.use('/admin', verifyToken, authRole("Recruiter"), AdminRouter);
+app.use('/apply', verifyToken, authRole("Applicant"), ApplyRouter);
+app.use('/content', ContentRouter);
 app.use('/login', LoginRouter);
+app.use('/register', RegisterRouter);
 app.use('/apply', verifyToken, authApplicant, ApplyRouter);
 
 // catch 404 and forward to error handler

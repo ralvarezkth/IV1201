@@ -1,8 +1,6 @@
 const {Builder, By, Key, until} = require('selenium-webdriver');
 const assert = require('assert');
 const {Options} = require('selenium-webdriver/chrome');
-const chrome = require('selenium-webdriver/chrome');
-const firefox = require('selenium-webdriver/firefox');
 
 const customChromePath = '/bin/brave';
 
@@ -49,13 +47,19 @@ const customChromePath = '/bin/brave';
         driver.switchTo().activeElement().then(el => {
             el.getId().then(activeId => {
                 lastName.getId().then(id => {
+                    let msg = "Client validation";
+                    test(msg);
                     assert.ok(activeId === id, "Client validation does not appear to autofocus");
+                    pass(msg);
                 });
             });
         });
 
         lastName.getText().then(text => {
+            let msg = "Client validation";
+            test(msg);
             assert.strictEqual("", text, "Client validation input expected empty but appears not to be");
+            pass(msg);
         });
 
         await driver.sleep(100);
@@ -63,9 +67,124 @@ const customChromePath = '/bin/brave';
         await driver.sleep(100);
 
         button.click();
+        await driver.sleep(500);
+        let feedback = await driver.findElement(By.xpath("//div[@class='App']/div"));
         
-        
+        feedback.getAttribute("class").then(attr => {
+            feedback.getText().then(text => {
+                let msg = "Conditional registration";
+                test(msg);
+                if (attr === "bg-green") {
+                    assert.notStrictEqual(-1, text.indexOf("Registration successful", "Registration successful but expected feedback not provided"));
+                    pass(msg);
+                } else {
+                    assert.notStrictEqual(-1, text.indexOf("Registration failed", "Registration failed due to duplicate user but expected feedback not provided"));
+                    assert.notStrictEqual(-1, text.indexOf("not available"), "Registration failed due to duplicate user but expected feedback not provided");
+                    pass(msg);
+                }
+            });
+        });
+
+        await driver.sleep(100);
+        button.click();
+        await driver.sleep(500);
+
+        feedback.getText().then(text => {
+            let msg = "Register duplicate user";
+            test(msg);
+            assert.notStrictEqual(-1, text.indexOf("Registration failed"), "Registration failed due to duplicate user but expected feedback not provided");
+            assert.notStrictEqual(-1, text.indexOf("not available"), "Registration failed due to duplicate user but expected feedback not provided");
+            pass(msg);
+        });
+
+        await driver.sleep(100);
+        firstName.clear();
+        lastName.clear();
+        email.clear();
+        ssn.clear();
+        uname.clear();
+        passwd.clear();
+        await driver.sleep(100);
+
+        firstName.sendKeys("Test1");
+        lastName.sendKeys("User");
+        email.sendKeys("test@user.com");
+        ssn.sendKeys("990909-9999");
+        uname.sendKeys("TestUser123");
+        passwd.sendKeys("Password123");
+
+        await driver.sleep(100);
+        button.click();
+        await driver.sleep(500);
+
+        feedback.getText().then(text => {
+            let msg = "Invalid name format; server-side validation";
+            test(msg);
+            assert.notStrictEqual(-1, text.indexOf("Invalid name format"), "Registration failed due to invalid first name but expected feedback not provided");
+            pass(msg);
+        });
+
+        await driver.sleep(100);
+        firstName.clear();
+        firstName.sendKeys("Test");
+        lastName.clear();
+        lastName.sendKeys("User1");
+
+        await driver.sleep(100);
+        button.click();
+        await driver.sleep(500);
+
+        feedback.getText().then(text => {
+            let msg = "Invalid name format; server-side validation";
+            test(msg);
+            assert.notStrictEqual(-1, text.indexOf("Invalid name format"), "Registration failed due to invalid last name but expected feedback not provided");
+            pass(msg);
+        });
+
+        await driver.sleep(100);
+        lastName.clear();
+        lastName.sendKeys("User");
+        email.clear();
+        email.sendKeys("test@user");
+
+        await driver.sleep(100);
+        button.click();
+        await driver.sleep(500);
+
+        feedback.getText().then(text => {
+            let msg = "Invalid email format; server-side validation";
+            test(msg);
+            assert.notStrictEqual(-1, text.indexOf("Invalid email format"), "Registration failed due to invalid email address but expected feedback not provided");
+            pass(msg);
+        });
+
+        await driver.sleep(100);
+        email.clear();
+        email.sendKeys("test@user.com");
+        passwd.clear();
+        passwd.sendKeys("badpw");
+
+        await driver.sleep(100);
+        button.click();
+        await driver.sleep(500);
+
+        feedback.getText().then(text => {
+            let msg = "Invalid password format; server-side validation";
+            test(msg);
+            assert.notStrictEqual(-1, text.indexOf("Invalid password"), "Registration failed due to invalid password but expected feedback not provided");
+            pass(msg);
+        });
+
+        await driver.sleep(100);
     } finally {
-  //      await driver.quit();
+        await driver.quit();
+    }
+
+    function test(msg) {
+        console.log("[*] testing: " + msg);
+    }
+
+    function pass(msg) {
+        console.log("[X] passed: " + msg);
     }
 })();

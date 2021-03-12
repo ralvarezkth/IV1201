@@ -14,6 +14,15 @@ router.get('/', function(req, res) {
     });
 });
 
+/* GET specific application details. */
+router.get('/:id', function(req, res) {
+    let id = req.params.id;
+
+    getApplication(id).then(data => {
+        res.json(data);
+    });
+});
+
 /* PUT application - update status of application */
 router.put('/:id', function(req, res) {
     let application = typeof(req.body.updatedApplication) === "string" ? JSON.parse(req.body.updatedApplication) : req.body.updatedApplication;

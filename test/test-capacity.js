@@ -1,5 +1,6 @@
 const needle = require('needle');
 
+const num = process.argv.length > 2 ? process.argv[2] : 100;
 let userReg = [];
 let appFetch = [];
 let userAll = [];
@@ -9,7 +10,7 @@ for (let i = 0; i < 5; i++) {
     userReg.push([]);
     appFetch.push([]);
 
-    for (let j = 0; j < 100; j++) {
+    for (let j = 0; j < num; j++) {
         let fname = scrambleFname(i, j);
         let lname = scrambleLname(i, j);
         let email = "fname" + i + j + "@test.com";
@@ -22,8 +23,8 @@ for (let i = 0; i < 5; i++) {
     }
 }
 
-bench().registerUser(userReg).wait();
-// bench().fetchApplication(appFetch).wait();
+// bench().registerUser(userReg).wait();
+bench().fetchApplication(appFetch).wait();
 
 
 function scrambleFname(outer, num) {

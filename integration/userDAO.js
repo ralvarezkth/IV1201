@@ -88,7 +88,7 @@ class UserDAO {
 
     /**
      * Stores a new applicant user type in the database.
-     *
+     * 
      * @param {UserDTO} user The user to be created
      * @returns {UserDTO} createdUser The created user
      * @throws Throws an exception if unable to set the specified user.
@@ -111,48 +111,48 @@ class UserDAO {
                 const createdApplicant = await Applicant.create(newApplicant, {include: Person, transaction: t});
 
                 return new UserDTO(
-                    createdPerson.id,
-                    createdPerson.firstName,
-                    createdPerson.lastName,
-                    createdPerson.username,
-                    createdPerson.password,
-                    createdApplicant.email,
+                    createdPerson.id, 
+                    createdPerson.firstName, 
+                    createdPerson.lastName, 
+                    createdPerson.username, 
+                    createdPerson.password, 
+                    createdApplicant.email, 
                     createdApplicant.ssn
                 );
-
-            });
+            
+            });   
         } catch (error) {
             let message = 'Technical issues, please try again later.';
 
-            if (error.name === 'SequelizeUniqueConstraintError')
+            if (error.name === 'SequelizeUniqueConstraintError') 
                 message = `The username '${username}' is not available`;
-
+            
             this.logger.log(error.stack);
             throw new WError(
-                {
-                    name: 'CreateUserFailedError',
-                    cause: error,
-                    info: {
-                        message: message
-                    }
-                },
-                'The user could not be created.'
+            {
+                name: 'CreateUserFailedError',
+                cause: error,
+                info: {
+                    message: message
+                }
+            },
+            'The user could not be created.'
             );
-
-
+            
+            
         }
     }
 
     /**
-     * Retrieves a user as a Person entity from the database by username and compares
+     * Retrieves a user as a Person entity from the database by username and compares 
      * its password with the provided password. The parameters are validated and sanitized
-     * before use.
+     * before use. 
      * Repeated failed login attempts are logged.
-     *
-     * @param {string} username The username to find in the database.
+     * 
+     * @param {string} username The username to find in the database. 
      * @param {string} password The password to compare with
      * @returns {Person} The found person.
-     * @throws Throws an exception if unable to retrieve Person or if the provided password is incorrect.
+     * @throws Throws an exception if unable to retrieve Person or if the provided password is incorrect. 
      */
     async getUser(username, password){
         const ValidatedUsername = this.validator.validateUserLogin(username, password);
@@ -189,7 +189,7 @@ class UserDAO {
                                 {name: "TooManyFailedLoginAttemptsError", info: {message: "Too many failed login attempts, please wait 1 minute and try again."}},
                                 'Too many failed login attempts.'
                             );
-                        }
+                        } 
                     }
                 }
                 throw new WError(
@@ -216,7 +216,7 @@ class UserDAO {
     }
 
     /**
-     * Retrieves a user as an Applicant entity from the database by the user id.
+     * Retrieves a user as the role entity from the database by the user id.
      * The parameter is validated and sanitized before use.
      * @param {integer} id The user id to find in the database.
      * @returns {Applicant} The applicant with the matching id or null if not found.
@@ -263,7 +263,7 @@ class UserDAO {
             return await this.database.transaction(async (t) => {
                 const recruiter = await Recruiter.count({ where: {person_id: id}, transaction: t} );
                 const applicant = await Applicant.count({ where: {person_id: id}, transaction: t} );
-
+                
                 if(recruiter || applicant) {
                     return {recruiter, applicant};
                 }

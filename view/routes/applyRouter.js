@@ -5,22 +5,16 @@ const {VError} = require('verror');
 const jwt = require('jsonwebtoken');
 
 /* GET users listing. */
-router.get('/', verifyToken, function(req, res) {
-    jwt.verify(req.token, 'secretkey', (err, authData) => {
-        try {
-           if(err) {
-            res.sendStatus(401);
-            } else {
-                res.json({
-                    securedData: "Grattis på födelsedagen Fredrik !! :)"
-                });
-            } 
-        } catch (err) {
-            res.status(500).json({error: VError.info(err).message});
-        }
-        
+router.get('/', function(req, res){
+    res.json({
+        securedData: "You are authorized!"
     });
-    
 });
+
+router.post('/', function(req, res) {
+    // validate req.body.newApplication
+    // send application data to controller
+    res.status(404).json({error: 'This feature has not been implemented yet'})
+})
 
 module.exports = router;

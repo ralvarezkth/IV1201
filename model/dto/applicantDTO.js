@@ -1,7 +1,7 @@
 'use strict';
 
 /**
- * A type of user of the recruitment application 
+ * A DTO representing an applicant user type of the recruitment application. 
  */
 class ApplicantDTO {
 

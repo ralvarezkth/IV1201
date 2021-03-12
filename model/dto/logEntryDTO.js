@@ -1,7 +1,7 @@
 'use strict';
 
 /**
- * This class represents a log entry 
+ * A DTO representing a log entry in the log.
  */
 class LogEntryDTO {
 

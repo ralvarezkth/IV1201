@@ -8,7 +8,7 @@ class RegisterVM extends Component {
     constructor(props) {
         super(props);
 
-        this.setState({success: null, msg: ""});
+        this.state = {success: null, msg: ""};
 
         this.handleRegistrationSubmit = this.handleRegistrationSubmit.bind(this);
     }
@@ -36,9 +36,8 @@ class RegisterVM extends Component {
 
                     json.then(data => {
                         if (res.status === 200) {
-                            this.setState({success: true, msg: "Hello " + data.firstName + "! Registration successful. Would you care for some pancakes? Richard's treat."});
+                            this.setState({success: true, msg: "Hello " + data.firstName + "! Registration successful."});
                         } else {
-                            console.log(data);
                             this.setState({success: false, msg: "Registration failed. " + data.error});
                         }  
                     }).catch(data => {
@@ -52,7 +51,8 @@ class RegisterVM extends Component {
         return(
             React.createElement(RegisterView, {
                 handleRegistrationSubmit: this.handleRegistrationSubmit,
-                state: this.state
+                state: this.state,
+                props: this.props.content
             })
         );
     }

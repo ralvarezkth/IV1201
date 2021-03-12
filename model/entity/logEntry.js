@@ -3,13 +3,14 @@
 const { Sequelize, DataTypes, Model } = require('sequelize');
 
 /**
- *  This class represents a log entry entity 
+ *  A LogEntry entity representing a log entry in the log. 
  */
 class LogEntry extends Model {
 
     /**
+     * Initializes the model.
      * 
-     * @param {Sequelize} sequelize The sequelize connection instance object
+     * @param {Sequelize} sequelize A sequelize connection instance object.
      * @return {LogEntry} A sequelize model describing the LogEntry entity.
      */
     static createModel(sequelize) {
@@ -22,7 +23,7 @@ class LogEntry extends Model {
                 primaryKey: true
             },
             event: {
-                type: DataTypes.STRING,
+                type: DataTypes.STRING(2000),
                 allowNull: false
             }
         }, {

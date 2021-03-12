@@ -15,13 +15,13 @@ const LoginView = ({handleLogin, state, props}) => {
             <h1>{props.logintitle}</h1>
             {
                 state != null && state.success != null &&
-                <div className={state.success ? 'bg-green' : 'bg-red'}>
+                <div id="message" className={state.success ? 'bg-green' : 'bg-red'}>
                     {state.msg}
                 </div>
             }
             {
                 state != null && state.msg.includes("Access denied") &&
-                <div className={state.success ? 'bg-green' : 'bg-red'}>
+                <div id="message" className={state.success ? 'bg-green' : 'bg-red'}>
                     {state.msg}
                 </div>
             }

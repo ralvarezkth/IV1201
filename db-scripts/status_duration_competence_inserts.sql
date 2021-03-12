@@ -44,9 +44,9 @@ INSERT INTO public."Duration" (id, years, created_at, updated_at) VALUES (10, 5.
 -- Data for Name: Status; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO public."Status" (id, name, created_at, updated_at) VALUES (2, 'Unhandled', '2021-03-03 19:51:36.243273+01', '2021-03-03 19:51:36.243273+01');
-INSERT INTO public."Status" (id, name, created_at, updated_at) VALUES (3, 'Accepted', '2021-03-03 19:51:36.243273+01', '2021-03-03 19:51:36.243273+01');
-INSERT INTO public."Status" (id, name, created_at, updated_at) VALUES (4, 'Rejected', '2021-03-03 19:51:36.243273+01', '2021-03-03 19:51:36.243273+01');
+INSERT INTO public."Status" (id, name, created_at, updated_at) VALUES (1, 'Unhandled', '2021-03-03 19:51:36.243273+01', '2021-03-03 19:51:36.243273+01');
+INSERT INTO public."Status" (id, name, created_at, updated_at) VALUES (2, 'Accepted', '2021-03-03 19:51:36.243273+01', '2021-03-03 19:51:36.243273+01');
+INSERT INTO public."Status" (id, name, created_at, updated_at) VALUES (3, 'Rejected', '2021-03-03 19:51:36.243273+01', '2021-03-03 19:51:36.243273+01');
 
 
 --

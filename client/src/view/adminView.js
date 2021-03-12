@@ -11,7 +11,7 @@ const AdminView = ({setApplication, setStatus, updateApplication, state, props})
             <h1>{props.admintitle}</h1>
 
             {state != null && state.success != null &&
-                <div className={state.success ? 'bg-green' : 'bg-red'}>
+                <div id="message" className={state.success ? 'bg-green' : 'bg-red'}>
                     {state.msg}
                 </div>
             }
@@ -29,10 +29,40 @@ const AdminView = ({setApplication, setStatus, updateApplication, state, props})
                 </div>
                 <div className="form-group">
                     {state !== null && state.applicationId &&
-                    <select id="status" name="status" defaultValue={0} onChange={ev => {setStatus(ev)}}>
-                        <option key={0} disabled value={0}>choose status</option>
-                        {state.status.map(stat => <option key={stat.id} value={stat.id} value={stat.id}>{stat.name}</option>)}
-                    </select>}
+                    <div className={`application-data ${
+                        state.applications.find(app => parseInt(state.applicationId) === app.id).status
+                    }`}>
+                        <div className="application-competence">
+                            <table>{
+                                state.applications.find(app => parseInt(state.applicationId) === app.id)
+                                    .competence.map(comp => {
+                                        return (
+                                            <tr>    
+                                                <td key={comp.toString()}>{comp.competence}</td>
+                                                <td>{comp.duration}</td>
+                                            </tr>
+                                        )
+                                    })
+                            }</table>
+                            <table>{
+                                state.applications.find(app => parseInt(state.applicationId) === app.id)
+                                    .availability.map(avail => {
+                                        return (
+                                            <tr>    
+                                                <td key={avail.toString()}>{avail.from}</td>
+                                                <td>{avail.to}</td>
+                                            </tr>
+                                        )
+                                    })
+                                           
+                            }</table>
+                        </div>
+                        <select id="status" name="status" defaultValue={0} onChange={ev => {setStatus(ev)}}>
+                            <option key={0} disabled value={0}>choose status</option>
+                            {state.status.map(stat => <option key={stat.id} value={stat.id} value={stat.id}>{stat.name}</option>)}
+                        </select>
+                    </div>
+                    }
                 </div>
                 <div className="form-group">
                     <button type="submit" id="send">{props.adminbutton}</button>

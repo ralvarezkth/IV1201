@@ -18,7 +18,7 @@ const RegisterView = ({handleRegistrationSubmit, state, props}) => {
         <div className="App">
             <h1>{props.registertitle}</h1>
             {state != null && state.success != null &&
-                <div className={state.success ? 'bg-green' : 'bg-red'}>
+                <div id="message" className={state.success ? 'bg-green' : 'bg-red'}>
                     {state.msg}
                 </div>
             }

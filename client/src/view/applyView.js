@@ -13,7 +13,7 @@ const ApplyView = ({handleApplicationSubmit, state, props}) => {
         <div className="App">
             <h1>{props.applytitle}</h1>
             {state && state.success != null && state.msg &&
-                <div className={state.success ? 'bg-green' : 'bg-red'}>
+                <div id="message" className={state.success ? 'bg-green' : 'bg-red'}>
                     {state.msg}
                 </div>
             }

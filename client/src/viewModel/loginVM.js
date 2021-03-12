@@ -37,11 +37,15 @@ class LoginVM extends Component{
 
        fetch(`/login?username=${username}&password=${password}`)
             .then(res => {
+                console.log("@1");
                 let json = res.json();
 
                 json.then((data) => {
                     if(res.status === 200) {
+                        console.log("@2");
+                        console.log(JSON.stringify(data.user.role));
                         sessionStorage.setItem("token", data.token);
+                        let redirect = data.user.role === "applicant" ? "/apply" : "/admin";
                         let msg = "Welcome back!";
                         if(data.user && data.user.firstName) {
                             msg = `Welcome back ${data.user.firstName}!`
@@ -49,16 +53,18 @@ class LoginVM extends Component{
                         this.setState({
                             success: true, 
                             msg,
-                            redirect: "/apply",
+                            redirect,
                             user: data.user
                         });
                     } else {
+                        console.log("@3");
                         this.setState({
                             success: false,
                             msg: `Login failed. ${data.error}`
                         });
                     }
                 }).catch(data => {
+                    console.log("@4");
                     this.setState({
                             success: false,
                             msg: `Login failed. ${data.error}`
@@ -68,8 +74,8 @@ class LoginVM extends Component{
 
     }
     render(){
-        if(this.state.redirect){
-            return <Redirect to={{pathname: this.state.redirect, user: this.state.user}}  />
+        if (this.state.redirect) {
+            return <Redirect to={{pathname: this.state.redirect, state: this.state}}  />
         }
         return(
             React.createElement(LoginView, {

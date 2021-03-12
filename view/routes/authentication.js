@@ -44,20 +44,26 @@ function authRole(role){
  * @param next The callback argument, passes control to next handler when called
  */
 function verifyToken(req, res, next) {
+    console.log("#1");
     const bearerHeader = req.headers['authorization'];
     if(bearerHeader) {
+        console.log("#2");
         try{
             jwt.verify(bearerHeader.split(' ')[1], 'secretkey', (error, authData) => {
                 if(error) {
+                    console.log("#3");
                     res.status(401).json({error: "Unauthenticated"});
                 } else {
+                    console.log("#4");
                     next();
                 }
             })
         } catch(error){
+            console.log("#5");
             res.status(500).json({error: VError.info(err).message});
         }
     } else {
+        console.log("#6");
         res.status(401).json({error: "Unauthorized"});
     }
 }

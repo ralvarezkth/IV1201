@@ -38,13 +38,13 @@ class UserController {
     }
 
     /**
-     * Retrieves a user of type applicant by matching the parameter id.
+     * Retrieves a user of a role type by matching the parameter id.
      *
      * @param {integer} id The applicant person id to be searched for in the database.
      * @returns {Applicant} The applicant with person id matching the parameter id.
      */
-    getApplicant(id) {
-        return this.userDAO.getApplicant(id);
+    getUserByRoleAndId(id, role) {
+        return this.userDAO.getUserByRoleAndId(id, role);
     }
     async getRole(id) {  
         return await this.userDAO.getRole(id);

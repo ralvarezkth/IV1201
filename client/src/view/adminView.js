@@ -18,7 +18,7 @@ const AdminView = ({setApplication, setStatus, updateApplication, state, props})
 
             <form onSubmit={(e)=> { updateApplication(e)}}>
                 <div className="form-group">
-                    {state && state.applications &&
+                    {state && state.applications && !state.applications.error &&
                         <select id="application" name="application" defaultValue={0} onChange={ev => {setApplication(ev)}}>
                         <option key={0} disabled value={0}>choose application</option>
                             {state.applications.map(app => <option key={app.id} value={app.id}>{app.id}</option>)}
@@ -65,7 +65,15 @@ const AdminView = ({setApplication, setStatus, updateApplication, state, props})
                     }
                 </div>
                 <div className="form-group">
-                    <button type="submit" id="send">{props.adminbutton}</button>
+                    {state && state.application && !state.applications.error &&
+                        <button type="submit" id="send">{props.adminbutton}</button>
+                    }
+                    {state && state.applications && state.applications.error && 
+                        <div className='bg-red'>
+                            {state.applications.error}
+                        </div> 
+                    }
+                    
                 </div>
             </form>             
         </div>

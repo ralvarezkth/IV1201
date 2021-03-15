@@ -18,35 +18,35 @@ class UserDAO {
 
     /**
      * Creates a new instance of this class and initializes the database connection
-     * using the environment variable DATABASE_URL, or using the default credentials 
+     * using the environment variable DATABASE_URL, or using the default credentials
      * for a local database.
-     * Initialization creates the model entities and the required database tables 
-     * if they are non-existent. 
+     * Initialization creates the model entities and the required database tables
+     * if they are non-existent.
      * @throws Throws an exception if unable to connect to the database.
      */
     constructor() {
-        process.env.DATABASE_URL ? 
-        this.database = new Sequelize(process.env.DATABASE_URL, {
-            dialect: 'postgres',
-            define: {
-                freezeTableName: true
-            },
-            dialectOptions: {
-                ssl: {
-                    require: true,
-                    rejectUnauthorized: false
+        process.env.DATABASE_URL ?
+            this.database = new Sequelize(process.env.DATABASE_URL, {
+                dialect: 'postgres',
+                define: {
+                    freezeTableName: true
+                },
+                dialectOptions: {
+                    ssl: {
+                        require: true,
+                        rejectUnauthorized: false
+                    }
                 }
-            }
-        }) 
-        :
-        this.database = new Sequelize('dbtest', 'postgres', 'admin', {
-            host: 'localhost',
-            port: '5432',
-            dialect: 'postgres',
-            define: {
-                freezeTableName: true
-            }
-        });
+            })
+            :
+            this.database = new Sequelize('dbtest', 'postgres', 'admin', {
+                host: 'localhost',
+                port: '5432',
+                dialect: 'postgres',
+                define: {
+                    freezeTableName: true
+                }
+            });
         this.initialize();
         this.logger = new Logger();
         this.validator = new ValidatorUtil();
@@ -82,7 +82,7 @@ class UserDAO {
                     }
                 },
                 'Could not connect to the database.'
-            );   
+            );
         }
     }
 
@@ -216,12 +216,12 @@ class UserDAO {
     }
 
     /**
-     * Retrieves a user as an Applicant entity from the database by the user id.
-     * The parameter is validated and sanitized before use. 
+     * Retrieves a user as the role entity from the database by the user id.
+     * The parameter is validated and sanitized before use.
      * @param {integer} id The user id to find in the database.
      * @returns {Applicant} The applicant with the matching id or null if not found.
      */
-    async getApplicant(id){
+    async getUserByRoleAndId(id, role){
         const ValidatedId = this.validator.validateUserId(id);
         if (ValidatedId.error) {
             throw new WError(
@@ -231,9 +231,18 @@ class UserDAO {
         }
         try {
             return await this.database.transaction(async (t) => {
-                return await Applicant.findOne({ where: {person_id: id}, transaction: t} );
+                if(role.toLowerCase() === "applicant") {
+                    return await Applicant.findOne({where: {person_id: id}, transaction: t});
+                }else if(role.toLowerCase() === "recruiter" ){
+                    return await Recruiter.findOne({where: {person_id: id}, transaction: t});
+                }else{
+                    throw new WError(
+                        {name: "RoleDoesNotExistError", info: {message: "The role '"+role+"' does not match any of the existing ones. Please check spelling of rolename or of if it's implemented correctly."}},
+                        'Role does not exist.'
+                    );
+                }
             });
-        } catch(error) {
+        }catch(error){
             this.logger.log(error.stack);
             throw new WError(
                 {
@@ -279,5 +288,3 @@ class UserDAO {
 
 }
 module.exports = UserDAO;
-
-

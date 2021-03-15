@@ -6,7 +6,7 @@ const jwt = require('jsonwebtoken');
 const {ApplicationCtrl} = require('../../controller');
 
 /* GET applications. */
-router.get('/', function(req, res) {   
+router.get('/', function(req, res) {
     getApplications().then(data => {
         res.json(data);
     }).catch(err => {

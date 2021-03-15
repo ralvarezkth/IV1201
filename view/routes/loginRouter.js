@@ -18,7 +18,7 @@ router.get('/', function(req, res, next) {
             if(user) {
                 jwt.sign({"id": user.id}, 'secretkey', (err, token) =>{
                     getRole(user.id).then(data => {
-                        user.dataValues.role = data.applicant ? "a" : "r";
+                        user.dataValues.role = data.applicant ? "applicant" : "recruiter";
                         res.json({user, token})
                     });
                 });

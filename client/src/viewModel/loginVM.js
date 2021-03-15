@@ -42,6 +42,7 @@ class LoginVM extends Component{
                 json.then((data) => {
                     if(res.status === 200) {
                         sessionStorage.setItem("token", data.token);
+                        let redirect = data.user.role === "applicant" ? "/apply" : "/admin";
                         let msg = "Welcome back!";
                         if(data.user && data.user.firstName) {
                             msg = `Welcome back ${data.user.firstName}!`
@@ -49,7 +50,7 @@ class LoginVM extends Component{
                         this.setState({
                             success: true, 
                             msg,
-                            redirect: "/apply",
+                            redirect,
                             user: data.user
                         });
                     } else {
@@ -68,8 +69,8 @@ class LoginVM extends Component{
 
     }
     render(){
-        if(this.state.redirect){
-            return <Redirect to={{pathname: this.state.redirect, user: this.state.user}}  />
+        if (this.state.redirect) {
+            return <Redirect to={{pathname: this.state.redirect, state: this.state}}  />
         }
         return(
             React.createElement(LoginView, {

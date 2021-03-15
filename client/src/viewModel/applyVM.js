@@ -27,7 +27,7 @@ class ApplyVM extends Component {
                 let json = res.json();
                 json.then(data => {
                     if (res.status === 200) {
-                        this.setState({success: true, user: this.props.location.user});
+                        this.setState({success: true});
                     } else {
                         this.setState({success: false, msg: "Access denied: " + data.error, redirect: "/login"});
                     }

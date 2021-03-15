@@ -1,5 +1,6 @@
 import AdminView from '../view/adminView'
 import React, { Component } from 'react';
+import { Redirect } from "react-router-dom";
 
 /**
  * Component AdminVM handles the Admin page
@@ -8,23 +9,34 @@ class AdminVM extends Component {
     constructor(props) {
         super(props);
 
-        this.state = {success: null, msg: "", applicationId: null, statusId: null, applications: null, 
+        this.state = {success: null, msg: "", applicationId: null, statusId: null, applications: null, redirect: null, user: null,
                         status: [{id: 1, name: "Unhandled"}, {id: 2, name: "Accepted"}, {id: 3, name: "Rejected"}]};
 
-        this.getApplications = this.getApplications.bind(this);
+        this.getApplications = this.getApplications.bind(this); // unused
         this.setApplication = this.setApplication.bind(this);
         this.setStatus = this.setStatus.bind(this);
         this.updateApplication = this.updateApplication.bind(this);
     }
 
     componentDidMount() {
-        fetch("/admin").then(res => {
-            res.json().then(data => {
-                this.setState({applications: data});
+        const token = sessionStorage.getItem("token");
+        let reqOp;
+        if(token) {
+            reqOp = {headers: {'Authorization': `Bearer ${token}`}}
+        }
+        fetch("/admin", reqOp)
+            .then(res => {
+                let json = res.json();
+                json.then(data => {
+                    if (res.status === 200) {
+                        this.setState({applications: data});
+                    } else {
+                        this.setState({success: false, msg: "Access denied: " + data.error, redirect: "/login"});
+                    }
+                }).catch(err => {
+                    this.setState({success: false, msg: "Unable to fetch applications, please try again later."});
+                });
             })
-        }).catch(err => {
-            this.setState({success: false, msg: "Unable to fetch applications, please try again later."});
-        });
     }
 
     setApplication(ev) {
@@ -73,10 +85,13 @@ class AdminVM extends Component {
         
     }
 
+    // unused
     getApplications(event) {       
         const token = sessionStorage.getItem("token");
-        const reqOp = {headers: {'Authorization': `Bearer ${token}`}}
-
+        let reqOp;
+        if(token) {
+            reqOp = {headers: {'Authorization': `Bearer ${token}`}}
+        }
         fetch('/apply', reqOp)
             .then(res => {
                 
@@ -97,6 +112,9 @@ class AdminVM extends Component {
     }
         
     render() {
+        if (this.state.redirect) {
+            return <Redirect to={{pathname: this.state.redirect, msg: this.state.msg}}  />
+        }
         return(
             React.createElement(AdminView, {
                 setApplication: this.setApplication,

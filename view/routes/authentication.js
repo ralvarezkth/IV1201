@@ -12,24 +12,27 @@ const { UserCtrl } = require('../../controller');
  * @param res The HTTP response argument
  * @param next The callback argument, passes control to next handler when called
  */
-function authApplicant(req, res, next){
-    const bearerHeader = req.headers['authorization'];
-    if(bearerHeader){
-        const bearerToken = bearerHeader.split(' ')[1];
-        const decoded = jwt.verify(bearerToken, 'secretkey')
-        getApplicant(decoded.id)
-            .then(user => {
-                if(user) {
-                    next();
-                } else {
-                    res.status(403).json({error: "Unauthorized"});
-                }
-            })
-            .catch(err => {
-                res.status(500).json({error: VError.info(err).message});
-        });
-    } else{
-        res.status(401).json({error: "Unauthenticated"})
+
+function authRole(role){
+    return function (req, res, next){
+        const bearerHeader = req.headers['authorization'];
+        if(bearerHeader){
+            const bearerToken = bearerHeader.split(' ')[1];
+            const decoded = jwt.verify(bearerToken, 'secretkey')
+            getUserByRoleAndId(decoded.id, role)
+                .then(user => {
+                    if(user) {
+                        next();
+                    } else {
+                        res.status(403).json({error: "Unauthorized"});
+                    }
+                })
+                .catch(err => {
+                    res.status(500).json({error: VError.info(err).message});
+                });
+        } else{
+            res.status(401).json({error: "Unauthenticated"})
+        }
     }
 }
 
@@ -59,10 +62,10 @@ function verifyToken(req, res, next) {
     }
 }
 
-async function getApplicant(id) {
-    return await UserCtrl.getApplicant(id);
+async function getUserByRoleAndId(id, role) {
+    return await UserCtrl.getUserByRoleAndId(id, role);
 }
 
 module.exports = {
-    verifyToken, authApplicant
+    verifyToken, authRole
 };

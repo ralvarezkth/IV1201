@@ -17,16 +17,15 @@ const ApplyView = ({handleApplicationSubmit, state, props}) => {
                     {state.msg}
                 </div>
             }
-            {state && state.success != null && state.user && (
+            {state && state.success != null && (
                 <div>
-                    <h3>{`Hi ${state.user.firstName}! Fill out and submit this form to apply`}</h3>
+                    <h3>Fill out and submit this form to apply</h3>
                     
                     <form onSubmit={(e)=> {
                         let newApplication = {
                             competence: competence,
                             duration: duration,
-                            availability: availability,
-                            personId: state.user.id   
+                            availability: availability   
                         };
                         handleApplicationSubmit(e, newApplication)
 

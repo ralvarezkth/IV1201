@@ -33,10 +33,10 @@ const LoginView = ({handleLogin, state, props}) => {
                     handleLogin(e, loginRequest)
                 }}>
                 <div>
-                    <input type="text" onChange={(event)=>setUsername(event.target.value)} id="username" placeholder="Username" required/>
+                    <input type="text" onChange={(event)=>setUsername(event.target.value)} id="username" placeholder={props.registerusername} required/>
                 </div>
                 <div>
-                    <input type="password" onChange={(event)=>setPassword(event.target.value)}  id="password" placeholder="Password" required/>
+                    <input type="password" onChange={(event)=>setPassword(event.target.value)}  id="password" placeholder={props.registerpassword} required/>
                 </div>
                 <div>
                     <button type="submit" id="send">{props.loginbutton}</button>

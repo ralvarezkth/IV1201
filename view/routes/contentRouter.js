@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 const {VError} = require('verror')
-const {ContentCtrl} = require('../../controller');
+const {ContentCtrl, ErrorCtrl} = require('../../controller');
 const ContentDTO = require('../../model/dto/contentDTO');
 
 /* GET /content - gets available languages. */
@@ -10,7 +10,9 @@ router.get('/', function(req, res, next) {
         .then(dat => {
             res.json(dat)})
         .catch(err => {
-            res.status(500).json({error: VError.info(err).message});
+            getError(err.name).then(er => {
+                res.status(500).json({error: er});
+            });
         });
 });
 
@@ -21,7 +23,9 @@ router.get('/:id', function(req, res, next) {
     getContent(id)
         .then(dat => res.json(dat))
         .catch(err => {
-            res.status(500).json({error: VError.info(err).message});
+            getError(err.name).then(er => {
+                res.status(500).json({error: er});
+            });
         });
 });
 
@@ -33,6 +37,11 @@ async function getLanguages() {
 async function getContent(id) {
     const content = await ContentCtrl.getContent(id);
     return content;
+}
+
+async function getError(name) {
+    let err = await ErrorCtrl.getError(name);
+    return err;
 }
 
 module.exports = router;

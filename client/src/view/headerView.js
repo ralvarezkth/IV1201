@@ -30,7 +30,7 @@ const HeaderView = (props) => {
             </ul>
             
             <div className="lang">
-                <label htmlFor="lang">Language</label>
+                <label htmlFor="lang">{props.content.menulanguage}</label>
                 <select id="lang" name="lang" onChange={(ev) => props.setLang(ev.target.value)}>
                     {hasLang &&
                     lang.map(lang => <option value={lang.id} key={lang.id}>{lang.lang}</option>)}

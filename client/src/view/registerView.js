@@ -35,13 +35,13 @@ const RegisterView = ({handleRegistrationSubmit, state, props}) => {
 
             }} id="registration">
                 <div>
-                    <input type="text" onChange={(event)=>setFirstName(event.target.value)} id="firstName" placeholder="First name" required/>
+                    <input type="text" onChange={(event)=>setFirstName(event.target.value)} id="firstName" placeholder={props.registerfirstname} required/>
                 </div>
                 <div>
-                    <input type="text" onChange={(event)=>setLastName(event.target.value)} id="lastName" placeholder="Last name" required/>
+                    <input type="text" onChange={(event)=>setLastName(event.target.value)} id="lastName" placeholder={props.registerlastname} required/>
                 </div>
                 <div>
-                    <input type="email" onChange={(event)=>setEmail(event.target.value)} id="email" placeholder="Email address" required/>
+                    <input type="email" onChange={(event)=>setEmail(event.target.value)} id="email" placeholder={props.registeremail} required/>
                 </div>
 
                 <div>
@@ -50,10 +50,10 @@ const RegisterView = ({handleRegistrationSubmit, state, props}) => {
                            title="Social security number" required/>
                 </div>
                 <div>
-                    <input type="text" onChange={(event)=>setUsername(event.target.value)} id="username" placeholder="Username" required/>
+                    <input type="text" onChange={(event)=>setUsername(event.target.value)} id="username" placeholder={props.registerusername} required/>
                 </div>
                 <div>
-                    <input type="password" onChange={(event)=>setPassword(event.target.value)}  id="password" placeholder="Password" required/>
+                    <input type="password" onChange={(event)=>setPassword(event.target.value)}  id="password" placeholder={props.registerpassword} required/>
                 </div>
                 <div>
                     <button type="submit" id="send">{props.registerbutton}</button>

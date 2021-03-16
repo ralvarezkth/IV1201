@@ -20,8 +20,15 @@ SET row_security = off;
 -- Data for Name: Competence; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO public."Competence" (id, name, created_at, updated_at) VALUES (1, 'Korvgrillning', '2021-03-03 19:52:08.300021+01', '2021-03-03 19:52:08.300021+01');
-INSERT INTO public."Competence" (id, name, created_at, updated_at) VALUES (2, 'Karuselldrift', '2021-03-03 19:52:08.300021+01', '2021-03-03 19:52:08.300021+01');
+INSERT INTO public."Competence" (id, created_at, updated_at) VALUES (1, '2021-03-03 19:52:08.300021+01', '2021-03-03 19:52:08.300021+01');
+INSERT INTO public."Competence" (id, created_at, updated_at) VALUES (2, '2021-03-03 19:52:08.300021+01', '2021-03-03 19:52:08.300021+01');
+
+INSERT INTO public."CompetenceName" (competence_id, lang_id, name, created_at, updated_at) VALUES (1, 1, 'Hotdog servant', '2021-03-03 19:52:08.300021+01', '2021-03-03 19:52:08.300021+01');
+INSERT INTO public."CompetenceName" (competence_id, lang_id, name, created_at, updated_at) VALUES (1, 2, 'Korvgrillning', '2021-03-03 19:52:08.300021+01', '2021-03-03 19:52:08.300021+01');
+INSERT INTO public."CompetenceName" (competence_id, lang_id, name, created_at, updated_at) VALUES (1, 3, 'Wurst machen', '2021-03-03 19:52:08.300021+01', '2021-03-03 19:52:08.300021+01');
+INSERT INTO public."CompetenceName" (competence_id, lang_id, name, created_at, updated_at) VALUES (2, 1, 'Ride attraction maintainer', '2021-03-03 19:52:08.300021+01', '2021-03-03 19:52:08.300021+01');
+INSERT INTO public."CompetenceName" (competence_id, lang_id, name, created_at, updated_at) VALUES (2, 2, 'Karuselldrift', '2021-03-03 19:52:08.300021+01', '2021-03-03 19:52:08.300021+01');
+INSERT INTO public."CompetenceName" (competence_id, lang_id, name, created_at, updated_at) VALUES (2, 3, 'Karusell fuhrer', '2021-03-03 19:52:08.300021+01', '2021-03-03 19:52:08.300021+01');
 
 
 --
@@ -44,9 +51,20 @@ INSERT INTO public."Duration" (id, years, created_at, updated_at) VALUES (10, 5.
 -- Data for Name: Status; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO public."Status" (id, name, created_at, updated_at) VALUES (1, 'Unhandled', '2021-03-03 19:51:36.243273+01', '2021-03-03 19:51:36.243273+01');
-INSERT INTO public."Status" (id, name, created_at, updated_at) VALUES (2, 'Accepted', '2021-03-03 19:51:36.243273+01', '2021-03-03 19:51:36.243273+01');
-INSERT INTO public."Status" (id, name, created_at, updated_at) VALUES (3, 'Rejected', '2021-03-03 19:51:36.243273+01', '2021-03-03 19:51:36.243273+01');
+INSERT INTO public."Status" (id, created_at, updated_at) VALUES (1, '2021-03-03 19:51:36.243273+01', '2021-03-03 19:51:36.243273+01');
+INSERT INTO public."Status" (id, created_at, updated_at) VALUES (2, '2021-03-03 19:51:36.243273+01', '2021-03-03 19:51:36.243273+01');
+INSERT INTO public."Status" (id, created_at, updated_at) VALUES (3, '2021-03-03 19:51:36.243273+01', '2021-03-03 19:51:36.243273+01');
+
+
+INSERT INTO public."StatusName" (status_id, lang_id, name, created_at, updated_at) VALUES (1, 1, 'Unhandled', '2021-03-03 19:51:36.243273+01', '2021-03-03 19:51:36.243273+01');
+INSERT INTO public."StatusName" (status_id, lang_id, name, created_at, updated_at) VALUES (1, 2, 'Ohanterad', '2021-03-03 19:51:36.243273+01', '2021-03-03 19:51:36.243273+01');
+INSERT INTO public."StatusName" (status_id, lang_id, name, created_at, updated_at) VALUES (1, 3, 'Unhanterieren', '2021-03-03 19:51:36.243273+01', '2021-03-03 19:51:36.243273+01');
+INSERT INTO public."StatusName" (status_id, lang_id, name, created_at, updated_at) VALUES (2, 1, 'Accepted', '2021-03-03 19:51:36.243273+01', '2021-03-03 19:51:36.243273+01');
+INSERT INTO public."StatusName" (status_id, lang_id, name, created_at, updated_at) VALUES (2, 2, 'Accpterad', '2021-03-03 19:51:36.243273+01', '2021-03-03 19:51:36.243273+01');
+INSERT INTO public."StatusName" (status_id, lang_id, name, created_at, updated_at) VALUES (2, 3, 'Acceptiert', '2021-03-03 19:51:36.243273+01', '2021-03-03 19:51:36.243273+01');
+INSERT INTO public."StatusName" (status_id, lang_id, name, created_at, updated_at) VALUES (3, 1, 'Rejected', '2021-03-03 19:51:36.243273+01', '2021-03-03 19:51:36.243273+01');
+INSERT INTO public."StatusName" (status_id, lang_id, name, created_at, updated_at) VALUES (3, 2, 'Avslagen', '2021-03-03 19:51:36.243273+01', '2021-03-03 19:51:36.243273+01');
+INSERT INTO public."StatusName" (status_id, lang_id, name, created_at, updated_at) VALUES (3, 3, 'Verdammt', '2021-03-03 19:51:36.243273+01', '2021-03-03 19:51:36.243273+01');
 
 
 --

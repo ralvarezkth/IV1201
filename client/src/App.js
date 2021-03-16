@@ -22,10 +22,10 @@ function App() {
       <HeaderView setLang={setLangId} content={content} />
         <Switch>
           <Route path="/" exact render={props => homeVM(content)} />
-          <Route path="/register" exact render={props => <RegisterVM {...props} content={content} />} />
-          <Route path="/login" render={props => <LoginVM {...props} content={content} />} />
-          <Route path="/apply" render={props => <ApplyVM {...props} content={content} />} />
-          <Route path="/admin" render={props => <AdminVM {...props} content={content} />} />
+          <Route path="/register" exact render={props => <RegisterVM {...props} content={content} lang={langId} />} />
+          <Route path="/login" render={props => <LoginVM {...props} content={content} lang={langId} />} />
+          <Route path="/apply" render={props => <ApplyVM {...props} content={content} lang={langId} />} />
+          <Route path="/admin" render={props => <AdminVM {...props} content={content} lang={langId} />} />
         </Switch>
       <FooterView content={content} />
     </Router>

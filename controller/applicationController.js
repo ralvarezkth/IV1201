@@ -29,8 +29,8 @@ class ApplicationController {
      * @returns {languages} languages The list of available languages.
      * @throws Throws an exception if unable to fetch a list of available languages from database.
      */
-    async getApplications() { 
-        return await this.applicationDAO.getApplications();
+    async getApplications(langId) { 
+        return await this.applicationDAO.getApplications(langId);
     }
 
     async updateApplication(application) {

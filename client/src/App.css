@@ -1,5 +1,7 @@
 .App {
   text-align: center;
+  min-height: 40vh;
+  margin-top: 10vh;
 }
 
 .App-logo {
@@ -28,6 +30,89 @@
   color: #61dafb;
 }
 
+.Header {
+  background-color: #FFD696;
+  display: flex;
+  justify-content: space-between;
+}
+
+.Header ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+.Header li {
+  float: left;
+}
+
+.Header li a.admin {
+  color: red;
+}
+
+.Header li a {
+  display: block;
+  color: black;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+.Header li a:hover {
+  background-color: #ffedd0;
+}
+
+.lang {
+  display: flex;
+  align-items:center; 
+}
+
+.lang label {
+  margin-right: 6px;
+  color: black;
+}
+
+
+.application-data {
+  margin: auto;
+  padding: 3%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  max-width: fit-content;
+  border: 1px solid black;
+}
+
+.application-data select {
+  max-width: fit-content;
+  align-self: center;
+}
+
+.application-competence {
+  margin-bottom: 5%;
+  text-align: center;
+}
+.Unhandled {
+  background-color: rgb(240, 240, 240);
+}
+
+.Accepted {
+  background-color: rgb(167, 255, 155);
+}
+
+.Rejected {
+  background-color: rgb(255, 138, 138);
+}
+
+
+
+
+.application-competence table, th, td {
+  margin: auto;
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
@@ -35,4 +120,38 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.bg-green {
+  margin: auto;
+  padding: 1em;
+  border: 2px solid #47ABFF;
+  background-color: #A2EDC3;
+}
+
+.bg-red {
+  margin: auto;
+  padding: 1em;
+  border: 2px solid #A73C0D;
+  background-color: #F59170;
+  max-width: fit-content;
+
+}
+
+.footer {
+  text-align: center;
+  background-color: #FFD696;
+  color: black;
+  padding: 1em;
+}
+
+.form-group {
+  margin: 1em;
+}
+
+.form-group-application-data {
+  margin: 1em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

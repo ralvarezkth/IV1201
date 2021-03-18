@@ -44,6 +44,16 @@ INSERT INTO public."Fragment" (id, name, created_at, updated_at) VALUES (12, 'ap
 INSERT INTO public."Fragment" (id, name, created_at, updated_at) VALUES (13, 'applybutton', '2021-03-01 09:35:35.095728+01', '2021-03-01 09:35:35.095728+01');
 INSERT INTO public."Fragment" (id, name, created_at, updated_at) VALUES (14, 'adminbutton', '2021-03-01 09:35:35.095728+01', '2021-03-01 09:35:35.095728+01');
 INSERT INTO public."Fragment" (id, name, created_at, updated_at) VALUES (15, 'admintitle', '2021-03-01 09:35:35.095728+01', '2021-03-01 09:35:35.095728+01');
+INSERT INTO public."Fragment" (id, name, created_at, updated_at) VALUES (16, 'admintimemetric', '2021-03-01 09:35:35.095728+01', '2021-03-01 09:35:35.095728+01');
+INSERT INTO public."Fragment" (id, name, created_at, updated_at) VALUES (17, 'adminavailability', '2021-03-01 09:35:35.095728+01', '2021-03-01 09:35:35.095728+01');
+INSERT INTO public."Fragment" (id, name, created_at, updated_at) VALUES (18, 'adminchooseapp', '2021-03-01 09:35:35.095728+01', '2021-03-01 09:35:35.095728+01');
+INSERT INTO public."Fragment" (id, name, created_at, updated_at) VALUES (19, 'adminchoosestatus', '2021-03-01 09:35:35.095728+01', '2021-03-01 09:35:35.095728+01');
+INSERT INTO public."Fragment" (id, name, created_at, updated_at) VALUES (20, 'menulanguage', '2021-02-27 23:03:14.941499+01', '2021-02-27 23:03:14.941499+01');
+INSERT INTO public."Fragment" (id, name, created_at, updated_at) VALUES (21, 'registerfirstname', '2021-03-01 09:35:35.095728+01', '2021-03-01 09:35:35.095728+01');
+INSERT INTO public."Fragment" (id, name, created_at, updated_at) VALUES (22, 'registerlastname', '2021-03-01 09:35:35.095728+01', '2021-03-01 09:35:35.095728+01');
+INSERT INTO public."Fragment" (id, name, created_at, updated_at) VALUES (23, 'registeremail', '2021-03-01 09:35:35.095728+01', '2021-03-01 09:35:35.095728+01');
+INSERT INTO public."Fragment" (id, name, created_at, updated_at) VALUES (24, 'registerusername', '2021-03-01 09:35:35.095728+01', '2021-03-01 09:35:35.095728+01');
+INSERT INTO public."Fragment" (id, name, created_at, updated_at) VALUES (25, 'registerpassword', '2021-03-01 09:35:35.095728+01', '2021-03-01 09:35:35.095728+01');
 
 
 --
@@ -85,16 +95,46 @@ INSERT INTO public."ContentFragment" (content_id, fragment_id, value, created_at
 INSERT INTO public."ContentFragment" (content_id, fragment_id, value, created_at, updated_at) VALUES (3, 11, 'Einloggen', '2021-03-01 10:42:19.990288+01', '2021-03-01 10:42:19.990288+01');
 INSERT INTO public."ContentFragment" (content_id, fragment_id, value, created_at, updated_at) VALUES (3, 12, 'Eine Stelle beantragen', '2021-03-01 10:42:19.990288+01', '2021-03-01 10:42:19.990288+01');
 INSERT INTO public."ContentFragment" (content_id, fragment_id, value, created_at, updated_at) VALUES (3, 13, 'Bewerbungsformular erhalten', '2021-03-01 10:42:19.990288+01', '2021-03-01 10:42:19.990288+01');
-INSERT INTO public."ContentFragment" (content_id, fragment_id, value, created_at, updated_at) VALUES (1, 7, 'Please log in to apply for a position.', '2021-03-01 10:42:19.990288+01', '2021-03-01 10:42:19.990288+01');
+INSERT INTO public."ContentFragment" (content_id, fragment_id, value, created_at, updated_at) VALUES (1, 7, 'This client is still very much a work in progress, so bear with us. There is still cause for celebration today no matter how things go. Get access to the apply page to find out! :)', '2021-03-01 10:42:19.990288+01', '2021-03-01 10:42:19.990288+01');
 INSERT INTO public."ContentFragment" (content_id, fragment_id, value, created_at, updated_at) VALUES (2, 7, 'Den här klienten är fortfarande ett bananskal, så håll avstånd. Oavsett hur saker går idag så finns det fortfarande skäl att fira för våren är kommen. Få tillgång till ansökningssidan och bli en professionell korvgrillare idag! :)', '2021-03-01 10:42:19.990288+01', '2021-03-01 10:42:19.990288+01');
 INSERT INTO public."ContentFragment" (content_id, fragment_id, value, created_at, updated_at) VALUES (3, 7, 'Achtung, unser deutsch ist ein bisschen besser als dieses programm. Unabhängig davon, wie die Dinge heute laufen, gibt es immer noch Grund zum Feiern, denn Richard ist ein spassig Dussel. Das muss man sagen. Greifen Sie auf die Anwendungsseite zu und überzeugen Sie sich selbst! :)', '2021-03-01 10:42:19.990288+01', '2021-03-01 10:42:19.990288+01');
 INSERT INTO public."ContentFragment" (content_id, fragment_id, value, created_at, updated_at) VALUES (3, 5, 'Kartoffelsalat ist sehr gut', '2021-03-01 10:42:19.990288+01', '2021-03-01 10:42:19.990288+01');
-INSERT INTO public."ContentFragment" (content_id, fragment_id, value, created_at, updated_at) VALUES (1, 14, 'Submit', '2021-03-01 10:42:19.990288+01', '2021-03-01 10:42:19.990288+01');
-INSERT INTO public."ContentFragment" (content_id, fragment_id, value, created_at, updated_at) VALUES (2, 14, 'Skicka', '2021-03-01 10:42:19.990288+01', '2021-03-01 10:42:19.990288+01');
-INSERT INTO public."ContentFragment" (content_id, fragment_id, value, created_at, updated_at) VALUES (3, 14, 'Enreichen', '2021-03-01 10:42:19.990288+01', '2021-03-01 10:42:19.990288+01');
+INSERT INTO public."ContentFragment" (content_id, fragment_id, value, created_at, updated_at) VALUES (1, 14, 'Update application', '2021-03-01 10:42:19.990288+01', '2021-03-01 10:42:19.990288+01');
+INSERT INTO public."ContentFragment" (content_id, fragment_id, value, created_at, updated_at) VALUES (2, 14, 'Uppdatera ansökan', '2021-03-01 10:42:19.990288+01', '2021-03-01 10:42:19.990288+01');
+INSERT INTO public."ContentFragment" (content_id, fragment_id, value, created_at, updated_at) VALUES (3, 14, 'Anwendung aktualisieren', '2021-03-01 10:42:19.990288+01', '2021-03-01 10:42:19.990288+01');
 INSERT INTO public."ContentFragment" (content_id, fragment_id, value, created_at, updated_at) VALUES (1, 15, 'Admin', '2021-03-01 10:42:19.990288+01', '2021-03-01 10:42:19.990288+01');
 INSERT INTO public."ContentFragment" (content_id, fragment_id, value, created_at, updated_at) VALUES (2, 15, 'Admin', '2021-03-01 10:42:19.990288+01', '2021-03-01 10:42:19.990288+01');
 INSERT INTO public."ContentFragment" (content_id, fragment_id, value, created_at, updated_at) VALUES (3, 15, 'Admin', '2021-03-01 10:42:19.990288+01', '2021-03-01 10:42:19.990288+01');
+INSERT INTO public."ContentFragment" (content_id, fragment_id, value, created_at, updated_at) VALUES (1, 16, 'years', '2021-03-01 10:42:19.990288+01', '2021-03-01 10:42:19.990288+01');
+INSERT INTO public."ContentFragment" (content_id, fragment_id, value, created_at, updated_at) VALUES (2, 16, 'år', '2021-03-01 10:42:19.990288+01', '2021-03-01 10:42:19.990288+01');
+INSERT INTO public."ContentFragment" (content_id, fragment_id, value, created_at, updated_at) VALUES (3, 16, 'Jahre', '2021-03-01 10:42:19.990288+01', '2021-03-01 10:42:19.990288+01');
+INSERT INTO public."ContentFragment" (content_id, fragment_id, value, created_at, updated_at) VALUES (1, 17, 'Availability periods', '2021-03-01 10:42:19.990288+01', '2021-03-01 10:42:19.990288+01');
+INSERT INTO public."ContentFragment" (content_id, fragment_id, value, created_at, updated_at) VALUES (2, 17, 'Tillgänglighetsperioder', '2021-03-01 10:42:19.990288+01', '2021-03-01 10:42:19.990288+01');
+INSERT INTO public."ContentFragment" (content_id, fragment_id, value, created_at, updated_at) VALUES (3, 17, 'Zeit perioden', '2021-03-01 10:42:19.990288+01', '2021-03-01 10:42:19.990288+01');
+INSERT INTO public."ContentFragment" (content_id, fragment_id, value, created_at, updated_at) VALUES (1, 18, 'Choose application', '2021-03-01 10:42:19.990288+01', '2021-03-01 10:42:19.990288+01');
+INSERT INTO public."ContentFragment" (content_id, fragment_id, value, created_at, updated_at) VALUES (2, 18, 'Välj ansökan', '2021-03-01 10:42:19.990288+01', '2021-03-01 10:42:19.990288+01');
+INSERT INTO public."ContentFragment" (content_id, fragment_id, value, created_at, updated_at) VALUES (3, 18, 'Zooser Anmeldung', '2021-03-01 10:42:19.990288+01', '2021-03-01 10:42:19.990288+01');
+INSERT INTO public."ContentFragment" (content_id, fragment_id, value, created_at, updated_at) VALUES (1, 19, 'Choose status', '2021-03-01 10:42:19.990288+01', '2021-03-01 10:42:19.990288+01');
+INSERT INTO public."ContentFragment" (content_id, fragment_id, value, created_at, updated_at) VALUES (2, 19, 'Välj status', '2021-03-01 10:42:19.990288+01', '2021-03-01 10:42:19.990288+01');
+INSERT INTO public."ContentFragment" (content_id, fragment_id, value, created_at, updated_at) VALUES (3, 19, 'Zoooser status', '2021-03-01 10:42:19.990288+01', '2021-03-01 10:42:19.990288+01');
+INSERT INTO public."ContentFragment" (content_id, fragment_id, value, created_at, updated_at) VALUES (1, 20, 'Language', '2021-03-01 10:42:19.990288+01', '2021-03-01 10:42:19.990288+01');
+INSERT INTO public."ContentFragment" (content_id, fragment_id, value, created_at, updated_at) VALUES (2, 20, 'Språk', '2021-03-01 10:42:19.990288+01', '2021-03-01 10:42:19.990288+01');
+INSERT INTO public."ContentFragment" (content_id, fragment_id, value, created_at, updated_at) VALUES (3, 20, 'Sprache', '2021-03-01 10:42:19.990288+01', '2021-03-01 10:42:19.990288+01');
+INSERT INTO public."ContentFragment" (content_id, fragment_id, value, created_at, updated_at) VALUES (1, 21, 'First name', '2021-03-01 10:42:19.990288+01', '2021-03-01 10:42:19.990288+01');
+INSERT INTO public."ContentFragment" (content_id, fragment_id, value, created_at, updated_at) VALUES (2, 21, 'Förnamn', '2021-03-01 10:42:19.990288+01', '2021-03-01 10:42:19.990288+01');
+INSERT INTO public."ContentFragment" (content_id, fragment_id, value, created_at, updated_at) VALUES (3, 21, 'Ein name', '2021-03-01 10:42:19.990288+01', '2021-03-01 10:42:19.990288+01');
+INSERT INTO public."ContentFragment" (content_id, fragment_id, value, created_at, updated_at) VALUES (1, 22, 'Last name', '2021-03-01 10:42:19.990288+01', '2021-03-01 10:42:19.990288+01');
+INSERT INTO public."ContentFragment" (content_id, fragment_id, value, created_at, updated_at) VALUES (2, 22, 'Efternamn', '2021-03-01 10:42:19.990288+01', '2021-03-01 10:42:19.990288+01');
+INSERT INTO public."ContentFragment" (content_id, fragment_id, value, created_at, updated_at) VALUES (3, 22, 'Leste name', '2021-03-01 10:42:19.990288+01', '2021-03-01 10:42:19.990288+01');
+INSERT INTO public."ContentFragment" (content_id, fragment_id, value, created_at, updated_at) VALUES (1, 23, 'Email address', '2021-03-01 10:42:19.990288+01', '2021-03-01 10:42:19.990288+01');
+INSERT INTO public."ContentFragment" (content_id, fragment_id, value, created_at, updated_at) VALUES (2, 23, 'Email adress', '2021-03-01 10:42:19.990288+01', '2021-03-01 10:42:19.990288+01');
+INSERT INTO public."ContentFragment" (content_id, fragment_id, value, created_at, updated_at) VALUES (3, 23, 'Email adresse', '2021-03-01 10:42:19.990288+01', '2021-03-01 10:42:19.990288+01');
+INSERT INTO public."ContentFragment" (content_id, fragment_id, value, created_at, updated_at) VALUES (1, 24, 'Username', '2021-03-01 10:42:19.990288+01', '2021-03-01 10:42:19.990288+01');
+INSERT INTO public."ContentFragment" (content_id, fragment_id, value, created_at, updated_at) VALUES (2, 24, 'Användarnamn', '2021-03-01 10:42:19.990288+01', '2021-03-01 10:42:19.990288+01');
+INSERT INTO public."ContentFragment" (content_id, fragment_id, value, created_at, updated_at) VALUES (3, 24, 'User name', '2021-03-01 10:42:19.990288+01', '2021-03-01 10:42:19.990288+01');
+INSERT INTO public."ContentFragment" (content_id, fragment_id, value, created_at, updated_at) VALUES (1, 25, 'Password', '2021-03-01 10:42:19.990288+01', '2021-03-01 10:42:19.990288+01');
+INSERT INTO public."ContentFragment" (content_id, fragment_id, value, created_at, updated_at) VALUES (2, 25, 'Lösenord', '2021-03-01 10:42:19.990288+01', '2021-03-01 10:42:19.990288+01');
+INSERT INTO public."ContentFragment" (content_id, fragment_id, value, created_at, updated_at) VALUES (3, 25, 'Passwort', '2021-03-01 10:42:19.990288+01', '2021-03-01 10:42:19.990288+01');
 
 
 --

@@ -3,34 +3,39 @@
 const { Sequelize, DataTypes, Model } = require('sequelize');
 
 /**
- * The various competences relating to an application.
+ * The specific error message belonging to an Error of a specified language and type.
  */
-class Competence extends Model {
+class Message extends Model {
 
     /**
      * 
      * @param {Sequelize} sequelize The sequelize connection instance object
-     * @return {Competence} A sequelize model describing the Competence entity.
+     * @return {Message} A sequelize model describing the Message entity.
      */
     static createModel(sequelize) {
-        Competence.init({
+        Message.init({
             id: {
                 type: DataTypes.INTEGER,
                 autoIncrement: true,
                 primaryKey: true
+            },
+            content: {
+                field: 'content',
+                type: DataTypes.TEXT,
+                allowNull: false
             }
         }, {
             freezeTableName: true,
             underscored: true,
             sequelize,
-            modelName: 'Competence',
+            modelName: 'Message',
             paranoid: false
         });
 
-        return Competence;
+        return Message;
     }
 }
 
 
 
-module.exports = Competence;
+module.exports = Message;

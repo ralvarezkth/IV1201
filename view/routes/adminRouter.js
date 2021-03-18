@@ -3,14 +3,16 @@ var router = express.Router();
 const { verifyToken } = require('./authentication');
 const {VError} = require('verror');
 const jwt = require('jsonwebtoken');
-const {ApplicationCtrl} = require('../../controller');
+const {ApplicationCtrl, ErrorCtrl} = require('../../controller');
 
 /* GET applications. */
 router.get('/', function(req, res) {
     getApplications().then(data => {
         res.json(data);
     }).catch(err => {
-        res.status(500).json({error: VError.info(err).message});
+        getError(err.name).then(er => {
+            res.status(500).json({error: er});
+        })
     });
 });
 
@@ -33,7 +35,9 @@ router.put('/:id', function(req, res) {
         let statusId = data.statusId;
 
         if (application.version !== data.version) {
-            res.status(403).json({error: "Version mismatch."});
+            getError("VersionMismatchError").then(data => {
+                res.status(403).json({error: data});
+            });
             return;
         }
 
@@ -43,13 +47,17 @@ router.put('/:id', function(req, res) {
             }).then(app => {
                 res.json(app);
             }).catch(err => {
-                res.status(500).json({error: VError.info(err).message});
+                getError(err.name).then(er => {
+                    res.status(500).json({error: er});
+                });
             });
         } else {
             res.json(application);
         }
     }).catch(err => {
-        res.status(500).json({error: VError.info(err).message});
+        getError(err.name).then(er => {
+            res.status(500).json({error: er});
+        });
     });
 });
 
@@ -66,6 +74,11 @@ async function getApplications() {
 async function updateApplication(application) {
     let app = await ApplicationCtrl.updateApplication(application);
     return app;
+}
+
+async function getError(name) {
+    let err = await ErrorCtrl.getError(name);
+    return err;
 }
 
 module.exports = router;

@@ -25,19 +25,19 @@ function App() {
         <Route
           path="/register"
           exact
-          render={props => <RegisterVM {...props} content={content} />}
+          render={props => <RegisterVM {...props} content={content} lang={langId} />}
         />
         <Route
           path="/login"
-          render={props => <LoginVM {...props} content={content} />}
+          render={props => <LoginVM {...props} content={content} lang={langId} />}
         />
         <Route
           path="/apply"
-          render={props => <ApplyVM {...props} content={content} />}
+          render={props => <ApplyVM {...props} content={content} lang={langId} />}
         />
         <Route
           path="/admin"
-          render={props => <AdminVM {...props} content={content} />}
+          render={props => <AdminVM {...props} content={content} lang={langId} />}
         />
       </Switch>
       <FooterView content={content} />

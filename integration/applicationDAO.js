@@ -4,9 +4,11 @@ const Sequelize = require('sequelize');
 const Application = require('../model/entity/application');
 const ApplicationCompetence = require('../model/entity/applicationCompetence');
 const Competence = require('../model/entity/competence');
+const CompetenceName = require('../model/entity/competenceName');
 const Duration = require('../model/entity/duration');
 const Availability = require('../model/entity/availability');
 const Status = require('../model/entity/status');
+const StatusName = require('../model/entity/statusName');
 const ApplicationDTO = require('../model/dto/applicationDTO');
 const { WError } = require('verror');
 
@@ -59,9 +61,11 @@ class ApplicationDAO {
         Application.createModel(this.database);
         ApplicationCompetence.createModel(this.database);
         Competence.createModel(this.database);
+        CompetenceName.createModel(this.database);
         Duration.createModel(this.database);
         Availability.createModel(this.database);
         Status.createModel(this.database);
+        StatusName.createModel(this.database);
         Application.hasMany(ApplicationCompetence, {foreignKey: 'application_id'});
         Application.hasMany(Availability, {foreignKey: 'application_id'});
         Application.belongsTo(Status, {foreignKey: 'status_id'});
@@ -69,9 +73,12 @@ class ApplicationDAO {
         ApplicationCompetence.belongsTo(Competence, {foreignKey: 'competence_id'});
         ApplicationCompetence.belongsTo(Duration, {foreignKey: 'duration_id'});
         Competence.hasMany(ApplicationCompetence, {foreignKey: 'competence_id'});
+        Competence.hasMany(CompetenceName, {foreignKey: "competence_id"});
+        CompetenceName.belongsTo(Competence, {foreignKey: "competence_id"});
         Duration.hasMany(ApplicationCompetence, {foreignKey: 'duration_id'});
         Availability.belongsTo(Application, {foreignKey: 'application_id'});
         Status.hasMany(Application, {foreignKey: "status_id"});
+        Status.hasMany(StatusName, {foreignKey: "status_id"});
     }
 
     async initTables() {
@@ -93,7 +100,7 @@ class ApplicationDAO {
         }
     }
 
-    async getApplication(id) {
+    async getApplication(id, langId) {
         try {
             let app = await Application.findOne({
                 where: {id},
@@ -102,7 +109,10 @@ class ApplicationDAO {
                     model: ApplicationCompetence,
                     include: [{
                         model: Competence,
-                        attributes: ["name"]
+                        include: [{
+                            model:CompetenceName,
+                            attributes: ["name"]
+                        }]
                     },
                     {
                         model: Duration,
@@ -115,7 +125,10 @@ class ApplicationDAO {
                 },
                 {
                     model: Status,
-                    attributes: ["name"]
+                    include: [{
+                        model: StatusName,
+                        attributes: ["lang_id", "name"]
+                    }]
                 }]
             });
 
@@ -123,6 +136,12 @@ class ApplicationDAO {
             let avs = [];
 
             app.dataValues.ApplicationCompetences.forEach(ac => {
+                let competence;
+
+                ac.dataValues.Competence.dataValues.CompetenceNames.forEach(acn => {
+                    competence = acn.dataValues.name;
+                });
+
                 acs.push({competence: ac.Competence.name, duration: ac.Duration.years});
             });
 
@@ -134,14 +153,14 @@ class ApplicationDAO {
                         to: t_date.getUTCDate() + "/" + (t_date.getUTCMonth() + 1) + "/" + t_date.getUTCFullYear()});
             });
 
-            return new ApplicationDTO(app.dataValues.id, acs, avs, app.dataValues.version, app.dataValues.status_id, app.dataValues.Status.name);
+            return new ApplicationDTO(app.dataValues.id, acs, avs, app.dataValues.version, app.dataValues.status_id, app.dataValues.Status.dataValues.StatusNames);
         } catch (err) {
             throw new WError(
                 {
                     name: 'GetApplicationFailedError',
                     cause: err,
                     info: {
-                        ApplicationDAO: 'The call to findByPk has failed.',
+                        ApplicationDAO: 'The call to findOne has failed.',
                         message: 'Technical issues, please try again later.'
                     }
                 },
@@ -165,7 +184,10 @@ class ApplicationDAO {
                     model: ApplicationCompetence,
                     include: [{
                         model: Competence,
-                        attributes: ["name"]
+                        include: [{
+                            model: CompetenceName,
+                            attributes: ["lang_id","name"]
+                        }]
                     },
                     {
                         model: Duration,
@@ -178,7 +200,10 @@ class ApplicationDAO {
                 },
                 {
                     model: Status,
-                    attributes: ["name"]
+                    include: [{
+                        model: StatusName,
+                        attributes: ["lang_id", "name"]
+                    }]
                 }]
             });
 
@@ -188,12 +213,18 @@ class ApplicationDAO {
                 let id = a.dataValues.id;
                 let version = a.dataValues.version;
                 let statusId = a.dataValues.status_id;
-                let status = a.dataValues.Status.name;
+                let status = a.dataValues.Status.dataValues.StatusNames;
                 let acs = [];
                 let avs = [];
 
                 a.dataValues.ApplicationCompetences.forEach(ac => {
-                    acs.push({competence: ac.Competence.name, duration: ac.Duration.years});
+                    let competence = [];
+
+                    ac.dataValues.Competence.dataValues.CompetenceNames.forEach(acn => {
+                        competence.push({lang_id: acn.dataValues.lang_id, name: acn.dataValues.name});
+                    });
+
+                    acs.push({competence, duration: ac.Duration.years});
                 });
 
                 a.dataValues.Availabilities.forEach(av => {

@@ -23,5 +23,9 @@ This project also includes a simple React web client. Run the client from the cl
 npm start
 ```
 
+Starting the server creates all the necessary tables.
+Content for a local database is found in the db-scripts directory.
+Read the documentation for help with database configuration. 
+
 ## API Reference and documentation
 Please visit the [wiki pages](https://github.com/ralvarezkth/IV1201/wiki)
